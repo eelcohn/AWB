@@ -1,0 +1,21 @@
+/* Variabes */
+:root {
+	--background-color: #0057a3;
+	--block-background-color: #00498a;
+	--systemmessage-background-color: #333333;
+	--header-fontsize: 16pt;
+	--main-fontsize: 15pt;
+	--main-fontsize-small: 12.5pt;
+	--footer-fontsize: 16pt;
+	--metadata-textcolor: #fff;
+	--metadata-fontsize: 9pt;
+	--textcolor: #fff;
+	--text-header-fontsize: 16pt;
+	--text-contents-fontsize: 15pt;
+	--alert-color: #000;
+	--alert0-background-color: #28a745;
+	--alert1-background-color: #ffe959;
+	--alert2-background-color: #f16e2a;
+	--alert3-background-color: #d3361a;
+}
+
