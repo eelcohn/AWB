@@ -3,4 +3,4 @@ Aviation Weather Board
 
 ### How to install (Raspberry Pi)
 
-`curl -s https://raw.githubusercontent.com/eelcohn/AviationWeatherBoard/main/rpi-install.sh | sudo bash`
+`curl -s https://raw.githubusercontent.com/eelcohn/AWB/main/rpi/rpi-install.sh | sudo bash`
