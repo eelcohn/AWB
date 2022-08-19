@@ -37,7 +37,7 @@ xset -dpms >> "${LOG_FILE}" 2>&1
 #
 echo "`date +%c` Updating system" >> "${LOG_FILE}" 2>&1
 sudo apt-get -y update >> "${LOG_FILE}" 2>&1
-sudo apt-get -y upgrade >> "${LOG_FILE}" 2>&1
+sudo apt-get -y --with-new-pkgs upgrade >> "${LOG_FILE}" 2>&1
 sudo apt-get -y clean >> "${LOG_FILE}" 2>&1
 sudo apt-get -y autoremove >> "${LOG_FILE}" 2>&1
 
@@ -129,7 +129,7 @@ timedatectl set-ntp True >> "${LOG_FILE}" 2>&1
 # Add cron job for daily updates and reboot
 #
 echo "`date +%c` Adding cron job" >> "${LOG_FILE}" 2>&1
-grep -qxF "0 0 * * * /usr/bin/bash /opt/${APP_NAME}/updater.sh" "/var/spool/cron/crontabs/root" || echo "0 0 * * * /usr/bin/bash /opt/${APP_NAME}/updater.sh" >> "/var/spool/cron/crontabs/root"
+grep -qxF "0 1 * * * /usr/bin/bash /opt/${APP_NAME}/updater.sh" "/var/spool/cron/crontabs/root" || echo "0 1 * * * /usr/bin/bash /opt/${APP_NAME}/updater.sh" >> "/var/spool/cron/crontabs/root"
 chown root:crontab /var/spool/cron/crontabs/root >> "${LOG_FILE}" 2>&1
 chmod 600 /var/spool/cron/crontabs/root >> "${LOG_FILE}" 2>&1
 systemctl force-reload cron >> "${LOG_FILE}" 2>&1

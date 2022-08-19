@@ -29,7 +29,7 @@ EXT_VERSION="`curl -s https://raw.githubusercontent.com/eelcohn/AviationWeatherB
 # Update system
 #
 apt-get -y update >> "${LOG_FILE}" 2>&1
-apt-get -y upgrade >> "${LOG_FILE}" 2>&1
+apt-get -y --with-new-pkgs upgrade >> "${LOG_FILE}" 2>&1
 
 #
 # Update application
