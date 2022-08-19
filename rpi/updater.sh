@@ -23,7 +23,7 @@ fi
 
 LOCAL_VERSION="`cat ${VERSION_FILE}`"
 #EXT_VERSION="`curl -s https://api.github.com/repos/eelcohn/${APP_NAME}/releases/latest | jq -r \".assets[] | select(.name) | .browser_download_url\"`"
-EXT_VERSION="`curl -s https://raw.githubusercontent.com/eelcohn/AviationWeatherBoard/main/VERSION`"
+EXT_VERSION="`curl -s https://raw.githubusercontent.com/eelcohn/${APP_NAME}/main/VERSION`"
 
 #
 # Update system
