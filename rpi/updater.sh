@@ -45,7 +45,7 @@ then
 	rm -rf "/var/www/html.old" >> "${LOG_FILE}" 2>&1
 	mv -f "/var/www/html" "/var/www/html.old" >> "${LOG_FILE}" 2>&1
 	mv -f "/tmp/weather/html" "/var/www/" >> "${LOG_FILE}" 2>&1
-	cp -a "/var/www/html.old/scripts/config.js" "/var/www/html/scripts/" >> "${LOG_FILE}" 2>&1
+	cp -a "/var/www/html.old/scripts/config.json" "/var/www/html/scripts/" >> "${LOG_FILE}" 2>&1
 	sudo chown -R www-data:www-data /var/www >> "${LOG_FILE}" 2>&1
 	sudo chmod -R 755 /var/www >> "${LOG_FILE}" 2>&1
 fi
