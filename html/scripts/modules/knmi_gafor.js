@@ -56,6 +56,7 @@ const UPPERCASES = {
 	'zeeland': 'Zeeland',
 	'noord brabant': 'Noord Brabant',
 	'limburg': 'Limburg',
+	'ijsland': 'IJsland',
 	'ijsselmeer': 'IJsselmeer',
 	'britse': 'Britse',
 	'duitsland': 'Duitsland',
