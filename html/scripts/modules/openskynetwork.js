@@ -114,6 +114,8 @@ class Module {
 				}
 			}
 //			console.log(opensky_data);
+		}).catch((error) => {
+			console.error(error);
 		});
 	}
 }

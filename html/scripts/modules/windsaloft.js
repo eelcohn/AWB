@@ -109,6 +109,8 @@ class Module {
 			} else {
 //				Old data warning?
 			}
+		}).catch((error) => {
+			console.error(error);
 		});
 	}
 }

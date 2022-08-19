@@ -126,14 +126,14 @@ class Module {
 				method: 'GET',
 				referrerPolicy: 'no-referrer',
 			}
-		).then((response => {
+		).then(response => {
 			if (response.status == 200) {
 				return response.text();
 			} else {
 				console.warn('Returned HTTP error ' + response.status + ' (' + response.statusText + ')');
 				return null;
 			}
-		})).then((data => {
+		}).then(data => {
 			if (data != null) {
 				this.last_updated = new Date();
 
@@ -170,7 +170,9 @@ class Module {
 				document.getElementById(ID_VALID_FROM).innerHTML = this.valid_from.toLocaleString(document.config.locale, DATE_OPTIONS_LOCAL);
 				document.getElementById(ID_LAST_UPDATED).innerHTML = this.last_updated.toLocaleString(document.config.locale, DATE_OPTIONS_LOCAL);
 			}
-		}));
+		}).catch((error) => {
+			console.error(error);
+		});
 	}
 
 	gafor_decompose(component) {

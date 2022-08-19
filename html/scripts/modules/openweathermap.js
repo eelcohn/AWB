@@ -166,6 +166,8 @@ class Module {
 				setTrend(ID_PRESSURE_TREND, this.pressure, pressure_previous);
 				setTrend(ID_VISIBILITY_TREND, this.visibility, visibility_previous);
 			}
+		}).catch((error) => {
+			console.error(error);
 		});
 	}
 }
