@@ -130,7 +130,9 @@ timedatectl set-ntp True >> "${LOG_FILE}" 2>&1
 #
 echo "`date +%c` Adding cron job" >> "${LOG_FILE}" 2>&1
 grep -qxF "0 0 * * * /usr/bin/bash /opt/${APP_NAME}/updater.sh" "/var/spool/cron/crontabs/root" || echo "0 0 * * * /usr/bin/bash /opt/${APP_NAME}/updater.sh" >> "/var/spool/cron/crontabs/root"
-systemctl force-reload cron
+chown root:crontab /var/spool/cron/crontabs/root >> "${LOG_FILE}" 2>&1
+chmod 600 /var/spool/cron/crontabs/root >> "${LOG_FILE}" 2>&1
+systemctl force-reload cron >> "${LOG_FILE}" 2>&1
 
 #
 # Restart
