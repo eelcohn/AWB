@@ -11,6 +11,8 @@ then
 	exit
 fi
 
+echo "`date +%c` Running lockdown script" >> "${LOG_FILE}" 2>&1
+
 #
 # Remove unused packages
 #
@@ -26,4 +28,6 @@ sudo apt-get -y clean >> "${LOG_FILE}" 2>&1
 echo "`date +%c` Disabling BlueTooth" >> "${LOG_FILE}" 2>&1
 #rfkill >> "${LOG_FILE}" 2>&1
 systemctl disable hciuart >> "${LOG_FILE}" 2>&1
+
+echo "`date +%c` Lockdown script done" >> "${LOG_FILE}" 2>&1
 
