@@ -106,7 +106,7 @@ echo "`date +%c` Installing ${APP_NAME}" >> "${LOG_FILE}" 2>&1
 mkdir -p "/opt/${APP_NAME}/" >> "${LOG_FILE}" 2>&1
 git clone ${APP_SOURCE} "/tmp/weather" >> "${LOG_FILE}" 2>&1
 mv -f /tmp/weather/VERSION "/opt/${APP_NAME}/" >> "${LOG_FILE}" 2>&1
-mv -f /tmp/weather/*.sh "/opt/${APP_NAME}/" >> "${LOG_FILE}" 2>&1
+mv -f /tmp/weather/rpi/*.sh "/opt/${APP_NAME}/" >> "${LOG_FILE}" 2>&1
 sudo chmod 755 /opt/${APP_NAME}/*.sh >> "${LOG_FILE}" 2>&1
 mv -f "/var/www/html" "/var/www/html.old" >> "${LOG_FILE}" 2>&1
 mv -f "/tmp/weather/html" "/var/www/" >> "${LOG_FILE}" 2>&1
