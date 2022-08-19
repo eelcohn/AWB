@@ -125,8 +125,8 @@ var metar = {};
 for (var i = 0; i < document.config.metar.length; i++) {
 	metar[document.config.metar[i]] = new NOAAMETAR(document.config.metar[i]);
 }
-var openweathermap = new OpenWeatherMap();
-//var weerlive = new WeerLive();
+//var openweathermap = new OpenWeatherMap();
+var weerlive = new WeerLive();
 var weerslag = new WeerSlag(ID_IMG_LAYER_MAP);
 var windsaloft = new WindsAloft();
 
