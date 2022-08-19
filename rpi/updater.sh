@@ -5,20 +5,35 @@ APP_SOURCE="https://github.com/eelcohn/${APP_NAME}"
 LOG_FILE="/var/log/${APP_NAME}/update.log"
 VERSION_FILE="/opt/${APP_NAME}/VERSION"
 
-# Create log directory if it doesn't exist already
-[ ! -d "/var/log/${APP_NAME}" ] && mkdir -m 755 -p "/var/log/${APP_NAME}/"
-
 echo "`date +%c` Updating and rebooting system" >> "${LOG_FILE}" 2>&1
+
+#
+# Check if user has root permissions
+#
+if [ "$EUID" -ne 0 ]
+then
+	echo "Please run as root" >> "${LOG_FILE}" 2>&1
+	exit
+fi
+
+#
+# Create log directory if it doesn't exist already
+#
+[ ! -d "/var/log/${APP_NAME}" ] && mkdir -m 755 -p "/var/log/${APP_NAME}/"
 
 LOCAL_VERSION="`cat ${VERSION_FILE}`"
 #EXT_VERSION="`curl -s https://api.github.com/repos/eelcohn/${APP_NAME}/releases/latest | jq -r \".assets[] | select(.name) | .browser_download_url\"`"
 EXT_VERSION="`curl -s https://raw.githubusercontent.com/eelcohn/AviationWeatherBoard/main/VERSION`"
 
+#
 # Update system
+#
 apt-get -y update >> "${LOG_FILE}" 2>&1
 apt-get -y upgrade >> "${LOG_FILE}" 2>&1
 
+#
 # Update application
+#
 echo "`date +%c` Local version: ${LOCAL_VERSION}   Ext version: ${EXT_VERSION}" >> "${LOG_FILE}" 2>&1
 if [ "${LOCAL_VERSION}" != "${EXT_VERSION}" ]
 then
