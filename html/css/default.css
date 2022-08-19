@@ -30,7 +30,7 @@ footer {
 }
 .metrics-text {
 }
-.metrics-forecast {
+.weather-forecast {
 	font-weight: bold;
 }
 .contents {
@@ -101,6 +101,7 @@ header,
 }
 .metrics-content,
 .upper-winds-content,
+.metar-content,
 .gafor-content {
 	padding-top: 7px;
 	padding-bottom: 11px;
