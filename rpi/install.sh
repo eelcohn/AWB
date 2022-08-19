@@ -18,19 +18,19 @@ then
 fi
 
 #
-# Disable screen saver and energy savings
-#
-xset s noblank >> "${LOG_FILE}" 2>&1
-xset s off >> "${LOG_FILE}" 2>&1
-xset -dpms >> "${LOG_FILE}" 2>&1
-
-#
 # Create log directory and tail the log file so the user can see what's going on during the installation
 #
 mkdir -m 755 -p "/var/log/${APP_NAME}/"
 chown root:root "/var/log/${APP_NAME}/"
 echo "`date +%c` Installer start for ${APP_NAME}" >> "${LOG_FILE}" 2>&1
 tail -f "${LOG_FILE}" &
+
+#
+# Disable screen saver and energy savings
+#
+xset s noblank >> "${LOG_FILE}" 2>&1
+xset s off >> "${LOG_FILE}" 2>&1
+xset -dpms >> "${LOG_FILE}" 2>&1
 
 #
 # Update system
