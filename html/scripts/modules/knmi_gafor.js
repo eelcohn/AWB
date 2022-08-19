@@ -184,7 +184,7 @@ class Module {
 			} else {
 				start = this.gafor.indexOf(': ', start) + 2;
 			}
-			data = this.gafor.slice(start, this.gafor.indexOf('\n.\n', start)).toLowerCase().replace('\n', ' ');
+			data = this.gafor.slice(start, this.gafor.indexOf('\n.\n', start)).toLowerCase().replaceAll('\n', ' ');
 			sentences = data.split(". ");
 			for (i = 0; i < sentences.length; i++) {
 				/* Always make first letter uppercase for the component */
