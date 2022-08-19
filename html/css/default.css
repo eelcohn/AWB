@@ -4,6 +4,7 @@ body {
 	color: var(--textcolor);
 	font-family: 'Roboto', 'Open Sans', sans-serif;
 	height: 100%;
+	overflow: hidden;
 }
 header {
 	display: flex;
