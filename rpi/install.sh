@@ -104,6 +104,7 @@ sed -i 's/;extension=curl/extension=curl/' '/etc/php/7.4/cgi/php.ini'
 #
 echo "`date +%c` Installing ${APP_NAME}" >> "${LOG_FILE}" 2>&1
 mkdir -p "/opt/${APP_NAME}/" >> "${LOG_FILE}" 2>&1
+rm -rf "/tmp/weather" >> "${LOG_FILE}" 2>&1
 git clone ${APP_SOURCE} "/tmp/weather" >> "${LOG_FILE}" 2>&1
 mv -f /tmp/weather/VERSION "/opt/${APP_NAME}/" >> "${LOG_FILE}" 2>&1
 mv -f /tmp/weather/rpi/*.sh "/opt/${APP_NAME}/" >> "${LOG_FILE}" 2>&1
@@ -112,12 +113,6 @@ mv -f "/var/www/html" "/var/www/html.old" >> "${LOG_FILE}" 2>&1
 mv -f "/tmp/weather/html" "/var/www/" >> "${LOG_FILE}" 2>&1
 sudo chown -R www-data:www-data /var/www >> "${LOG_FILE}" 2>&1
 sudo chmod -R 755 /var/www >> "${LOG_FILE}" 2>&1
-
-#
-# Alter overscan settings so the full-screen desktop is available on normal TV's
-#
-echo "`date +%c` Altering overscan settings" >> "${LOG_FILE}" 2>&1
-/opt/${APP_NAME}/fixoverscan.sh >> "${LOG_FILE}" 2>&1
 
 #
 # Enable NTP time sync (if it's not already enabled by default)
@@ -133,6 +128,18 @@ grep -qxF "0 1 * * * /usr/bin/bash /opt/${APP_NAME}/updater.sh" "/var/spool/cron
 chown root:crontab /var/spool/cron/crontabs/root >> "${LOG_FILE}" 2>&1
 chmod 600 /var/spool/cron/crontabs/root >> "${LOG_FILE}" 2>&1
 systemctl force-reload cron >> "${LOG_FILE}" 2>&1
+
+#
+# Alter overscan settings so the full-screen desktop is available on normal TV's
+#
+echo "`date +%c` Altering overscan settings" >> "${LOG_FILE}" 2>&1
+/opt/${APP_NAME}/fixoverscan.sh >> "${LOG_FILE}" 2>&1
+
+#
+# Remove unused packages and services to improve security
+#
+echo "`date +%c` Removing unused packages and services" >> "${LOG_FILE}" 2>&1
+/opt/${APP_NAME}/lockdown.sh >> "${LOG_FILE}" 2>&1
 
 #
 # Restart
