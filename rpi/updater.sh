@@ -38,6 +38,7 @@ echo "`date +%c` Local version: ${LOCAL_VERSION}   Ext version: ${EXT_VERSION}" 
 if [ "${LOCAL_VERSION}" != "${EXT_VERSION}" ]
 then
 	echo "`date +%c` New ${APP_NAME} version found: ${EXT_VERSION}" >> "${LOG_FILE}" 2>&1
+	rm -rf "/opt/${APP_NAME}.new" >> "${LOG_FILE}" 2>&1
 	git clone ${APP_SOURCE} "/opt/${APP_NAME}.new/" >> "${LOG_FILE}" 2>&1
 	sudo chmod 755 /opt/${APP_NAME}.new/*.sh >> "${LOG_FILE}" 2>&1
 	rm -rf "/opt/${APP_NAME}.old" >> "${LOG_FILE}" 2>&1
