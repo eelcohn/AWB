@@ -134,8 +134,8 @@ echo "`date +%c` Altering overscan settings" >> "${LOG_FILE}" 2>&1
 # -------------------------------------------------------
 # Remove unused packages and services to improve security
 # -------------------------------------------------------
-echo "`date +%c` Removing unused packages and services" >> "${LOG_FILE}" 2>&1
-/opt/${APP_NAME}/rpi/lockdown.sh >> "${LOG_FILE}" 2>&1
+#echo "`date +%c` Removing unused packages and services" >> "${LOG_FILE}" 2>&1
+#/opt/${APP_NAME}/rpi/lockdown.sh >> "${LOG_FILE}" 2>&1
 
 # -------
 # Restart
