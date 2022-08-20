@@ -64,6 +64,7 @@ const UPPERCASES = {
 	'noord-frankrijk': 'Noord-Frankrijk',
 	'frankrijk': 'Frankrijk',
 	'ierland': 'Ierland',
+	'azoren': 'Azoren',
 	'baltische': 'Baltische',
 	'nw-zo': 'NW-ZO',
 	'nnw-zzo': 'NNW-ZZO',
