@@ -38,16 +38,16 @@ echo "`date +%c` Local version: ${LOCAL_VERSION}   Ext version: ${EXT_VERSION}" 
 if [ "${LOCAL_VERSION}" != "${EXT_VERSION}" ]
 then
 	echo "`date +%c` New ${APP_NAME} version found: ${EXT_VERSION}" >> "${LOG_FILE}" 2>&1
-	git clone ${APP_SOURCE} "/tmp/weather" >> "${LOG_FILE}" 2>&1
-	mv -f /tmp/weather/VERSION "/opt/${APP_NAME}/" >> "${LOG_FILE}" 2>&1
-	mv -f /tmp/weather/*.sh "/opt/${APP_NAME}/" >> "${LOG_FILE}" 2>&1
-	sudo chmod 755 /opt/${APP_NAME}/*.sh >> "${LOG_FILE}" 2>&1
-	rm -rf "/var/www/html.old" >> "${LOG_FILE}" 2>&1
+	git clone ${APP_SOURCE} "/opt/${APP_NAME}.new/" >> "${LOG_FILE}" 2>&1
+	sudo chmod 755 /opt/${APP_NAME}.new/*.sh >> "${LOG_FILE}" 2>&1
+	rm -rf "/opt/${APP_NAME}.old" >> "${LOG_FILE}" 2>&1
+	mv -f "/opt/${APP_NAME}" "/opt/${APP_NAME}.old" >> "${LOG_FILE}" 2>&1
+	mv -f "/opt/${APP_NAME}.new" "/opt/${APP_NAME}" >> "${LOG_FILE}" 2>&1
 	mv -f "/var/www/html" "/var/www/html.old" >> "${LOG_FILE}" 2>&1
-	mv -f "/tmp/weather/html" "/var/www/" >> "${LOG_FILE}" 2>&1
-	cp -a "/var/www/html.old/scripts/config.json" "/var/www/html/scripts/" >> "${LOG_FILE}" 2>&1
-	sudo chown -R www-data:www-data /var/www >> "${LOG_FILE}" 2>&1
-	sudo chmod -R 755 /var/www >> "${LOG_FILE}" 2>&1
+	mv -f "/opt/${APP_NAME}/html" "/var/www/" >> "${LOG_FILE}" 2>&1
+	cp -a "/var/www/html.old/config.json" "/var/www/html/" >> "${LOG_FILE}" 2>&1
+	sudo chown -R www-data:www-data /var/www/html >> "${LOG_FILE}" 2>&1
+	sudo chmod -R 755 /var/www/html >> "${LOG_FILE}" 2>&1
 fi
 
 echo "`date +%c` Updaing done" >> "${LOG_FILE}" 2>&1
