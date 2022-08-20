@@ -39,7 +39,7 @@ then
 	echo "`date +%c` New ${APP_NAME} version found: ${EXT_VERSION}" >> "${LOG_FILE}" 2>&1
 	rm -rf "/opt/${APP_NAME}.new" >> "${LOG_FILE}" 2>&1
 	git clone ${APP_SOURCE} "/opt/${APP_NAME}.new" >> "${LOG_FILE}" 2>&1
-	sudo chmod 755 /opt/${APP_NAME}.new/*.sh >> "${LOG_FILE}" 2>&1
+	sudo chmod 755 /opt/${APP_NAME}.new/rpi/*.sh >> "${LOG_FILE}" 2>&1
 	rm -rf "/opt/${APP_NAME}.old" >> "${LOG_FILE}" 2>&1
 	mv -f "/opt/${APP_NAME}" "/opt/${APP_NAME}.old" >> "${LOG_FILE}" 2>&1
 	mv -f "/opt/${APP_NAME}.new" "/opt/${APP_NAME}" >> "${LOG_FILE}" 2>&1

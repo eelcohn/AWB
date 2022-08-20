@@ -104,7 +104,7 @@ sed -i 's/;extension=curl/extension=curl/' '/etc/php/7.4/cgi/php.ini'
 # -------------------
 echo "`date +%c` Installing ${APP_NAME}" >> "${LOG_FILE}" 2>&1
 git clone ${APP_SOURCE} "/opt/${APP_NAME}" >> "${LOG_FILE}" 2>&1
-sudo chmod 755 /opt/${APP_NAME}/*.sh >> "${LOG_FILE}" 2>&1
+sudo chmod 755 /opt/${APP_NAME}/rpi/*.sh >> "${LOG_FILE}" 2>&1
 mv -f "/var/www/html" "/var/www/html.old" >> "${LOG_FILE}" 2>&1
 mv -f "/opt/${APP_NAME}/html" "/var/www/" >> "${LOG_FILE}" 2>&1
 sudo chown -R www-data:www-data /var/www/html >> "${LOG_FILE}" 2>&1
