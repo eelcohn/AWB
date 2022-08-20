@@ -129,13 +129,13 @@ systemctl force-reload cron >> "${LOG_FILE}" 2>&1
 # Alter overscan settings so the full-screen desktop is available on normal TV's
 # ------------------------------------------------------------------------------
 echo "`date +%c` Altering overscan settings" >> "${LOG_FILE}" 2>&1
-/opt/${APP_NAME}/fixoverscan.sh >> "${LOG_FILE}" 2>&1
+/opt/${APP_NAME}/rpi/fixoverscan.sh >> "${LOG_FILE}" 2>&1
 
 # -------------------------------------------------------
 # Remove unused packages and services to improve security
 # -------------------------------------------------------
 echo "`date +%c` Removing unused packages and services" >> "${LOG_FILE}" 2>&1
-/opt/${APP_NAME}/lockdown.sh >> "${LOG_FILE}" 2>&1
+/opt/${APP_NAME}/rpi/lockdown.sh >> "${LOG_FILE}" 2>&1
 
 # -------
 # Restart
