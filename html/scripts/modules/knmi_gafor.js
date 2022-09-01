@@ -45,6 +45,7 @@ const UPPERCASES = {
 	' fl1': ' FL1',
 	' Fl0': ' FL0',
 	' Fl1': ' FL1',
+	'celcius': 'Celcius',
 	'groningen': 'Groningen',
 	'friesland': 'Friesland',
 	'drenthe': 'Drenthe',
@@ -58,14 +59,27 @@ const UPPERCASES = {
 	'limburg': 'Limburg',
 	'ijsland': 'IJsland',
 	'ijsselmeer': 'IJsselmeer',
-	'britse': 'Britse',
-	'duitsland': 'Duitsland',
-	'engeland': 'Engeland',
-	'noord-frankrijk': 'Noord-Frankrijk',
-	'frankrijk': 'Frankrijk',
-	'ierland': 'Ierland',
 	'azoren': 'Azoren',
 	'baltische': 'Baltische',
+	'britse eilanden': 'Britse Eilanden',
+	'britse': 'Britse',
+	'denemarken': 'Denemarken',
+	'duitsland': 'Duitsland',
+	'engeland': 'Engeland',
+	'frankrijk': 'Frankrijk',
+	'golf van biscaje': 'Golf van Biskaje',
+	'ierland': 'Ierland',
+	'nederland': 'Nederland',
+	'noord-frankrijk': 'Noord-Frankrijk',
+	'noorse': 'Noorse',
+	'noordzee': 'Noordzee',
+	'noorwegen': 'Noorwegen',
+	'polen': 'Polen',
+	'scandinavie': 'Scandinavië',
+	'waddeneilanden': 'Waddeneilanden',
+	'waddengebied': 'Waddengebied',
+	'waddenzee': 'Waddenzee',
+	'n-z': 'N-Z',
 	'nw-zo': 'NW-ZO',
 	'nnw-zzo': 'NNW-ZZO',
 	'no-zw': 'NO-ZW',
@@ -100,7 +114,7 @@ class Module {
 
 		this.gafor = null;
 		this.gafor_items = {};
-		this.valid_from = null
+		this.valid_from = null;
 		this.last_updated = null;
 
 		/* Schedule update of document content */
@@ -191,7 +205,7 @@ class Module {
 			sentences = data.split(". ");
 			for (i = 0; i < sentences.length; i++) {
 				/* Always make first letter uppercase for the component */
-				sentences[0]= sentences[0][0].toUpperCase() + sentences[0].slice(1);;
+				sentences[0]= sentences[0][0].toUpperCase() + sentences[0].slice(1);
 				/* Only transform first letter of sentence to uppercase when it's not preceded by an abbreviation */
 				if ((i !== 0) && (sentences[i - 1][sentences[i - 1].length - 2] !== '.')) {
 					sentences[i] = sentences[i][0].toUpperCase() + sentences[i].slice(1);
