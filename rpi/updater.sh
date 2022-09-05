@@ -43,6 +43,7 @@ then
 	rm -rf "/opt/${APP_NAME}.old" >> "${LOG_FILE}" 2>&1
 	mv -f "/opt/${APP_NAME}" "/opt/${APP_NAME}.old" >> "${LOG_FILE}" 2>&1
 	mv -f "/opt/${APP_NAME}.new" "/opt/${APP_NAME}" >> "${LOG_FILE}" 2>&1
+	rm -rf "/var/www/html.old" >> "${LOG_FILE}" 2>&1
 	mv -f "/var/www/html" "/var/www/html.old" >> "${LOG_FILE}" 2>&1
 	mv -f "/opt/${APP_NAME}/html" "/var/www/" >> "${LOG_FILE}" 2>&1
 	cp -a "/var/www/html.old/config.json" "/var/www/html/" >> "${LOG_FILE}" 2>&1
