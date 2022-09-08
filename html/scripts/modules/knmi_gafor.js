@@ -133,14 +133,16 @@ const UPPERCASES = {
 	' as ': ' AS ',
 	' cb ': ' CB ',
 	' cu ': ' CU ',
-	' cu/ac ': ' CU/AC ',
-	' cu/sc ': ' CU/SC ',
 	' ns ': ' NS ',
 	' sc ': ' SC ',
-	' sc/ac ': ' SC/AC ',
-	' sc/cu ': ' SC/CU ',
 	' st ': ' ST ',
 	' tcu ': ' TCU ',
+	'as/sc', 'AS/SC',
+	'cu/ac': 'CU/AC',
+	'cu/sc': 'CU/SC',
+	'sc/ac': 'SC/AC',
+	'sc/ns': 'SC/NS',
+	'sc/cu': 'SC/CU',
 };
 
 class Module {
