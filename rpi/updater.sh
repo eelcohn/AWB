@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
+APP_MAINTAINER="eelcohn"
 APP_NAME="AWB"
-APP_SOURCE="https://github.com/eelcohn/${APP_NAME}"
+APP_SOURCE="https://github.com/${APP_MAINTAINER}/${APP_NAME}"
 LOG_FILE="/var/log/${APP_NAME}/update.log"
 VERSION_FILE="/opt/${APP_NAME}/VERSION"
 
@@ -24,8 +25,8 @@ fi
 # -------------
 # Update system
 # -------------
-apt-get -y update >> "${LOG_FILE}" 2>&1
-apt-get -y --with-new-pkgs upgrade >> "${LOG_FILE}" 2>&1
+echo "`date +%c` `apt-get -q -y update`" >> "${LOG_FILE}" 2>&1
+echo "`date +%c` `apt-get -q -y --with-new-pkgs upgrade`" >> "${LOG_FILE}" 2>&1
 
 # ------------------
 # Update application
@@ -33,10 +34,9 @@ apt-get -y --with-new-pkgs upgrade >> "${LOG_FILE}" 2>&1
 LOCAL_VERSION="`cat ${VERSION_FILE}`"
 #EXT_VERSION="`curl -s https://api.github.com/repos/eelcohn/${APP_NAME}/releases/latest | jq -r \".assets[] | select(.name) | .browser_download_url\"`"
 EXT_VERSION="`curl -s https://raw.githubusercontent.com/eelcohn/${APP_NAME}/main/VERSION`"
-echo "`date +%c` Local version: ${LOCAL_VERSION}   Ext version: ${EXT_VERSION}" >> "${LOG_FILE}" 2>&1
 if [ "${LOCAL_VERSION}" != "${EXT_VERSION}" ]
 then
-	echo "`date +%c` New ${APP_NAME} version found: ${EXT_VERSION}" >> "${LOG_FILE}" 2>&1
+	echo "`date +%c` New ${APP_NAME} version found: ${EXT_VERSION} (Local version: ${LOCAL_VERSION})" >> "${LOG_FILE}" 2>&1
 	rm -rf "/opt/${APP_NAME}.new" >> "${LOG_FILE}" 2>&1
 	git clone ${APP_SOURCE} "/opt/${APP_NAME}.new" >> "${LOG_FILE}" 2>&1
 	sudo chmod +x /opt/${APP_NAME}.new/rpi/*.sh >> "${LOG_FILE}" 2>&1
@@ -57,4 +57,3 @@ fi
 echo "`date +%c` Updaing done" >> "${LOG_FILE}" 2>&1
 
 /usr/sbin/shutdown -r now >> "${LOG_FILE}" 2>&1
-
