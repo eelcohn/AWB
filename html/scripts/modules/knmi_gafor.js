@@ -143,6 +143,7 @@ const UPPERCASES = {
 	'cu/ac': 'CU/AC',
 	'cu/sc': 'CU/SC',
 	'sc/ac': 'SC/AC',
+	'sc/as': 'SC/AS',
 	'sc/ns': 'SC/NS',
 	'sc/cu': 'SC/CU',
 };
