@@ -1,4 +1,5 @@
 /* eslint no-tabs: ["error", { allowIndentationTabs: true }] */
+/* jshint esversion: 6 */ 
 
 const DATE_OPTIONS_UTC = { timeZone: 'UTC', timeZoneName: 'short', hour12: false, hour: '2-digit', minute: '2-digit'};
 const DATE_OPTIONS_LOCAL = { timeZoneName: 'short', hour12: false, hour: '2-digit', minute: '2-digit'};
@@ -144,6 +145,7 @@ const UPPERCASES = {
 	' st ': ' ST ',
 	' tcu ': ' TCU ',
 	'as/sc': 'AS/SC',
+	'as/ac': 'AS/AC',
 	'cu/ac': 'CU/AC',
 	'cu/sc': 'CU/SC',
 	'sc/ac': 'SC/AC',
