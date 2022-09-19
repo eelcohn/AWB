@@ -159,6 +159,7 @@ const UPPERCASES = {
 	'sc/as': 'SC/AS',
 	'sc/ns': 'SC/NS',
 	'sc/cu': 'SC/CU',
+	'tcu/cb': 'TCU/CB',
 };
 
 class Module {
