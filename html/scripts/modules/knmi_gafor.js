@@ -162,6 +162,7 @@ const UPPERCASES = {
 	'sc/as': 'SC/AS',
 	'sc/ns': 'SC/NS',
 	'sc/cu': 'SC/CU',
+	'st/sc': 'ST/SC',
 	'tcu/cb': 'TCU/CB',
 };
 
