@@ -70,6 +70,7 @@ const UPPERCASES = {
 	'atlantische oceaan': 'Atlantische Oceaan',
 	'azoren': 'Azoren',
 	'baltische': 'Baltische',
+	'belgie': 'België',
 	'britse eilanden': 'Britse Eilanden',
 	'britse': 'Britse',
 	'centraal-europa': 'Centraal-Europa',
