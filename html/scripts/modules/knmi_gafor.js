@@ -114,6 +114,7 @@ const UPPERCASES = {
 	'ehhv': 'EHHV',
 	'ehkd': 'EHKD',
 	'ehle': 'EHLE',
+	'ehlw': 'EHLW',
 	'ehmz': 'EHMZ',
 	'ehmm': 'EHMM',
 	'ehnd': 'EHND',
