@@ -47,6 +47,7 @@ const UPPERCASES = {
 	' Fl0': ' FL0',
 	' Fl1': ' FL1',
 	'celcius': 'Celcius',
+	'geisoleerde': 'geïsoleerde',
 	'groningen': 'Groningen',
 	'friesland': 'Friesland',
 	'drenthe': 'Drenthe',
