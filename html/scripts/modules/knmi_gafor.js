@@ -100,6 +100,7 @@ const UPPERCASES = {
 	'waddeneilanden': 'Waddeneilanden',
 	'waddengebied': 'Waddengebied',
 	'waddenzee': 'Waddenzee',
+	'wadden': 'Wadden',
 	'wales': 'Wales',
 	'west-': 'West-',
 	'zuid-': 'Zuid-',
