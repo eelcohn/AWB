@@ -19,7 +19,8 @@ const FREEZING_TEMPERATURE = 0;
 
 class Module {
 	constructor() {
-		this.api_url = 'https://markschulze.net/winds/winds.php?lat=' + document.config.location.lattitude + '&lon=' + document.config.location.longitude + '&hourOffset=' + document.config.windsaloft.hourOffset + '&referrer=' + document.config.windsaloft.referrer;
+//		this.api_url = 'https://markschulze.net/winds/winds.php?lat=' + document.config.location.lattitude + '&lon=' + document.config.location.longitude + '&hourOffset=' + document.config.windsaloft.hourOffset + '&referrer=' + document.config.windsaloft.referrer;
+		this.api_url = 'https://windsaloft.us/winds_gfs_1hr.php?lat=' + document.config.location.lattitude + '&lon=' + document.config.location.longitude + '&hourOffset=' + document.config.windsaloft.hourOffset + '&referrer=' + document.config.windsaloft.referrer;
 		this.cors_proxy_url = 'cors-proxy.php';
 		this.refreshInterval = 10 * 60 * 1000; // Refresh interval is 10 minutes
 		this.last_updated = null;
