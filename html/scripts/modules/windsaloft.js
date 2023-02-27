@@ -95,7 +95,12 @@ class Module {
 						for (var i = 0; i < document.config.upperwinds.length; i++) {
 							document.getElementById(ID_WIND_DIRECTION.replace('????', document.config.upperwinds[i])).innerHTML = this.wind_direction[document.config.upperwinds[i]] + '&nbsp;' + UNIT_DIRECTION;
 							document.getElementById(ID_WIND_SPEED.replace('????', document.config.upperwinds[i])).innerHTML = this.wind_speed[document.config.upperwinds[i]] + '&nbsp;' + UNIT_SPEED;
-							document.getElementById(ID_WIND_TEMPERATURE.replace('????', document.config.upperwinds[i])).innerHTML = this.temperature[document.config.upperwinds[i]] + '&nbsp;' + UNIT_TEMPERATURE;
+							if (this.temperature[document.config.upperwinds[i]] == -272) {
+								/* Do not display invalid temperatures */
+								document.getElementById(ID_WIND_TEMPERATURE.replace('????', document.config.upperwinds[i])).innerHTML = '-&nbsp;' + UNIT_TEMPERATURE;
+							} else {
+								document.getElementById(ID_WIND_TEMPERATURE.replace('????', document.config.upperwinds[i])).innerHTML = this.temperature[document.config.upperwinds[i]] + '&nbsp;' + UNIT_TEMPERATURE;
+							}
 						}
 
 						document.getElementById(ID_FREEZING_ALTITUDE).innerHTML = this.freezing_altitude + '&nbsp;' + UNIT_ALTITUDE;
