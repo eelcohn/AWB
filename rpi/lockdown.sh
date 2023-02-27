@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+APP_NAME="AWB"
 LOG_FILE="/var/log/${APP_NAME}/install.log"
 
 #
