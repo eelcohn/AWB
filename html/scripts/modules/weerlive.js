@@ -205,8 +205,8 @@ class Module {
 					}
 				}
 
-				document.getElementById('sunrise-data').innerHTML = this.sunrise + '&nbsp;CEST'; // TODO make this a Date()
-				document.getElementById('sunset-data').innerHTML = this.sunset + '&nbsp;CEST'; // TODO make this a Date()
+				document.getElementById('sunrise-data').innerHTML = this.sunrise + '&nbsp;CET'; // TODO make this a Date()
+				document.getElementById('sunset-data').innerHTML = this.sunset + '&nbsp;CET'; // TODO make this a Date()
 				document.getElementById(ID_LOCATION).innerHTML = this.location;
 				document.getElementById(ID_ICON).src = this.icon;
 				document.getElementById(ID_TEMPERATURE).innerHTML = Number(this.temperature).toFixed(1) + '&nbsp;' + UNIT_TEMPERATURE;
