@@ -257,7 +257,7 @@ class Module {
 							break;
 					}
 				}
-				document.getElementById(ID_LAST_UPDATED).innerHTML = this.last_updated.toLocaleString(document.config.locale, DATE_OPTIONS_LOCAL );
+				document.getElementById(ID_LAST_UPDATED).innerHTML = this.last_updated.toLocaleString(document.config.locale, DATE_OPTIONS_LOCAL);
 			}
 		}).catch((error) => {
 			console.error(error);
