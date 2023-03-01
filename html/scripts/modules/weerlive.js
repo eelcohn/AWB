@@ -78,13 +78,13 @@ class Module {
 
 		if (document.config.weerlive.key === '0000000000') {
 			createSystemMessage('Weerlive API key not set. Please edit config.json with the correct value.');
+		} else {
+			/* Schedule update of document content */
+			this.task = setInterval(
+				this.updateData.bind(this),
+				this.refreshInterval
+			);
 		}
-
-		/* Schedule update of document content */
-		this.task = setInterval(
-			this.updateData.bind(this),
-			this.refreshInterval
-		);
 
 		/* Initial fill of document content */
 		this.updateData();
