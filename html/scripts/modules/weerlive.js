@@ -1,6 +1,6 @@
 /* eslint no-tabs: ["error", { allowIndentationTabs: true }] */
 
-import { setTrend, setCompass } from '../functions.js';
+import { createSystemMessage, setTrend, setCompass } from '../functions.js';
 
 const DATE_OPTIONS_LOCAL = { timeZoneName: 'short', hour12: false, hour: '2-digit', minute: '2-digit'};
 const ICON_URL = 'https://weerlive.nl/items/img/weericonen/grote_iconen_'
@@ -31,6 +31,7 @@ const UNIT_METERS_PER_SECOND = 'm/s';
 const UNIT_KNOTS = 'kt';
 const UNIT_KILOMETERS = 'km';
 const UNIT_HECTOPASCAL = 'hPa';
+const UNIT_TIMEZONE = 'CET';
 
 const ICONS = {
 	zonnig: 'mdi-weather-sunny',
@@ -74,6 +75,10 @@ class Module {
 		this.humidity = null;
 		this.weather_text = null;
 		this.forecast = null;
+
+		if (document.config.weerlive.key === '0000000000') {
+			createSystemMessage('Weerlive API key not set. Please edit config.json with the correct value.');
+		}
 
 		/* Schedule update of document content */
 		this.task = setInterval(
@@ -205,8 +210,8 @@ class Module {
 					}
 				}
 
-				document.getElementById('sunrise-data').innerHTML = this.sunrise + '&nbsp;CET'; // TODO make this a Date()
-				document.getElementById('sunset-data').innerHTML = this.sunset + '&nbsp;CET'; // TODO make this a Date()
+				document.getElementById('sunrise-data').innerHTML = this.sunrise + '&nbsp;' + UNIT_TIMEZONE; // TODO make this a Date()
+				document.getElementById('sunset-data').innerHTML = this.sunset + '&nbsp;' + UNIT_TIMEZONE; // TODO make this a Date()
 				document.getElementById(ID_LOCATION).innerHTML = this.location;
 				document.getElementById(ID_ICON).src = this.icon;
 				document.getElementById(ID_TEMPERATURE).innerHTML = Number(this.temperature).toFixed(1) + '&nbsp;' + UNIT_TEMPERATURE;
@@ -261,4 +266,3 @@ class Module {
 }
 
 export { Module };
-
