@@ -4,6 +4,8 @@ import { createSystemMessage, setTrend, setCompass } from '../functions.js';
 
 const DATE_OPTIONS_LOCAL = { timeZoneName: 'short', hour12: false, hour: '2-digit', minute: '2-digit'};
 const ICON_URL = 'https://weerlive.nl/items/img/weericonen/grote_iconen_'
+const ID_SUNRISE = 'sunrise-data';
+const ID_SUNSET = 'sunset-data';
 const ID_LOCATION = 'location-data';
 const ID_ICON = 'metrics-icon';
 const ID_TEMPERATURE = 'temperature-data';
@@ -31,7 +33,7 @@ const UNIT_METERS_PER_SECOND = 'm/s';
 const UNIT_KNOTS = 'kt';
 const UNIT_KILOMETERS = 'km';
 const UNIT_HECTOPASCAL = 'hPa';
-const UNIT_TIMEZONE = 'CET';
+const UNIT_TIMEZONE = 'CET'; // TODO get timezone from local JavaScript settings
 
 const ICONS = {
 	zonnig: 'mdi-weather-sunny',
@@ -210,8 +212,8 @@ class Module {
 					}
 				}
 
-				document.getElementById('sunrise-data').innerHTML = this.sunrise + '&nbsp;' + UNIT_TIMEZONE; // TODO make this a Date()
-				document.getElementById('sunset-data').innerHTML = this.sunset + '&nbsp;' + UNIT_TIMEZONE; // TODO make this a Date()
+				document.getElementById(ID_SUNRISE).innerHTML = this.sunrise + '&nbsp;' + UNIT_TIMEZONE; // TODO make this a Date()
+				document.getElementById(ID_SUNSET).innerHTML = this.sunset + '&nbsp;' + UNIT_TIMEZONE; // TODO make this a Date()
 				document.getElementById(ID_LOCATION).innerHTML = this.location;
 				document.getElementById(ID_ICON).src = this.icon;
 				document.getElementById(ID_TEMPERATURE).innerHTML = Number(this.temperature).toFixed(1) + '&nbsp;' + UNIT_TEMPERATURE;
