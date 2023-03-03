@@ -1,6 +1,6 @@
 /* eslint no-tabs: ["error", { allowIndentationTabs: true }] */
 
-import { setTrend } from '../functions.js';
+import { createSystemMessage, removeSystemMessage, setTrend } from '../functions.js';
 
 const ID_WIND_DIRECTION = 'wind????-direction';
 const ID_WIND_SPEED = 'wind????-speed';
@@ -113,7 +113,25 @@ class Module {
 					console.error('WindsAloft: Error parsing JSON data: ' + JSON.stringify(data, null, 4));
 				}
 			} else {
-//				Old data warning?
+				// TODO: Old data warning?
+//				createSystemMessage('Could not update upper winds from www.windsaloft.us');
+//				setTimeout(removeSystemMessage(), 10000);
+				for (var i = 0; i < document.config.upperwinds.length; i++) {
+					if (this.wind_direction[document.config.upperwinds[i]] === undefined) {
+						document.getElementById(ID_WIND_DIRECTION.replace('????', document.config.upperwinds[i])).innerHTML = '-&nbsp;' + UNIT_DIRECTION;
+					}
+					if (this.wind_speed[document.config.upperwinds[i]] === undefined) {
+						document.getElementById(ID_WIND_SPEED.replace('????', document.config.upperwinds[i])).innerHTML = '-&nbsp;' + UNIT_SPEED;
+					}
+					if (this.temperature[document.config.upperwinds[i]] === undefined) {
+						document.getElementById(ID_WIND_TEMPERATURE.replace('????', document.config.upperwinds[i])).innerHTML = '-&nbsp;' + UNIT_TEMPERATURE;
+					}
+				}
+
+				if (this.freezing_altitude === null) {
+					document.getElementById(ID_FREEZING_ALTITUDE).innerHTML = '-&nbsp;' + UNIT_ALTITUDE;
+					setTrend(ID_FREEZING_ALTITUDE_TREND, 0, 0);
+				}
 			}
 		}).catch((error) => {
 			console.error(error);
@@ -122,4 +140,3 @@ class Module {
 }
 
 export { Module };
-
