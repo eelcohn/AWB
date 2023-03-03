@@ -72,7 +72,7 @@ grep -qxF "@xset -dpms" /etc/xdg/lxsession/LXDE-pi/autostart || echo "@xset -dpm
 # Hide mouse-cursor when idle
 grep -qxF "@unclutter -idle 5" /etc/xdg/lxsession/LXDE-pi/autostart || echo "@unclutter -idle 1" >> /etc/xdg/lxsession/LXDE-pi/autostart
 # Autostart browser and load webpage
-grep -qxF "@chromium-browser --noerrdialogs --check-for-update-interval=31536000 --disable-features=TranslateUI --disable-restore-session-state --disable-session-crashed-bubble --disable-infobars --incognito --kiosk ${WEATHER_URL} &" /etc/xdg/lxsession/LXDE-pi/autostart || echo "@chromium-browser --noerrdialogs --disable-infobars --check-for-update-interval=31536000 --incognito --kiosk ${WEATHER_URL} &" >> /etc/xdg/lxsession/LXDE-pi/autostart
+grep -qxF "@chromium-browser --noerrdialogs --check-for-update-interval=31536000 --disable-features=TranslateUI --disable-restore-session-state --disable-session-crashed-bubble --disable-infobars --enable-logging --kiosk ${WEATHER_URL} &" /etc/xdg/lxsession/LXDE-pi/autostart || echo "@chromium-browser --noerrdialogs --disable-infobars --check-for-update-interval=31536000 --incognito --kiosk ${WEATHER_URL} &" >> /etc/xdg/lxsession/LXDE-pi/autostart
 #grep -qxF "@firefox-esr -foreground --kiosk ${WEATHER_URL} &" /etc/xdg/lxsession/LXDE-pi/autostart || echo "@firefox-esr -foreground --kiosk ${WEATHER_URL} &" >> /etc/xdg/lxsession/LXDE-pi/autostart
 #@lxpanel --profile LXDE-pi
 #@pcmanfm --desktop --profile LXDE-pi
