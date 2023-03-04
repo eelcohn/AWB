@@ -7,6 +7,19 @@ const UNIT_CELCIUS = '°C';
 const UNIT_DIRECTION = '°';
 const UNIT_FEET = 'ft';
 const UNIT_HECTOPASCAL = 'hPa';
-const UNIT_METERS_PER_SECOND = 'm/s';
 const UNIT_KILOMETERS = 'km';
+const UNIT_METERS_PER_SECOND = 'm/s';
 const UNIT_KNOTS = 'kt';
+
+export {
+        APPNAME,
+        DATE_OPTIONS_UTC,
+        DATE_OPTIONS_LOCAL,
+        UNIT_CELCIUS,
+        UNIT_DIRECTION,
+        UNIT_FEET,
+        UNIT_HECTOPASCAL,
+        UNIT_KILIMETERS,
+        UNIT_METERS_PER_SECOND,
+        UNIT_KNOTS,
+};
