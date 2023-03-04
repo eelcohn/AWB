@@ -1,6 +1,7 @@
 /* eslint no-tabs: ["error", { allowIndentationTabs: true }] */
 
 import { loadConfig } from './config.js';
+import { UNIT_FEET } from "./const.js";
 import { createSystemMessage, removeSystemMessage } from './functions.js';
 import { Module as KNMI } from './modules/knmi.js';
 import { Module as KNMIGafor } from './modules/knmi_gafor.js';
@@ -13,7 +14,6 @@ import { Module as WeerLive } from './modules/weerlive.js';
 import { Module as WeerSlag } from './modules/weerslag.js';
 import { Module as WindsAloft } from './modules/windsaloft.js';
 
-const APPNAME = 'Skydive Weather Dashboard v0.0.2';
 const ID_DATETIME = 'datetime-data';
 const ID_IMG_LAYER_MAP = 'img-layer-map-id';
 const ID_IMG_LAYER_CLOUD = 'img-layer-cloud-id';
@@ -23,7 +23,6 @@ const ID_UPPERWINDS_TABLE = 'uppper-winds-content-data';
 const ID_WEATHER_ALERT = 'weather-alert';
 const ID_COMPASS = 'compass';
 const ID_METAR = 'metar';
-const UNIT_ALTITUDE = 'ft';
 
 class ShowCurrentDateTime {
 	constructor(id) {
@@ -125,7 +124,7 @@ loadConfig().then(response => {
 	if (document.config.upperwinds) {
 		for (var i = 0; i < document.config.upperwinds.length; i++) {
 			document.getElementById(ID_UPPERWINDS_TABLE).innerHTML += `<tr>
-<td><span class="windtext" id="wind` + document.config.upperwinds[i] + `-label">` + document.config.upperwinds[i] + `&nbsp;` + UNIT_ALTITUDE + `</span></td>
+<td><span class="windtext" id="wind` + document.config.upperwinds[i] + `-label">` + document.config.upperwinds[i] + `&nbsp;` + UNIT_FEET + `</span></td>
 <td><span class="winddirection" id="wind` + document.config.upperwinds[i] + `-direction"></span></td>
 <td><span class="windspeed" id="wind` + document.config.upperwinds[i] + `-speed"></span></td>
 <td><span class="windtemperature" id="wind` + document.config.upperwinds[i] + `-temperature"></span></td>
