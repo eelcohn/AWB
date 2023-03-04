@@ -275,7 +275,7 @@ class Module {
 	gafor_decompose(component) {
 		var i, start, data, sentences, key, result = null;
 
-		start = this.gafor.indexOf(component);
+		start = this.gafor.indexOf('.\n' + component);
 		if (start !== -1) {
 			/* The 'GELDIG' component doesn't have a ':', so set the start variable to a fixed value of 7 */
 			if (component === 'GELDIG') {
