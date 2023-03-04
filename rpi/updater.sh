@@ -17,6 +17,11 @@ then
 	exit
 fi
 
+# ---------------------------
+# Remount /boot as read/write
+# ---------------------------
+mount -o remount,rw /boot
+
 # ------------------------------------------------
 # Create log directory if it doesn't exist already
 # ------------------------------------------------
