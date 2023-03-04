@@ -19,7 +19,7 @@ export {
         UNIT_DIRECTION,
         UNIT_FEET,
         UNIT_HECTOPASCAL,
-        UNIT_KILIMETERS,
+        UNIT_KILOMETERS,
         UNIT_METERS_PER_SECOND,
         UNIT_KNOTS,
 };
