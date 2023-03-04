@@ -1,5 +1,6 @@
 /* eslint no-tabs: ["error", { allowIndentationTabs: true }] */
 
+import { UNIT_CELCIUS, UNIT_METERS_PER_SECOND, UNIT_KNOTS, UNIT_KILOMETERS, UNIT_HECTOPASCAL } from "../const.js";
 import { createSystemMessage, setTrend, setCompass } from '../functions.js';
 
 const DATE_OPTIONS_LOCAL = { timeZoneName: 'short', hour12: false, hour: '2-digit', minute: '2-digit'};
@@ -28,11 +29,6 @@ const ID_COMPASS_ARROW = 'compass-arrow-id';
 const CLASS_WEATHER_ALERT1 = 'weather-alert1';
 const CLASS_WEATHER_ALERT2 = 'weather-alert2';
 const CLASS_WEATHER_ALERT3 = 'weather-alert3';
-const UNIT_TEMPERATURE = '°C';
-const UNIT_METERS_PER_SECOND = 'm/s';
-const UNIT_KNOTS = 'kt';
-const UNIT_KILOMETERS = 'km';
-const UNIT_HECTOPASCAL = 'hPa';
 const UNIT_TIMEZONE = 'CET'; // TODO get timezone from local JavaScript settings
 
 const ICONS = {
@@ -216,8 +212,8 @@ class Module {
 				document.getElementById(ID_SUNSET).innerHTML = this.sunset + '&nbsp;' + UNIT_TIMEZONE; // TODO make this a Date()
 				document.getElementById(ID_LOCATION).innerHTML = this.location;
 				document.getElementById(ID_ICON).src = this.icon;
-				document.getElementById(ID_TEMPERATURE).innerHTML = Number(this.temperature).toFixed(1) + '&nbsp;' + UNIT_TEMPERATURE;
-				document.getElementById(ID_TEMPERATURE_FEEL).innerHTML = Number(this.temperature_feel).toFixed(1) + '&nbsp;' + UNIT_TEMPERATURE;
+				document.getElementById(ID_TEMPERATURE).innerHTML = Number(this.temperature).toFixed(1) + '&nbsp;' + UNIT_CELCIUS;
+				document.getElementById(ID_TEMPERATURE_FEEL).innerHTML = Number(this.temperature_feel).toFixed(1) + '&nbsp;' + UNIT_CELCIUS;
 				document.getElementById(ID_WEATHER_WIND).innerHTML = this.wind_direction;
 				document.getElementById(ID_WEATHER_WIND_MS).innerHTML = this.wind_speed_ms + '&nbsp;' + UNIT_METERS_PER_SECOND;
 //				document.getElementById(ID_WEATHER_WIND_KT).innerHTML = this.wind_speed_kt + '&nbsp;' + UNIT_KNOTS;
