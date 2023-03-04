@@ -12,10 +12,6 @@ const ID_LAST_UPDATED = 'winds-last-updated';
 const ID_VALID_FROM = 'winds-valid-from';
 const ICON_TREND_DOWN = 'mdi-arrow-bottom-right';
 const ICON_TREND_UP = 'mdi-arrow-top-right';
-const UNIT_DIRECTION = UNIT_DIRECTION;
-const UNIT_SPEED = UNIT_KNOTS;
-const UNIT_TEMPERATURE = UNIT_CELCIUS;
-const UNIT_ALTITUDE = UNIT_FEET;
 const FREEZING_TEMPERATURE = 0;
 
 class Module {
@@ -95,16 +91,16 @@ class Module {
 						/* Update document */
 						for (var i = 0; i < document.config.upperwinds.length; i++) {
 							document.getElementById(ID_WIND_DIRECTION.replace('????', document.config.upperwinds[i])).innerHTML = this.wind_direction[document.config.upperwinds[i]] + '&nbsp;' + UNIT_DIRECTION;
-							document.getElementById(ID_WIND_SPEED.replace('????', document.config.upperwinds[i])).innerHTML = this.wind_speed[document.config.upperwinds[i]] + '&nbsp;' + UNIT_SPEED;
+							document.getElementById(ID_WIND_SPEED.replace('????', document.config.upperwinds[i])).innerHTML = this.wind_speed[document.config.upperwinds[i]] + '&nbsp;' + UNIT_KNOTS;
 							if (this.temperature[document.config.upperwinds[i]] == -272) {
 								/* Do not display invalid temperatures */
-								document.getElementById(ID_WIND_TEMPERATURE.replace('????', document.config.upperwinds[i])).innerHTML = '-&nbsp;' + UNIT_TEMPERATURE;
+								document.getElementById(ID_WIND_TEMPERATURE.replace('????', document.config.upperwinds[i])).innerHTML = '-&nbsp;' + UNIT_CELCIUS;
 							} else {
-								document.getElementById(ID_WIND_TEMPERATURE.replace('????', document.config.upperwinds[i])).innerHTML = this.temperature[document.config.upperwinds[i]] + '&nbsp;' + UNIT_TEMPERATURE;
+								document.getElementById(ID_WIND_TEMPERATURE.replace('????', document.config.upperwinds[i])).innerHTML = this.temperature[document.config.upperwinds[i]] + '&nbsp;' + UNIT_CELCIUS;
 							}
 						}
 
-						document.getElementById(ID_FREEZING_ALTITUDE).innerHTML = this.freezing_altitude + '&nbsp;' + UNIT_ALTITUDE;
+						document.getElementById(ID_FREEZING_ALTITUDE).innerHTML = this.freezing_altitude + '&nbsp;' + UNIT_FEET;
 						setTrend(ID_FREEZING_ALTITUDE_TREND, this.freezing_altitude, freezing_altitude_previous);
 
 						document.getElementById(ID_VALID_FROM).innerHTML = this.valid_from.toLocaleString(document.config.locale, { timeZoneName: 'short', hour12: false, hour: '2-digit', minute: '2-digit'} );
@@ -122,10 +118,10 @@ class Module {
 						document.getElementById(ID_WIND_DIRECTION.replace('????', document.config.upperwinds[i])).innerHTML = '-&nbsp;' + UNIT_DIRECTION;
 					}
 					if (this.wind_speed[document.config.upperwinds[i]] === undefined) {
-						document.getElementById(ID_WIND_SPEED.replace('????', document.config.upperwinds[i])).innerHTML = '-&nbsp;' + UNIT_SPEED;
+						document.getElementById(ID_WIND_SPEED.replace('????', document.config.upperwinds[i])).innerHTML = '-&nbsp;' + UNIT_KNOTS;
 					}
 					if (this.temperature[document.config.upperwinds[i]] === undefined) {
-						document.getElementById(ID_WIND_TEMPERATURE.replace('????', document.config.upperwinds[i])).innerHTML = '-&nbsp;' + UNIT_TEMPERATURE;
+						document.getElementById(ID_WIND_TEMPERATURE.replace('????', document.config.upperwinds[i])).innerHTML = '-&nbsp;' + UNIT_CELCIUS;
 					}
 				}
 
