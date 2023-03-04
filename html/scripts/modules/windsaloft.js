@@ -1,5 +1,6 @@
 /* eslint no-tabs: ["error", { allowIndentationTabs: true }] */
 
+import { UNIT_DIRECTION, UNIT_KNOTS, UNIT_CELCIUS, UNIT_FEET } from '../const.js';
 import { createSystemMessage, removeSystemMessage, setTrend } from '../functions.js';
 
 const ID_WIND_DIRECTION = 'wind????-direction';
@@ -11,10 +12,10 @@ const ID_LAST_UPDATED = 'winds-last-updated';
 const ID_VALID_FROM = 'winds-valid-from';
 const ICON_TREND_DOWN = 'mdi-arrow-bottom-right';
 const ICON_TREND_UP = 'mdi-arrow-top-right';
-const UNIT_DIRECTION = '°';
-const UNIT_SPEED = 'kt';
-const UNIT_TEMPERATURE = '°C';
-const UNIT_ALTITUDE = 'ft';
+const UNIT_DIRECTION = UNIT_DIRECTION;
+const UNIT_SPEED = UNIT_KNOTS;
+const UNIT_TEMPERATURE = UNIT_CELCIUS;
+const UNIT_ALTITUDE = UNIT_FEET;
 const FREEZING_TEMPERATURE = 0;
 
 class Module {
