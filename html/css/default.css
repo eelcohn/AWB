@@ -1,10 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+html {
+	scrollbar-width: none; /* Firefox */
+	-ms-overflow-style: none;  /* IE 10+ */
+}
+html::-webkit-scrollbar {
+	background: transparent; /* Chrome/Safari/Webkit */
+	width: 0px;
+}
 body {
 	background-color: var(--background-color);
 	color: var(--textcolor);
 	font-family: 'Roboto', 'Open Sans', sans-serif;
 	height: 100%;
-	overflow: hidden;
 }
 header {
 	display: flex;
@@ -144,12 +152,21 @@ header,
 .upper-winds-content td {
 	width: 25%;
 }
-.metadata {
+.metadata-source {
 	font-size: var(--metadata-fontsize);
 	color: var(--metadata-textcolor);
 	position: absolute;
 	bottom: 5px;
-	right: 5px;
+	left: 10px;
+	display: flex;
+}
+.metadata-last-updated {
+	font-size: var(--metadata-fontsize);
+	color: var(--metadata-textcolor);
+	position: absolute;
+	bottom: 5px;
+	right: 10px;
+	display: flex;
 }
 .images {
 	width: 50%;
@@ -222,4 +239,3 @@ header,
 /*	transform: translateY(0);*/
 	opacity: 1;
 }
-
