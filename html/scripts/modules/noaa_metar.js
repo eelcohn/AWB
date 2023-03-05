@@ -1,9 +1,10 @@
 /* eslint no-tabs: ["error", { allowIndentationTabs: true }] */
 
+import { DATE_OPTIONS_LOCAL } from '../const.js';
+
 const ID_METAR_CONTENT = 'metar-content';
 const ID_METAR_VALID_FROM = 'metar-valid-from';
 const ID_METAR_LAST_UPDATED = 'metar-last-updated';
-const DATE_OPTIONS_LOCAL = { timeZoneName: 'short', hour12: false, hour: '2-digit', minute: '2-digit'};
 
 class Module {
 	constructor(station) {

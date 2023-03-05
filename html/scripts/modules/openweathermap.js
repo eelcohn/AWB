@@ -1,8 +1,8 @@
 /* eslint no-tabs: ["error", { allowIndentationTabs: true }] */
 
+import { DATE_OPTIONS_LOCAL, UNIT_KNOTS, UNIT_CELCIUS, UNIT_FEET, UNIT_HECTOPASCAL, UNIT_KILOMETERS, UNIT_METERS_PER_SECOND } from '../const.js';
 import { setTrend, setCompass, windDegreesToDirection } from '../functions.js';
 
-const DATE_OPTIONS_LOCAL = { timeZoneName: 'short', hour12: false, hour: '2-digit', minute: '2-digit'};
 const ID_LAST_UPDATED = 'metrics-last-updated';
 const ID_SUNRISE = 'sunrise-data';
 const ID_SUNSET = 'sunset-data';
@@ -21,11 +21,6 @@ const ID_WEATHER_PRESSURE = 'pressure-data';
 const ID_WEATHER_TEXT_SHORT = 'metrics-data';
 const ID_WEATHER_FORECAST_SHORT = 'metrics-forecast-data';
 const ID_COMPASS_ARROW = 'compass-arrow-id';
-const UNIT_TEMPERATURE = '°C';
-const UNIT_METERS_PER_SECOND = 'm/s';
-const UNIT_KNOTS = 'kt';
-const UNIT_KILOMETERS = 'km';
-const UNIT_HECTOPASCAL = 'hPa';
 
 class Module {
 	constructor() {
@@ -152,8 +147,8 @@ class Module {
 				document.getElementById(ID_SUNSET).innerHTML = this.sunset.toLocaleString(document.config.locale, DATE_OPTIONS_LOCAL);
 				document.getElementById(ID_LOCATION).innerHTML = this.location;
 				document.getElementById(ID_ICON).src = 'https://openweathermap.org/img/wn/' + this.icon + '@2x.png';;
-				document.getElementById(ID_TEMPERATURE).innerHTML = Number(this.temperature).toFixed(1) + '&nbsp;' + UNIT_TEMPERATURE;
-				document.getElementById(ID_TEMPERATURE_FEEL).innerHTML = Number(this.temperature_feel).toFixed(1) + '&nbsp;' + UNIT_TEMPERATURE;
+				document.getElementById(ID_TEMPERATURE).innerHTML = Number(this.temperature).toFixed(1) + '&nbsp;' + UNIT_CELCIUS;
+				document.getElementById(ID_TEMPERATURE_FEEL).innerHTML = Number(this.temperature_feel).toFixed(1) + '&nbsp;' + UNIT_CELCIUS;
 				document.getElementById(ID_WEATHER_WIND).innerHTML = this.wind_direction;
 				document.getElementById(ID_WEATHER_WIND_MS).innerHTML = this.wind_speed + '&nbsp;' + UNIT_METERS_PER_SECOND;
 				document.getElementById(ID_WEATHER_VISIBILITY).innerHTML = this.visibility + '&nbsp;' + UNIT_KILOMETERS;

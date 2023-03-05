@@ -1,8 +1,11 @@
 /* eslint no-tabs: ["error", { allowIndentationTabs: true }] */
 
-import { UNIT_DIRECTION, UNIT_KNOTS, UNIT_CELCIUS, UNIT_FEET } from '../const.js';
+import { DATE_OPTIONS_LOCAL, UNIT_DIRECTION, UNIT_KNOTS, UNIT_CELCIUS, UNIT_FEET } from '../const.js';
 import { createSystemMessage, removeSystemMessage, setTrend } from '../functions.js';
+import { LANGUAGE_SOURCE, LANGUAGE_LAST_UPDATED } from '../language.js';
 
+const ID_WINDS_SOURCE_LABEL = 'winds-source-label';
+const ID_WINDS_LAST_UPDATED_LABEL = 'winds-last-updated-label';
 const ID_WIND_DIRECTION = 'wind????-direction';
 const ID_WIND_SPEED = 'wind????-speed';
 const ID_WIND_TEMPERATURE = 'wind????-temperature';
@@ -28,6 +31,10 @@ class Module {
 		this.freezing_altitude = null;
 		this.qfe = null;
 		this.qnh = null;
+
+		/* Set language specific stuff */
+		document.getElementById(ID_WINDS_SOURCE_LABEL).innerHTML = LANGUAGE_SOURCE;
+		document.getElementById(ID_WINDS_LAST_UPDATED_LABEL).innerHTML = LANGUAGE_LAST_UPDATED;
 
 		/* Schedule update of document content */
 		this.task = setInterval(
@@ -103,8 +110,8 @@ class Module {
 						document.getElementById(ID_FREEZING_ALTITUDE).innerHTML = this.freezing_altitude + '&nbsp;' + UNIT_FEET;
 						setTrend(ID_FREEZING_ALTITUDE_TREND, this.freezing_altitude, freezing_altitude_previous);
 
-						document.getElementById(ID_VALID_FROM).innerHTML = this.valid_from.toLocaleString(document.config.locale, { timeZoneName: 'short', hour12: false, hour: '2-digit', minute: '2-digit'} );
-						document.getElementById(ID_LAST_UPDATED).innerHTML = this.last_updated.toLocaleString(document.config.locale, { timeZoneName: 'short', hour12: false, hour: '2-digit', minute: '2-digit'} );
+						document.getElementById(ID_VALID_FROM).innerHTML = this.valid_from.toLocaleString(document.config.locale, DATE_OPTIONS_LOCAL );
+						document.getElementById(ID_LAST_UPDATED).innerHTML = this.last_updated.toLocaleString(document.config.locale, DATE_OPTIONS_LOCAL );
 					}
 				} catch (error) {
 					console.error('WindsAloft: Error parsing JSON data: ' + JSON.stringify(data, null, 4));

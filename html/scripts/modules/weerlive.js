@@ -1,10 +1,12 @@
 /* eslint no-tabs: ["error", { allowIndentationTabs: true }] */
 
-import { UNIT_CELCIUS, UNIT_METERS_PER_SECOND, UNIT_KNOTS, UNIT_KILOMETERS, UNIT_HECTOPASCAL } from "../const.js";
+import { DATE_OPTIONS_LOCAL, UNIT_CELCIUS, UNIT_METERS_PER_SECOND, UNIT_KNOTS, UNIT_KILOMETERS, UNIT_HECTOPASCAL } from "../const.js";
 import { createSystemMessage, setTrend, setCompass } from '../functions.js';
+import { LANGUAGE_SOURCE, LANGUAGE_LAST_UPDATED } from '../language.js';
 
-const DATE_OPTIONS_LOCAL = { timeZoneName: 'short', hour12: false, hour: '2-digit', minute: '2-digit'};
 const ICON_URL = 'https://weerlive.nl/items/img/weericonen/grote_iconen_'
+const ID_METRICS_SOURCE_LABEL = 'metrics-source-label';
+const ID_METRICS_LAST_UPDATED_LABEL = 'metrics-last-updated-label';
 const ID_SUNRISE = 'sunrise-data';
 const ID_SUNSET = 'sunset-data';
 const ID_LOCATION = 'location-data';
@@ -29,7 +31,7 @@ const ID_COMPASS_ARROW = 'compass-arrow-id';
 const CLASS_WEATHER_ALERT1 = 'weather-alert1';
 const CLASS_WEATHER_ALERT2 = 'weather-alert2';
 const CLASS_WEATHER_ALERT3 = 'weather-alert3';
-const UNIT_TIMEZONE = 'CET'; // TODO get timezone from local JavaScript settings
+//const UNIT_TIMEZONE = 'CET'; // TODO get timezone from local JavaScript settings
 
 const ICONS = {
 	zonnig: 'mdi-weather-sunny',
@@ -73,6 +75,13 @@ class Module {
 		this.humidity = null;
 		this.weather_text = null;
 		this.forecast = null;
+
+		var tempdate = new Date();
+		this.UNIT_TIMEZONE = tempdate.toLocaleString(document.config.locale, DATE_OPTIONS_LOCAL).split(' ')[1];
+
+		/* Set language specific stuff */
+		document.getElementById(ID_METRICS_SOURCE_LABEL).innerHTML = LANGUAGE_SOURCE;
+		document.getElementById(ID_METRICS_LAST_UPDATED_LABEL).innerHTML = LANGUAGE_LAST_UPDATED;
 
 		if (document.config.weerlive.key === '0000000000') {
 			createSystemMessage('Weerlive API key not set. Please edit config.json with the correct value.');
@@ -208,8 +217,8 @@ class Module {
 					}
 				}
 
-				document.getElementById(ID_SUNRISE).innerHTML = this.sunrise + '&nbsp;' + UNIT_TIMEZONE; // TODO make this a Date()
-				document.getElementById(ID_SUNSET).innerHTML = this.sunset + '&nbsp;' + UNIT_TIMEZONE; // TODO make this a Date()
+				document.getElementById(ID_SUNRISE).innerHTML = this.sunrise + '&nbsp;' + this.UNIT_TIMEZONE; // TODO make this a Date()
+				document.getElementById(ID_SUNSET).innerHTML = this.sunset + '&nbsp;' + this.UNIT_TIMEZONE; // TODO make this a Date()
 				document.getElementById(ID_LOCATION).innerHTML = this.location;
 				document.getElementById(ID_ICON).src = this.icon;
 				document.getElementById(ID_TEMPERATURE).innerHTML = Number(this.temperature).toFixed(1) + '&nbsp;' + UNIT_CELCIUS;

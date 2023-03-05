@@ -1,8 +1,11 @@
 /* eslint no-tabs: ["error", { allowIndentationTabs: true }] */
 /* jshint esversion: 6 */ 
 
-const DATE_OPTIONS_UTC = { timeZone: 'UTC', timeZoneName: 'short', hour12: false, hour: '2-digit', minute: '2-digit'};
-const DATE_OPTIONS_LOCAL = { timeZoneName: 'short', hour12: false, hour: '2-digit', minute: '2-digit'};
+import { DATE_OPTIONS_UTC, DATE_OPTIONS_LOCAL, UNIT_CELCIUS, UNIT_FEET } from '../const.js';
+import { LANGUAGE_SOURCE, LANGUAGE_LAST_UPDATED } from '../language.js';
+
+const ID_GAFOR_SOURCE_LABEL = 'gafor-source-label';
+const ID_GAFOR_LAST_UPDATED_LABEL = 'gafor-last-updated-label';
 const ID_GAFOR_CONTENT = 'gafor-content';
 const ID_GAFOR_SITUATION = 'gafor-situation-data';
 const ID_GAFOR_SIGNIFICANT_WEATHER = 'gafor-significant-weather-data';
@@ -74,6 +77,7 @@ const UPPERCASES = {
 	'azoren': 'Azoren',
 	'baltische': 'Baltische',
 	'belgie': 'België',
+	'bretagne': 'Bretagne',
 	'britse eilanden': 'Britse Eilanden',
 	'britse': 'Britse',
 	'centraal-europa': 'Centraal-Europa',
@@ -199,6 +203,10 @@ class Module {
 		this.gafor_items = {};
 		this.valid_from = null;
 		this.last_updated = null;
+
+		/* Set language specific stuff */
+		document.getElementById(ID_GAFOR_SOURCE_LABEL).innerHTML = LANGUAGE_SOURCE;
+		document.getElementById(ID_GAFOR_LAST_UPDATED_LABEL).innerHTML = LANGUAGE_LAST_UPDATED;
 
 		/* Schedule update of document content */
 		this.task = setInterval(
