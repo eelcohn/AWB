@@ -127,11 +127,13 @@ chown root:crontab /var/spool/cron/crontabs/root >> "${LOG_FILE}" 2>&1
 chmod 600 /var/spool/cron/crontabs/root >> "${LOG_FILE}" 2>&1
 systemctl force-reload cron >> "${LOG_FILE}" 2>&1
 
-# ------------------------------------------------------------------------------
-# Alter overscan settings so the full-screen desktop is available on normal TV's
-# ------------------------------------------------------------------------------
-echo "`date +%c` Altering overscan settings" >> "${LOG_FILE}" 2>&1
-/opt/${APP_NAME}/rpi/fixoverscan.sh >> "${LOG_FILE}" 2>&1
+# ----------------------
+# Alter video resolution
+# ----------------------
+sed -i 's/#framebuffer_width=1280/framebuffer_width=1920/' '/boot/config.txt'
+sed -i 's/#framebuffer_height=720/framebuffer_height=1080/' '/boot/config.txt'
+sed -i 's/#hdmi_group=1/hdmi_group=1/' '/boot/config.txt'
+sed -i 's/#hdmi_mode=1/hdmi_mode=16/' '/boot/config.txt'
 
 # -------------------------------------------------------
 # Remove unused packages and services to improve security
