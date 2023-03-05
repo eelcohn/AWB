@@ -1,8 +1,9 @@
 /* eslint no-tabs: ["error", { allowIndentationTabs: true }] */
 
 import { loadConfig } from './config.js';
-import { UNIT_FEET } from "./const.js";
+import { UNIT_CELCIUS, UNIT_DIRECTION, UNIT_FEET, UNIT_KNOTS } from './const.js';
 import { createSystemMessage, removeSystemMessage } from './functions.js';
+import { LANGUAGE_INTERNET_DOWN, LANGUAGE_INTERNET_RESTORED } from './language.js';
 import { Module as KNMI } from './modules/knmi.js';
 import { Module as KNMIGafor } from './modules/knmi_gafor.js';
 import { Module as NOAAMETAR } from './modules/noaa_metar.js';
@@ -66,13 +67,13 @@ class OnlineStatus {
 		if (window.navigator.onLine === false) {
 			this.count++;
 			if (this.count === 3) {
-				createSystemMessage('Internet connection is down');
-				console.warn('Internet connection is down');
+				createSystemMessage(LANGUAGE_INTERNET_DOWN);
+				console.warn(LANGUAGE_INTERNET_DOWN);
 			}
 		} else {
 			if (this.count !== 0) {
 				removeSystemMessage();
-				console.info('Internet connection is restored');
+				console.info(LANGUAGE_INTERNET_RESTORED);
 				this.count = 0;
 			}
 		}
@@ -125,9 +126,9 @@ loadConfig().then(response => {
 		for (var i = 0; i < document.config.upperwinds.length; i++) {
 			document.getElementById(ID_UPPERWINDS_TABLE).innerHTML += `<tr>
 <td><span class="windtext" id="wind` + document.config.upperwinds[i] + `-label">` + document.config.upperwinds[i] + `&nbsp;` + UNIT_FEET + `</span></td>
-<td><span class="winddirection" id="wind` + document.config.upperwinds[i] + `-direction"></span></td>
-<td><span class="windspeed" id="wind` + document.config.upperwinds[i] + `-speed"></span></td>
-<td><span class="windtemperature" id="wind` + document.config.upperwinds[i] + `-temperature"></span></td>
+<td><span class="winddirection" id="wind` + document.config.upperwinds[i] + `-direction">&nbsp;` + UNIT_DIRECTION + `</span></td>
+<td><span class="windspeed" id="wind` + document.config.upperwinds[i] + `-speed">&nbsp;` + UNIT_KNOTS + `</span></td>
+<td><span class="windtemperature" id="wind` + document.config.upperwinds[i] + `-temperature">&nbsp;` + UNIT_CELCIUS + `</span></td>
 </tr>`;
 		}
 	}
