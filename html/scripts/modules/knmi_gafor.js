@@ -293,6 +293,13 @@ class Module {
 				start = this.gafor.indexOf(': ', start) + 2;
 			}
 			data = this.gafor.slice(start, this.gafor.indexOf('\n.\n', start)).toLowerCase().replaceAll('\n', ' ');
+
+			/* Make some METAR- and language-specific uppercase changes */
+			for (key in UPPERCASES) {
+				data = data.replaceAll(key, UPPERCASES[key]);
+			}
+
+			/* Start each sentence with an uppercase letter */
 			sentences = data.split(". ");
 			for (i = 0; i < sentences.length; i++) {
 				/* Always make first letter uppercase for the component */
@@ -305,15 +312,9 @@ class Module {
 
 			/* Combine the seperated sentences to one string again */
 			result = sentences.join('. ');
-
-			/* Make some METAR- and language-specific uppercase changes */
-			for (key in UPPERCASES) {
-				result = result.replaceAll(key, UPPERCASES[key]);
-			}
 		}
 		return result;
 	}
 }
 
 export { Module };
-
