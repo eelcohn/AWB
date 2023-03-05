@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en">
 	<head>
-		<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--
-		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 -->
-		<link rel="manifest" href="/site.webmanifest" />
-		<link rel="preconnect" href="https://www.huininga.nl" />
-		<link rel="stylesheet" type="text/css" title="default" href="css/blue-blue.css" />
-		<link rel="stylesheet" type="text/css" title="default" href="css/default.css" />
+		<link rel="manifest" href="/site.webmanifest">
+		<link rel="preconnect" href="https://www.huininga.nl">
+		<link rel="stylesheet" type="text/css" title="default" href="css/blue-blue.css">
+		<link rel="stylesheet" type="text/css" title="default" href="css/default.css">
 		<title>Aviation Weather Board</title>
 	</head>
 	<body>
@@ -31,7 +31,7 @@
 				<div class="text">
 					<div class="weather">
 						<div class="metrics-header">
-							<img id="metrics-icon" alt="" src="#" />
+							<img id="metrics-icon" alt="" src="#">
 							<div class="metrics-location" id="location-data"></div>
 							<div class="metrics-text" id="metrics-data"></div>
 							<div class="metrics-temperature">
@@ -68,14 +68,16 @@
 								</tbody>
 							</table>
 						</div>
-						<div class="metadata">
-							<span id="metrics-source-label">Source:&nbsp;</span><span id="metrics-source-data">weerlive.nl</span>
-							<span id="metrics-last-updated-label">Last updated:&nbsp;</span><span id="metrics-last-updated"></span>
+						<div class="metadata-source">
+							<div id="metrics-source-label"></div>&nbsp;<div id="metrics-source-data">weerlive.nl</div>
+						</div>
+						<div class="metadata-last-updated">
+							<div id="metrics-last-updated-label"></div>&nbsp;<div id="metrics-last-updated"></div>
 						</div>
 					</div>
 					<div class="compass" id="compass">
-						<img class="compass-rose" alt="" src="images/compass-rose.svg" id="compass-rose-id"/>
-						<img class="compass-arrow" alt="" src="images/compass-arrow.svg" id="compass-arrow-id"/>
+						<img class="compass-rose" alt="" src="images/compass-rose.svg" id="compass-rose-id">
+						<img class="compass-arrow" alt="" src="images/compass-arrow.svg" id="compass-arrow-id">
 					</div>
 
 					<div class="upper-winds" id="upper-winds">
@@ -96,9 +98,11 @@
 								</tbody>
 							</table>
 						</div>
-						<div class="metadata">
-							<span id="winds-source-label">Source:&nbsp;</span><span id="winds-source-data">Windsaloft</span>
-							<span id="winds-last-updated-label">Last updated:&nbsp;</span><span id="winds-last-updated"></span>
+						<div class="metadata-source">
+							<div id="winds-source-label"></div>&nbsp;<div id="winds-source-data">Windsaloft</div>
+						</div>
+						<div class="metadata-last-updated">
+							<div id="winds-last-updated-label"></div>&nbsp;<div id="winds-last-updated"></div>
 						</div>
 					</div>
 					<div class="metar" id="metar">
@@ -107,9 +111,11 @@
 						</div>
 						<div class="metar-content" id="metar-content">
 						</div>
-						<div class="metadata">
-							<span id="metar-source-label">Source:&nbsp;</span><span id="metar-source-data">NOAA</span>
-							<span id="metar-last-updated-label">Last updated:&nbsp;</span><span id="metar-last-updated"></span>
+						<div class="metadata-source">
+							<div id="metar-source-label"></div>&nbsp;<div id="metar-source-data">NOAA</div>
+						</div>
+						<div class="metadata-last-updated">
+							<div id="metar-last-updated-label"></div>&nbsp;<div id="metar-last-updated"></div>
 						</div>
 					</div>
 					<div class="gafor" id="gafor">
@@ -118,17 +124,19 @@
 						</div>
 						<div class="gafor-content" id="gafor-content">
 						</div>
-						<div class="metadata">
-							<span id="gafor-source-label">Source:&nbsp;</span><span id="gafor-source-data">KNMI</span>
-							<span id="gafor-last-updated-label">Last updated:&nbsp;</span><span id="gafor-last-updated"></span>
+						<div class="metadata-source">
+							<div id="gafor-source-label"></div>&nbsp;<div id="gafor-source-data">KNMI</div>
+						</div>
+						<div class="metadata-last-updated">
+							<div id="gafor-last-updated-label"></div>&nbsp;<div id="gafor-last-updated"></div>
 						</div>
 					</div>
 				</div>
 				<div class="images">
-					<img class="layer-map" alt="" src="#" id="img-layer-map-id"/>
+					<img class="layer-map" alt="" src="#" id="img-layer-map-id">
 <!--
-					<img class="layer-cloud" alt="" src="#" id="img-layer-cloud-id"/>
-					<img class="layer-rain" alt="" src="#" id="img-layer-rain-id"/>
+					<img class="layer-cloud" alt="" src="#" id="img-layer-cloud-id">
+					<img class="layer-rain" alt="" src="#" id="img-layer-rain-id">
 -->
 				</div>
 				<div class="widgets">
