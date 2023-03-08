@@ -221,6 +221,7 @@ class Module {
 				document.getElementById(ID_SUNSET).innerHTML = this.sunset + '&nbsp;' + this.UNIT_TIMEZONE; // TODO make this a Date()
 				document.getElementById(ID_LOCATION).innerHTML = this.location;
 				document.getElementById(ID_ICON).src = this.icon;
+				document.getElementById(ID_ICON).alt = this.weather;
 				document.getElementById(ID_TEMPERATURE).innerHTML = Number(this.temperature).toFixed(1) + '&nbsp;' + UNIT_CELCIUS;
 				document.getElementById(ID_TEMPERATURE_FEEL).innerHTML = Number(this.temperature_feel).toFixed(1) + '&nbsp;' + UNIT_CELCIUS;
 				document.getElementById(ID_WEATHER_WIND).innerHTML = this.wind_direction;
