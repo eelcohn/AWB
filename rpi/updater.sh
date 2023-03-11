@@ -20,7 +20,7 @@ fi
 # ---------------------------
 # Remount /boot as read/write
 # ---------------------------
-if [ findmnt -n -o OPTIONS /boot | egrep "^ro,|,ro,|,ro$" ]
+if [[ `findmnt -n -o OPTIONS /boot | egrep "^ro,|,ro,|,ro$"` ]]
 then
 	mount -o remount,rw /boot >> "${LOG_FILE}" 2>&1
 fi
