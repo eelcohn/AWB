@@ -182,7 +182,7 @@ header,
 	/* Scale image to full height */
 	width: 100%;
 	height: 100%;
-	object-fit: cover;
+	object-fit: fill;
 	overflow: hidden;
 	border-radius: 8px;
 }
