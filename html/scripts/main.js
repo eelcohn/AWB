@@ -25,6 +25,15 @@ const ID_WEATHER_ALERT = 'weather-alert';
 const ID_COMPASS = 'compass';
 const ID_METAR = 'metar';
 
+var knmi;
+var knmi_gafor;
+var sat24;
+var weatherandradar;
+var openweathermap;
+var weerlive;
+var weerslag;
+var windsaloft;
+
 class ShowCurrentDateTime {
 	constructor(id) {
 		this.id = id;
@@ -133,13 +142,23 @@ loadConfig().then(response => {
 		}
 	}
 
-	//var knmi = new KNMI(ID_IMG_LAYER_RAIN);
-	var knmi_gafor = new KNMIGafor();
-	//var sat24 = new Sat24(ID_IMG_LAYER_CLOUD);
-	//var weatherandradar = new WeatherAndRadar(ID_IFRAME_RAIN);
-	//var openweathermap = new OpenWeatherMap();
-	var weerlive = new WeerLive();
-	var weerslag = new WeerSlag(ID_IMG_LAYER_MAP);
-	var windsaloft = new WindsAloft();
-})
+	//knmi = new KNMI(ID_IMG_LAYER_RAIN);
+	knmi_gafor = new KNMIGafor();
+	//sat24 = new Sat24(ID_IMG_LAYER_CLOUD);
+	//weatherandradar = new WeatherAndRadar(ID_IFRAME_RAIN);
+	//openweathermap = new OpenWeatherMap();
+	weerlive = new WeerLive();
+	weerslag = new WeerSlag(ID_IMG_LAYER_MAP);
+	windsaloft = new WindsAloft();
 
+	// Add event listener for 'R' key for manual refresh
+	document.addEventListener('keydown', (e) => {
+		console.log('Manual refresh started');
+		if (e.code === "KeyR") {
+			knmi_gafor.updateData();
+			weerlive.updateData();
+			weerslag.updateData();
+			windsaloft.updateData();
+		}
+	});
+})
