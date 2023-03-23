@@ -52,6 +52,7 @@ const UPPERCASES = {
 	'celcius': 'Celcius',
 	'geisoleerde': 'geïsoleerde',
 	'georienteerd': 'georiënteerd',
+	'orientatie': 'oriëntatie',
 	'groningen': 'Groningen',
 	'friesland': 'Friesland',
 	'drenthe': 'Drenthe',
