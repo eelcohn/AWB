@@ -48,7 +48,7 @@ class Module {
 			var longitudesOnScreen = Math.abs(LONGITUDE_LEFT - LONGITUDE_RIGHT);
 			var x = Math.floor(Math.abs(((document.config.location.longitude - LONGITUDE_LEFT) / longitudesOnScreen) * w));
 			var y = Math.floor(Math.abs(((LATTITUDE_UP - document.config.location.lattitude) / lattitudesOnScreen) * h));
-			console.log('w=' + w + ' h=' + h + ' x=' + x + ' y=' + y);
+//			console.log('w=' + w + ' h=' + h + ' x=' + x + ' y=' + y);
 
 			/* Draw a dot at the location */
 			this.location_ctx.clearRect(0, 0, w, h);
