@@ -4,8 +4,12 @@
 import { DATE_OPTIONS_UTC, DATE_OPTIONS_LOCAL, UNIT_CELCIUS, UNIT_FEET } from '../const.js';
 import { LANGUAGE_SOURCE, LANGUAGE_LAST_UPDATED } from '../language.js';
 
+const SOURCE = 'KNMI';
+
 const ID_GAFOR_SOURCE_LABEL = 'gafor-source-label';
+const ID_GAFOR_SOURCE_DATA = 'gafor-source-data';
 const ID_GAFOR_LAST_UPDATED_LABEL = 'gafor-last-updated-label';
+const ID_GAFOR_LAST_UPDATED_SPINNER = 'gafor-last-updated-spinner';
 const ID_GAFOR_CONTENT = 'gafor-content';
 const ID_GAFOR_SITUATION = 'gafor-situation-data';
 const ID_GAFOR_SIGNIFICANT_WEATHER = 'gafor-significant-weather-data';
@@ -280,6 +284,7 @@ class Module {
 
 		/* Set language specific stuff */
 		document.getElementById(ID_GAFOR_SOURCE_LABEL).innerHTML = LANGUAGE_SOURCE;
+		document.getElementById(ID_GAFOR_SOURCE_DATA).innerHTML = SOURCE;
 		document.getElementById(ID_GAFOR_LAST_UPDATED_LABEL).innerHTML = LANGUAGE_LAST_UPDATED;
 
 		/* Schedule update of document content */
@@ -294,6 +299,9 @@ class Module {
 
 	updateData() {
 		var i, start;
+
+		/* Enable spinner icon */
+		document.getElementById(ID_GAFOR_LAST_UPDATED_SPINNER).style.display = 'block';
 
 		/* Update KNMI GAFOR data */
 		fetch(
@@ -350,6 +358,9 @@ class Module {
 				document.getElementById(ID_VALID_FROM).innerHTML = this.valid_from.toLocaleString(document.config.locale, DATE_OPTIONS_LOCAL);
 				document.getElementById(ID_LAST_UPDATED).innerHTML = this.last_updated.toLocaleString(document.config.locale, DATE_OPTIONS_LOCAL);
 			}
+
+			/* Disable spinner icon */
+			document.getElementById(ID_GAFOR_LAST_UPDATED_SPINNER).style.display = 'none';
 		}).catch((error) => {
 			console.error(error);
 		});
@@ -392,3 +403,4 @@ class Module {
 }
 
 export { Module };
+

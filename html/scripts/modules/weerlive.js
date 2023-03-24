@@ -4,9 +4,13 @@ import { DATE_OPTIONS_LOCAL, UNIT_CELCIUS, UNIT_METERS_PER_SECOND, UNIT_KNOTS, U
 import { createSystemMessage, setTrend, setCompass } from '../functions.js';
 import { LANGUAGE_SOURCE, LANGUAGE_LAST_UPDATED } from '../language.js';
 
+const SOURCE = 'weerlive.nl';
 const ICON_URL = 'https://weerlive.nl/items/img/weericonen/grote_iconen_'
+
 const ID_METRICS_SOURCE_LABEL = 'metrics-source-label';
+const ID_METRICS_SOURCE_DATA = 'metrics-source-data';
 const ID_METRICS_LAST_UPDATED_LABEL = 'metrics-last-updated-label';
+const ID_METRICS_LAST_UPDATED_SPINNER = 'metrics-last-updated-spinner';
 const ID_SUNRISE = 'sunrise-data';
 const ID_SUNSET = 'sunset-data';
 const ID_LOCATION = 'location-data';
@@ -31,6 +35,7 @@ const ID_COMPASS_ARROW = 'compass-arrow-id';
 const CLASS_WEATHER_ALERT1 = 'weather-alert1';
 const CLASS_WEATHER_ALERT2 = 'weather-alert2';
 const CLASS_WEATHER_ALERT3 = 'weather-alert3';
+
 //const UNIT_TIMEZONE = 'CET'; // TODO get timezone from local JavaScript settings
 
 const ICONS = {
@@ -81,6 +86,7 @@ class Module {
 
 		/* Set language specific stuff */
 		document.getElementById(ID_METRICS_SOURCE_LABEL).innerHTML = LANGUAGE_SOURCE;
+		document.getElementById(ID_METRICS_SOURCE_DATA).innerHTML = SOURCE;
 		document.getElementById(ID_METRICS_LAST_UPDATED_LABEL).innerHTML = LANGUAGE_LAST_UPDATED;
 
 		if (document.config.weerlive.key === '0000000000') {
@@ -98,6 +104,9 @@ class Module {
 	}
 
 	updateData() {
+		/* Enable spinner icon */
+		document.getElementById(ID_METRICS_LAST_UPDATED_SPINNER).style.display = 'block';
+
 		/* Fetch data from the API */
 		fetch(
 			this.api_url,
@@ -267,6 +276,9 @@ class Module {
 				}
 				document.getElementById(ID_LAST_UPDATED).innerHTML = this.last_updated.toLocaleString(document.config.locale, DATE_OPTIONS_LOCAL);
 			}
+
+			/* Disable spinner icon */
+			document.getElementById(ID_METRICS_LAST_UPDATED_SPINNER).style.display = 'none';
 		}).catch((error) => {
 			console.error(error);
 		});

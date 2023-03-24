@@ -4,8 +4,12 @@ import { DATE_OPTIONS_LOCAL, UNIT_DIRECTION, UNIT_KNOTS, UNIT_CELCIUS, UNIT_FEET
 import { createSystemMessage, removeSystemMessage, setTrend } from '../functions.js';
 import { LANGUAGE_SOURCE, LANGUAGE_LAST_UPDATED } from '../language.js';
 
+const SOURCE = 'Windsaloft';
+
 const ID_WINDS_SOURCE_LABEL = 'winds-source-label';
+const ID_WINDS_SOURCE_DATA = 'winds-source-data';
 const ID_WINDS_LAST_UPDATED_LABEL = 'winds-last-updated-label';
+const ID_WINDS_LAST_UPDATED_SPINNER = 'winds-last-updated-spinner';
 const ID_WIND_DIRECTION = 'wind????-direction';
 const ID_WIND_SPEED = 'wind????-speed';
 const ID_WIND_TEMPERATURE = 'wind????-temperature';
@@ -34,6 +38,7 @@ class Module {
 
 		/* Set language specific stuff */
 		document.getElementById(ID_WINDS_SOURCE_LABEL).innerHTML = LANGUAGE_SOURCE;
+		document.getElementById(ID_WINDS_SOURCE_DATA).innerHTML = SOURCE;
 		document.getElementById(ID_WINDS_LAST_UPDATED_LABEL).innerHTML = LANGUAGE_LAST_UPDATED;
 
 		/* Schedule update of document content */
@@ -47,6 +52,9 @@ class Module {
 	}
 
 	updateData() {
+		/* Enable spinner icon */
+		document.getElementById(ID_WINDS_LAST_UPDATED_SPINNER).style.display = 'block';
+
 		/* Fetch data from the API */
 		fetch(
 			this.cors_proxy_url,
@@ -137,6 +145,9 @@ class Module {
 					setTrend(ID_FREEZING_ALTITUDE_TREND, 0, 0);
 				}
 			}
+
+			/* Disable spinner icon */
+			document.getElementById(ID_WINDS_LAST_UPDATED_SPINNER).style.display = 'none';
 		}).catch((error) => {
 			console.error(error);
 		});
