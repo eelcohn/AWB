@@ -72,6 +72,7 @@
 							<div id="metrics-source-label"></div>&nbsp;<div id="metrics-source-data">weerlive.nl</div>
 						</div>
 						<div class="metadata-last-updated">
+							<div id="metrics-last-updated-spinner"><span class="iconify" data-icon="line-md:loading-loop"></span></div>&nbsp;
 							<div id="metrics-last-updated-label"></div>&nbsp;<div id="metrics-last-updated"></div>
 						</div>
 					</div>
@@ -102,6 +103,7 @@
 							<div id="winds-source-label"></div>&nbsp;<div id="winds-source-data">Windsaloft</div>
 						</div>
 						<div class="metadata-last-updated">
+							<div id="winds-last-updated-spinner"><span class="iconify" data-icon="line-md:loading-loop"></span></div>&nbsp;
 							<div id="winds-last-updated-label"></div>&nbsp;<div id="winds-last-updated"></div>
 						</div>
 					</div>
@@ -115,6 +117,7 @@
 							<div id="metar-source-label"></div>&nbsp;<div id="metar-source-data">NOAA</div>
 						</div>
 						<div class="metadata-last-updated">
+							<div id="metar-last-updated-spinner"><span class="iconify" data-icon="line-md:loading-loop"></span></div>&nbsp;
 							<div id="metar-last-updated-label"></div>&nbsp;<div id="metar-last-updated"></div>
 						</div>
 					</div>
@@ -128,16 +131,33 @@
 							<div id="gafor-source-label"></div>&nbsp;<div id="gafor-source-data">KNMI</div>
 						</div>
 						<div class="metadata-last-updated">
+							<div id="gafor-last-updated-spinner"><span class="iconify" data-icon="line-md:loading-loop"></span></div>&nbsp;
 							<div id="gafor-last-updated-label"></div>&nbsp;<div id="gafor-last-updated"></div>
 						</div>
 					</div>
 				</div>
 				<div class="images">
+					<!--
+					<iframe class="layer-map" src="https://www.rainviewer.com/map.html?loc=52.1941,5.1416,7&oFa=0&oC=0&oU=0&oCS=1&oF=0&oAP=1&c=1&o=88&lm=1&layer=radar-sat&sm=1&sn=1&hu=0" frameborder="0" allowfullscreen></iframe>
+					?.html	map.html / hurricane-map.html
+					c	Color Scheme
+					hu	Hurricane Tracking
+					lm	Legend map (0=normal, 1=small)
+					o	Radar Layer Opacity
+					oAP	Auto Play
+					oC	Coverage
+					oF	?
+					oFa	Fast Animation
+					oCS	Show legend
+					oU	UTC Time Zone
+					sm	Smoothing Radar Data
+					sn	Snow
+					layer	radar/radar-sat/sat
+					-->
 					<img class="layer-map" alt="" src="#" id="img-layer-map-id">
-<!--
 					<img class="layer-cloud" alt="" src="#" id="img-layer-cloud-id">
 					<img class="layer-rain" alt="" src="#" id="img-layer-rain-id">
--->
+					<canvas class="layer-location" id="img-layer-location-id"></canvas>
 				</div>
 				<div class="widgets">
 					<div class="widget-24hr-forecast">
