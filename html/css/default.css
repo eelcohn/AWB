@@ -175,10 +175,12 @@ header,
 	border-color: var(--block-border-color);
 	border-style: solid;
 	border-width: 1px;
+	position: relative;
 }
 .layer-map,
 .layer-cloud,
-.layer-rain {
+.layer-rain,
+.layer-location {
 	/* Scale image to full height */
 	width: 100%;
 	height: 100%;
@@ -187,14 +189,28 @@ header,
 	border-radius: 8px;
 }
 .layer-cloud,
-.layer-rain {
+.layer-rain,
+.layer-location {
 	position: absolute;
 	top: 0;
 	left: 0;
 }
+.layer-map {
+	z-index: 10;
+}
+.layer-cloud {
+	z-index: 20;
+}
+.layer-rain {
+	z-index: 30;
+}
+.layer-location {
+	z-index: 40;
+}
 .layer-map iframe,
 .layer-cloud iframe,
-.layer-rain iframe {
+.layer-rain iframe,
+.layer-location iframe {
 	height: inherit;
 	width: inherit;
 }
