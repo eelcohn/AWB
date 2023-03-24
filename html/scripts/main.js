@@ -34,6 +34,11 @@ var weerlive;
 var weerslag;
 var windsaloft;
 
+var ip;
+var showip_counter = 0;
+
+
+
 class ShowCurrentDateTime {
 	constructor(id) {
 		this.id = id;
@@ -53,7 +58,12 @@ class ShowCurrentDateTime {
 		var element = document.getElementById(ID_DATETIME);
 		var x = new Date();
 
-		element.innerHTML = x.toLocaleString(document.config.locale, document.config.options);
+		if (showip_counter == 0) {
+			element.innerHTML = x.toLocaleString(document.config.locale, document.config.options);
+		} else {
+			element.innerHTML = ip;
+			showip_counter--;
+		}
 	}
 }
 
@@ -151,14 +161,42 @@ loadConfig().then(response => {
 	weerslag = new WeerSlag(ID_IMG_LAYER_MAP);
 	windsaloft = new WindsAloft();
 
-	// Add event listener for 'R' key for manual refresh
+	// Add event listener for key-down events
 	document.addEventListener('keydown', (e) => {
-		console.log('Manual refresh started');
+		/* Key 'R' for manual refresh */
 		if (e.code === "KeyR") {
+			console.log('Manual refresh triggered');
 			knmi_gafor.updateData();
 			weerlive.updateData();
 			weerslag.updateData();
 			windsaloft.updateData();
 		}
+
+		/* Key 'I' to show local IP address */
+		if (e.code === "KeyI") {
+			console.log('Show IP address triggered');
+
+			/* Fetch local IP */
+			fetch(
+				'localip.php'
+			).then(response => {
+				if (response.ok === true) {
+					return response.text();
+				} else {
+					console.warn('Returned HTTP error ' + response.status + ' (' + response.statusText + ')');
+					return null;
+				}
+			}).then(data => {
+				if (data === null) {
+					createSystemMessage('Local IP file not found.');
+				}
+				console.log(data);
+				ip = data;
+				showip_counter = 10;
+			}).catch((error) => {
+				console.error(error);
+			});
+		}
 	});
 })
+

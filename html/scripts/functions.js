@@ -72,6 +72,6 @@ export {
 	removeSystemMessage,
 	setCompass,
 	setTrend,
-	windDegreesToDirection
+	windDegreesToDirection,
 };
 
