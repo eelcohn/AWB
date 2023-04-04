@@ -17,6 +17,7 @@ const ID_GAFOR_WINDS = 'gafor-winds-data';
 const ID_GAFOR_CLOUDS = 'gafor-clouds-data';
 const ID_GAFOR_THERMALS = 'gafor-thermals-data';
 const ID_GAFOR_FORECAST = 'gafor-forecast-data';
+
 const ID_VALID_FROM = 'gafor-valid-from';
 const ID_LAST_UPDATED = 'gafor-last-updated';
 
@@ -41,6 +42,7 @@ const UPPERCASES = {
 //	'bkn/ovc': 'BKN/OVC',
 	'utc': 'UTC',
 	'vfr': 'VFR',
+	' fir': ' FIR',
 //	' few': ' FEW',
 //	' sct': ' SCT',
 //	' bkn': ' BKN',
@@ -87,7 +89,9 @@ const UPPERCASES = {
 	'centraal-europa': 'Centraal-Europa',
 	'denemarken': 'Denemarken',
 	'duitsland': 'Duitsland',
+	'duitse': 'Duitse',
 	'engeland': 'Engeland',
+	'engelse': 'Engelse',
 	'europa': 'Europa',
 	'finland': 'Finland',
 	'frankrijk': 'Frankrijk',
@@ -99,6 +103,7 @@ const UPPERCASES = {
 	'noorse': 'Noorse',
 	'noordzee': 'Noordzee',
 	'noorwegen': 'Noorwegen',
+	'oostenrijk': 'Oostenrijk',
 	'polen': 'Polen',
 	'rusland': 'Rusland',
 	'scandinavie': 'Scandinavië',
@@ -301,6 +306,7 @@ class Module {
 		var i, start;
 
 		/* Enable spinner icon */
+		document.getElementById(ID_GAFOR_LAST_UPDATED_SPINNER).dataset.icon = 'line-md:loading-loop';
 		document.getElementById(ID_GAFOR_LAST_UPDATED_SPINNER).style.display = 'block';
 
 		/* Update KNMI GAFOR data */
@@ -357,10 +363,13 @@ class Module {
 				}
 				document.getElementById(ID_VALID_FROM).innerHTML = this.valid_from.toLocaleString(document.config.locale, DATE_OPTIONS_LOCAL);
 				document.getElementById(ID_LAST_UPDATED).innerHTML = this.last_updated.toLocaleString(document.config.locale, DATE_OPTIONS_LOCAL);
+
+				/* Disable spinner icon */
+				document.getElementById(ID_GAFOR_LAST_UPDATED_SPINNER).style.display = 'none';
+			} else {
+				document.getElementById(ID_GAFOR_LAST_UPDATED_SPINNER).dataset.icon = 'mdi:warning-outline';
 			}
 
-			/* Disable spinner icon */
-			document.getElementById(ID_GAFOR_LAST_UPDATED_SPINNER).style.display = 'none';
 		}).catch((error) => {
 			console.error(error);
 		});
@@ -403,4 +412,3 @@ class Module {
 }
 
 export { Module };
-
