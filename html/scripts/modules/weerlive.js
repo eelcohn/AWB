@@ -11,21 +11,25 @@ const ID_METRICS_SOURCE_LABEL = 'metrics-source-label';
 const ID_METRICS_SOURCE_DATA = 'metrics-source-data';
 const ID_METRICS_LAST_UPDATED_LABEL = 'metrics-last-updated-label';
 const ID_METRICS_LAST_UPDATED_SPINNER = 'metrics-last-updated-spinner';
+const ID_METRICS_LAST_UPDATED_WARNING = 'metrics-last-updated-warning';
 const ID_SUNRISE = 'sunrise-data';
 const ID_SUNSET = 'sunset-data';
 const ID_LOCATION = 'location-data';
 const ID_ICON = 'metrics-icon';
 const ID_TEMPERATURE = 'temperature-data';
 const ID_TEMPERATURE_FEEL = 'temperature-feel-data';
-const ID_WEATHER_WIND = 'wind-data';
-const ID_WEATHER_WIND_MS = 'wind-ms-data';
-const ID_WEATHER_WIND_KT = 'wind-kt-data';
+const ID_WEATHER_WIND_DIRECTION = 'wind-direction';
+const ID_WEATHER_WIND_VALUE = 'wind-value';
+const ID_WEATHER_WIND_UNIT = 'wind-unit';
+const ID_WEATHER_WIND_JUMPLIMIT = 'wind-jumplimit';
 const ID_TEMPERATURE_TREND = 'temperature-trend';
 const ID_WIND_SPEED_TREND = 'wind-trend';
-const ID_PRESSURE_TREND = 'pressure-trend';
 const ID_VISIBILITY_TREND = 'visibility-trend';
-const ID_WEATHER_VISIBILITY = 'visibility-data';
-const ID_WEATHER_PRESSURE = 'pressure-data';
+const ID_WEATHER_VISIBILITY_VALUE = 'visibility-value';
+const ID_WEATHER_VISIBILITY_UNIT = 'visibility-unit';
+const ID_WEATHER_PRESSURE_VALUE = 'pressure-value';
+const ID_WEATHER_PRESSURE_UNIT = 'pressure-unit';
+const ID_PRESSURE_TREND = 'pressure-trend';
 const ID_WEATHER_TEXT_SHORT = 'metrics-data';
 const ID_WEATHER_FORECAST_SHORT = 'metrics-forecast-data';
 const ID_WEATHER_ALERT = 'weather-alert';
@@ -104,6 +108,9 @@ class Module {
 	}
 
 	updateData() {
+		/* Disable warning icon */
+		document.getElementById(ID_METRICS_LAST_UPDATED_WARNING).style.display = 'none';
+
 		/* Enable spinner icon */
 		document.getElementById(ID_METRICS_LAST_UPDATED_SPINNER).style.display = 'block';
 
@@ -124,6 +131,9 @@ class Module {
 				return null;
 			}
 		}).then(data => {
+			/* Disable spinner icon */
+			document.getElementById(ID_METRICS_LAST_UPDATED_SPINNER).style.display = 'none';
+
 			if (data != null) {
 //				console.log(data);
 				if (data['liveweer'] && (data['liveweer'].length == 1)) {
@@ -233,11 +243,15 @@ class Module {
 				document.getElementById(ID_ICON).alt = this.weather;
 				document.getElementById(ID_TEMPERATURE).innerHTML = Number(this.temperature).toFixed(1) + '&nbsp;' + UNIT_CELCIUS;
 				document.getElementById(ID_TEMPERATURE_FEEL).innerHTML = Number(this.temperature_feel).toFixed(1) + '&nbsp;' + UNIT_CELCIUS;
-				document.getElementById(ID_WEATHER_WIND).innerHTML = this.wind_direction;
-				document.getElementById(ID_WEATHER_WIND_MS).innerHTML = this.wind_speed_ms + '&nbsp;' + UNIT_METERS_PER_SECOND;
-//				document.getElementById(ID_WEATHER_WIND_KT).innerHTML = this.wind_speed_kt + '&nbsp;' + UNIT_KNOTS;
-				document.getElementById(ID_WEATHER_VISIBILITY).innerHTML = this.visibility + '&nbsp;' + UNIT_KILOMETERS;
-				document.getElementById(ID_WEATHER_PRESSURE).innerHTML = Number(this.pressure).toFixed(1) + '&nbsp;' + UNIT_HECTOPASCAL;
+				document.getElementById(ID_WEATHER_WIND_DIRECTION).innerHTML = this.wind_direction;
+				document.getElementById(ID_WEATHER_WIND_VALUE).innerHTML = this.wind_speed_ms;
+				document.getElementById(ID_WEATHER_WIND_UNIT).innerHTML = UNIT_METERS_PER_SECOND;
+				document.getElementById(ID_WEATHER_WIND_JUMPLIMIT).innerHTML = "(> 200 jumps)";
+				document.getElementById(ID_WEATHER_WIND_JUMPLIMIT).style.visibility = "block";
+				document.getElementById(ID_WEATHER_VISIBILITY_VALUE).innerHTML = this.visibility;
+				document.getElementById(ID_WEATHER_VISIBILITY_UNIT).innerHTML = UNIT_KILOMETERS;
+				document.getElementById(ID_WEATHER_PRESSURE_VALUE).innerHTML = Number(this.pressure).toFixed(1);
+				document.getElementById(ID_WEATHER_PRESSURE_UNIT).innerHTML = UNIT_HECTOPASCAL;
 				document.getElementById(ID_WEATHER_TEXT_SHORT).innerHTML = this.weather;
 				document.getElementById(ID_WEATHER_FORECAST_SHORT).innerHTML = this.forecast;
 				setCompass(ID_COMPASS_ARROW, this.wind_direction_degrees);
@@ -275,11 +289,17 @@ class Module {
 					}
 				}
 				document.getElementById(ID_LAST_UPDATED).innerHTML = this.last_updated.toLocaleString(document.config.locale, DATE_OPTIONS_LOCAL);
-			}
 
+			} else {
+				document.getElementById(ID_METRICS_LAST_UPDATED_WARNING).style.display = 'block';
+			}
+		}).catch((error) => {
 			/* Disable spinner icon */
 			document.getElementById(ID_METRICS_LAST_UPDATED_SPINNER).style.display = 'none';
-		}).catch((error) => {
+
+			/* Enable warning icon */
+			document.getElementById(ID_METRICS_LAST_UPDATED_WARNING).style.display = 'block';
+
 			console.error(error);
 		});
 	}

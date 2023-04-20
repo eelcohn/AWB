@@ -10,6 +10,7 @@ const ID_WINDS_SOURCE_LABEL = 'winds-source-label';
 const ID_WINDS_SOURCE_DATA = 'winds-source-data';
 const ID_WINDS_LAST_UPDATED_LABEL = 'winds-last-updated-label';
 const ID_WINDS_LAST_UPDATED_SPINNER = 'winds-last-updated-spinner';
+const ID_WINDS_LAST_UPDATED_WARNING = 'winds-last-updated-warning';
 const ID_WIND_DIRECTION = 'wind????-direction';
 const ID_WIND_SPEED = 'wind????-speed';
 const ID_WIND_TEMPERATURE = 'wind????-temperature';
@@ -52,6 +53,9 @@ class Module {
 	}
 
 	updateData() {
+		/* Disable warning icon */
+		document.getElementById(ID_WINDS_LAST_UPDATED_WARNING).style.display = 'none';
+
 		/* Enable spinner icon */
 		document.getElementById(ID_WINDS_LAST_UPDATED_SPINNER).style.display = 'block';
 
@@ -76,6 +80,9 @@ class Module {
 				return null;
 			}
 		}).then(data => {
+			/* Disable spinner icon */
+			document.getElementById(ID_WINDS_LAST_UPDATED_SPINNER).style.display = 'none';
+
 			if (data != null) {
 				try {
 					// Update the data
@@ -90,40 +97,51 @@ class Module {
 						this.temperature = data['temp'];
 						this.qfe = Number(data['QFE']).toFixed(1);
 						this.qnh = Number(data['QNH']).toFixed(1);
+					}
+				} catch (error) {
+					console.error('WindsAloft: Error parsing JSON data: ' + JSON.stringify(data, null, 4));
+					document.getElementById(ID_WINDS_LAST_UPDATED_WARNING).style.display = 'block';
+					document.getElementById(ID_WINDS_LAST_UPDATED_SPINNER).style.display = 'none';
 
-						// Calculate freezing level: Get the altitude closest to the freezing level
-						var freezing_altitude_previous = this.freezing_altitude;
-						var closest = Object.values(this.temperature).reduce((a, b) => {
-							return Math.abs(b - FREEZING_TEMPERATURE) < Math.abs(a - FREEZING_TEMPERATURE) ? b : a;
-						});
-						this.freezing_altitude = Number(Object.keys(this.temperature).find(key => this.temperature[key] === closest));
-						// Calculate freezing level: Calculate the freezing level when it's not at one of the pre-defined altitudes
+				}
+
+				// Calculate freezing level: Get the altitude closest to the freezing level
+				var freezing_altitude_previous = this.freezing_altitude;
+
+				for (let x in this.temperature) {
+					if (this.temperature[x] <= 0) {
+						if (x >= 1000) {
+							this.freezing_altitude = x - 1000;
+						} else {
+							this.freezing_altitude = x;
+						}
+
+						// Calculate the freezing level when it's not at one of the pre-defined altitudes
 						if (this.temperature[this.freezing_altitude] !== FREEZING_TEMPERATURE) {
 							var diff = Math.abs(this.temperature[this.freezing_altitude]) + Math.abs(this.temperature[this.freezing_altitude + 1000]);
 							this.freezing_altitude += Number((Math.abs(this.temperature[this.freezing_altitude]) / diff * 1000).toFixed(0));
 						}
-
-						/* Update document */
-						for (var i = 0; i < document.config.upperwinds.length; i++) {
-							document.getElementById(ID_WIND_DIRECTION.replace('????', document.config.upperwinds[i])).innerHTML = this.wind_direction[document.config.upperwinds[i]] + '&nbsp;' + UNIT_DIRECTION;
-							document.getElementById(ID_WIND_SPEED.replace('????', document.config.upperwinds[i])).innerHTML = this.wind_speed[document.config.upperwinds[i]] + '&nbsp;' + UNIT_KNOTS;
-							if (this.temperature[document.config.upperwinds[i]] == -272) {
-								/* Do not display invalid temperatures */
-								document.getElementById(ID_WIND_TEMPERATURE.replace('????', document.config.upperwinds[i])).innerHTML = '-&nbsp;' + UNIT_CELCIUS;
-							} else {
-								document.getElementById(ID_WIND_TEMPERATURE.replace('????', document.config.upperwinds[i])).innerHTML = this.temperature[document.config.upperwinds[i]] + '&nbsp;' + UNIT_CELCIUS;
-							}
-						}
-
-						document.getElementById(ID_FREEZING_ALTITUDE).innerHTML = this.freezing_altitude + '&nbsp;' + UNIT_FEET;
-						setTrend(ID_FREEZING_ALTITUDE_TREND, this.freezing_altitude, freezing_altitude_previous);
-
-						document.getElementById(ID_VALID_FROM).innerHTML = this.valid_from.toLocaleString(document.config.locale, DATE_OPTIONS_LOCAL );
-						document.getElementById(ID_LAST_UPDATED).innerHTML = this.last_updated.toLocaleString(document.config.locale, DATE_OPTIONS_LOCAL );
+						break;
 					}
-				} catch (error) {
-					console.error('WindsAloft: Error parsing JSON data: ' + JSON.stringify(data, null, 4));
+				};
+
+				/* Update document */
+				for (var i = 0; i < document.config.upperwinds.length; i++) {
+					document.getElementById(ID_WIND_DIRECTION.replace('????', document.config.upperwinds[i])).innerHTML = this.wind_direction[document.config.upperwinds[i]] + '&nbsp;' + UNIT_DIRECTION;
+					document.getElementById(ID_WIND_SPEED.replace('????', document.config.upperwinds[i])).innerHTML = this.wind_speed[document.config.upperwinds[i]] + '&nbsp;' + UNIT_KNOTS;
+					if (this.temperature[document.config.upperwinds[i]] == -272) {
+						/* Do not display invalid temperatures */
+						document.getElementById(ID_WIND_TEMPERATURE.replace('????', document.config.upperwinds[i])).innerHTML = '-&nbsp;' + UNIT_CELCIUS;
+					} else {
+						document.getElementById(ID_WIND_TEMPERATURE.replace('????', document.config.upperwinds[i])).innerHTML = this.temperature[document.config.upperwinds[i]] + '&nbsp;' + UNIT_CELCIUS;
+					}
 				}
+
+				document.getElementById(ID_FREEZING_ALTITUDE).innerHTML = this.freezing_altitude + '&nbsp;' + UNIT_FEET;
+				setTrend(ID_FREEZING_ALTITUDE_TREND, this.freezing_altitude, freezing_altitude_previous);
+
+				document.getElementById(ID_VALID_FROM).innerHTML = this.valid_from.toLocaleString(document.config.locale, DATE_OPTIONS_LOCAL );
+				document.getElementById(ID_LAST_UPDATED).innerHTML = this.last_updated.toLocaleString(document.config.locale, DATE_OPTIONS_LOCAL );
 			} else {
 				// TODO: Old data warning?
 //				createSystemMessage('Could not update upper winds from www.windsaloft.us');
@@ -144,11 +162,17 @@ class Module {
 					document.getElementById(ID_FREEZING_ALTITUDE).innerHTML = '-&nbsp;' + UNIT_ALTITUDE;
 					setTrend(ID_FREEZING_ALTITUDE_TREND, 0, 0);
 				}
+
+				document.getElementById(ID_WINDS_LAST_UPDATED_WARNING).style.display = 'block';
 			}
 
+		}).catch((error) => {
 			/* Disable spinner icon */
 			document.getElementById(ID_WINDS_LAST_UPDATED_SPINNER).style.display = 'none';
-		}).catch((error) => {
+
+			/* Enable warning icon */
+			document.getElementById(ID_WINDS_LAST_UPDATED_WARNING).style.display = 'block';
+
 			console.error(error);
 		});
 	}

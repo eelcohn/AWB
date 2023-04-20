@@ -51,6 +51,7 @@ class Module {
 		this.icao24s = icao24s;
 		this.api_url = 'https://opensky-network.org/api/states/all?icao24=' + icao24s.join(',') + '&extended=1';
 		this.refreshInterval = 5 * 60 * 1000; // Refresh interval is 15 seconds
+		this.rate_limit = null;
 
 		/* Schedule update of document content */
 		this.task = setInterval(
@@ -76,6 +77,7 @@ class Module {
 			}
 		).then(response => {
 			if (response.status == 200) {
+				this.rate_limit = null;
 				return response.json();	// converting byte data to json
 			} else {
 				if (response.status == 429) {
@@ -85,7 +87,6 @@ class Module {
 							this.rate_limit = header[1];
 						}
 					}
-//					console.log('Rate limited. Retry in ' + this.rate_limit + ' seconds.');
 				} else {
 					console.warn('Returned HTTP error ' + response.status + ' (' + response.statusText + ')');
 				}
@@ -93,24 +94,30 @@ class Module {
 			}
 		}).then(data => {
 			opensky_data = [];
-			if ((data != null) && (data['states'])) {
-				for (state in data['states']) {
-					plane = {};
-					if (state.length !== 0) {
-//						console.log(state);
-						state.forEach(function(item, index) {
-							plane[PROPERTIES[index]] = item;
+			if (data == null) {
+				if (this.rate_limit != null) {
+					console.log('Rate limited. Retry in ' + this.rate_limit + ' seconds.');
+				}
+			} else {
+				if (data['states']) {
+					for (state in data['states']) {
+						plane = {};
+						if (state.length !== 0) {
+	//						console.log(state);
+							state.forEach(function(item, index) {
+								plane[PROPERTIES[index]] = item;
+							});
+						}
+						opensky_data[plane['icao24']] = plane;
+					}
+				}
+				for (plane in this.icao24s) {
+					if (!opensky_data[plane]) {
+						opensky_data[plane] = {};
+						PROPERTIES.forEach(function(item) {
+							opensky_data[plane][item] = null;
 						});
 					}
-					opensky_data[plane['icao24']] = plane;
-				}
-			}
-			for (plane in this.icao24s) {
-				if (!opensky_data[plane]) {
-					opensky_data[plane] = {};
-					PROPERTIES.forEach(function(item) {
-						opensky_data[plane][item] = null;
-					});
 				}
 			}
 //			console.log(opensky_data);

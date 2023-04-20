@@ -10,6 +10,7 @@ const ID_GAFOR_SOURCE_LABEL = 'gafor-source-label';
 const ID_GAFOR_SOURCE_DATA = 'gafor-source-data';
 const ID_GAFOR_LAST_UPDATED_LABEL = 'gafor-last-updated-label';
 const ID_GAFOR_LAST_UPDATED_SPINNER = 'gafor-last-updated-spinner';
+const ID_GAFOR_LAST_UPDATED_WARNING = 'gafor-last-updated-warning';
 const ID_GAFOR_CONTENT = 'gafor-content';
 const ID_GAFOR_SITUATION = 'gafor-situation-data';
 const ID_GAFOR_SIGNIFICANT_WEATHER = 'gafor-significant-weather-data';
@@ -269,8 +270,9 @@ const UPPERCASES = {
 	'ns/st': 'NS/ST',
 	'sc/ac': 'SC/AC',
 	'sc/as': 'SC/AS',
-	'sc/ns': 'SC/NS',
 	'sc/cu': 'SC/CU',
+	'sc/ns': 'SC/NS',
+	'sc/st': 'SC/ST',
 	'st/ns': 'ST/NS',
 	'st/sc': 'ST/SC',
 	'tcu/cb': 'TCU/CB',
@@ -305,8 +307,10 @@ class Module {
 	updateData() {
 		var i, start;
 
+		/* Disable warning icon */
+		document.getElementById(ID_GAFOR_LAST_UPDATED_WARNING).style.display = 'none';
+
 		/* Enable spinner icon */
-		document.getElementById(ID_GAFOR_LAST_UPDATED_SPINNER).dataset.icon = 'line-md:loading-loop';
 		document.getElementById(ID_GAFOR_LAST_UPDATED_SPINNER).style.display = 'block';
 
 		/* Update KNMI GAFOR data */
@@ -328,6 +332,9 @@ class Module {
 				return null;
 			}
 		}).then(data => {
+			/* Disable spinner icon */
+			document.getElementById(ID_GAFOR_LAST_UPDATED_SPINNER).style.display = 'none';
+
 			if (data != null) {
 				this.last_updated = new Date();
 
@@ -363,14 +370,17 @@ class Module {
 				}
 				document.getElementById(ID_VALID_FROM).innerHTML = this.valid_from.toLocaleString(document.config.locale, DATE_OPTIONS_LOCAL);
 				document.getElementById(ID_LAST_UPDATED).innerHTML = this.last_updated.toLocaleString(document.config.locale, DATE_OPTIONS_LOCAL);
-
-				/* Disable spinner icon */
-				document.getElementById(ID_GAFOR_LAST_UPDATED_SPINNER).style.display = 'none';
 			} else {
-				document.getElementById(ID_GAFOR_LAST_UPDATED_SPINNER).dataset.icon = 'mdi:warning-outline';
+				document.getElementById(ID_GAFOR_LAST_UPDATED_WARNING).style.display = 'block';
 			}
 
 		}).catch((error) => {
+			/* Disable spinner icon */
+			document.getElementById(ID_GAFOR_LAST_UPDATED_SPINNER).style.display = 'none';
+
+			/* Enable warning icon */
+			document.getElementById(ID_GAFOR_LAST_UPDATED_WARNING).style.display = 'block';
+
 			console.error(error);
 		});
 	}
@@ -412,3 +422,4 @@ class Module {
 }
 
 export { Module };
+
