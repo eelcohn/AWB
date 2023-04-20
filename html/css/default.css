@@ -55,6 +55,11 @@ footer {
 .text table {
 	width: 100%;
 }
+.wind-jumplimit {
+	display: none;
+	color: var(--jumplimit-color);
+	font-size: smaller;
+}
 header,
 .weather,
 .compass,
@@ -160,6 +165,12 @@ header,
 	left: 10px;
 	display: flex;
 }
+.metadata-spinner {
+	display: none;
+}
+.metadata-warning {
+	display: none;
+}
 .metadata-last-updated {
 	font-size: var(--metadata-fontsize);
 	color: var(--metadata-textcolor);
@@ -188,6 +199,13 @@ header,
 	overflow: hidden;
 	border-radius: 8px;
 }
+.layer-map iframe,
+.layer-cloud iframe,
+.layer-rain iframe,
+.layer-location iframe {
+	height: inherit;
+	width: inherit;
+}
 .layer-cloud,
 .layer-rain,
 .layer-location {
@@ -199,20 +217,15 @@ header,
 	z-index: 10;
 }
 .layer-cloud {
+	display: none;
 	z-index: 20;
 }
 .layer-rain {
+	display: none;
 	z-index: 30;
 }
 .layer-location {
 	z-index: 40;
-}
-.layer-map iframe,
-.layer-cloud iframe,
-.layer-rain iframe,
-.layer-location iframe {
-	height: inherit;
-	width: inherit;
 }
 
 /* Weather alerts */
