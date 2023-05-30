@@ -43,6 +43,7 @@ const UPPERCASES = {
 //	'bkn/ovc': 'BKN/OVC',
 	'utc': 'UTC',
 	'vfr': 'VFR',
+	'cavok': 'CAVOK',
 	' fir': ' FIR',
 //	' few': ' FEW',
 //	' sct': ' SCT',
