@@ -52,28 +52,28 @@
 									</tr>
 									<tr>
 										<td><span class="iconify" data-icon="mdi-weather-windy"></span></td>
-										<td><span id="wind-data"></span>&nbsp;<span id="wind-ms-data"></span><span id="wind-trend" class="trend"></span></td>
-	<!--
-										<td><span id="wind-data"></span>&nbsp;<span id="wind-ms-data"></span>&nbsp;(<span id="wind-kt-data"></span>)<span class="iconify" id="wind-trend" class="trend"></span></td>
-	-->
+										<td><span id="wind-direction"></span>&nbsp;<span id="wind-value"></span>&nbsp;<span id="wind-unit"></span><span id="wind-trend" class="trend"></span>&nbsp;<span id="wind-jumplimit" class="wind-jumplimit"></span></td>
 										<td><span class="iconify" data-icon="mdi-snowflake"></span></td>
 										<td><span id="freezing-altitude-data"></span><span id="freezing-altitude-trend" class="trend"></span></td>
 									</tr>
 									<tr>
 										<td><span class="iconify" data-icon="mdi-gauge"></span></td>
-										<td><span id="pressure-data"></span><span id="pressure-trend" class="trend"></span></td>
+										<td><span id="pressure-value"></span>&nbsp;<span id="pressure-unit"></span><span id="pressure-trend" class="trend"></span></td>
 										<td><span class="iconify" data-icon="mdi-eye"></span></td>
-										<td><span id="visibility-data"></span><span id="visibility-trend" class="trend"></span></td>
+										<td><span id="visibility-value"></span>&nbsp;<span id="visibility-unit"></span><span id="visibility-trend" class="trend"></span></td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
 						<div class="metadata-source">
-							<div id="metrics-source-label"></div>&nbsp;<div id="metrics-source-data"></div>
+							<div id="metrics-source-label"></div>&nbsp;
+							<div id="metrics-source-data"></div>
 						</div>
 						<div class="metadata-last-updated">
-							<div id="metrics-last-updated-spinner"><span class="iconify" data-icon="line-md:loading-loop"></span></div>&nbsp;
-							<div id="metrics-last-updated-label"></div>&nbsp;<div id="metrics-last-updated"></div>
+							<div class="metadata-warning iconify" id="metrics-last-updated-warning" data-icon="mdi:warning-outline"></div>&nbsp;
+							<div class="metadata-spinner iconify" id="metrics-last-updated-spinner" data-icon="line-md:loading-loop"></div>&nbsp;
+							<div id="metrics-last-updated-label"></div>&nbsp;
+							<div id="metrics-last-updated"></div>
 						</div>
 					</div>
 					<div class="compass" id="compass">
@@ -100,11 +100,14 @@
 							</table>
 						</div>
 						<div class="metadata-source">
-							<div id="winds-source-label"></div>&nbsp;<div id="winds-source-data"></div>
+							<div id="winds-source-label"></div>&nbsp;
+							<div id="winds-source-data"></div>
 						</div>
 						<div class="metadata-last-updated">
-							<div id="winds-last-updated-spinner"><span class="iconify" data-icon="line-md:loading-loop"></span></div>&nbsp;
-							<div id="winds-last-updated-label"></div>&nbsp;<div id="winds-last-updated"></div>
+							<div class="metadata-warning iconify" id="winds-last-updated-warning" data-icon="mdi:warning-outline"></div>&nbsp;
+							<div class="metadata-spinner iconify" id="winds-last-updated-spinner" data-icon="line-md:loading-loop"></div>&nbsp;
+							<div id="winds-last-updated-label"></div>&nbsp;
+							<div id="winds-last-updated"></div>
 						</div>
 					</div>
 					<div class="metar" id="metar">
@@ -114,11 +117,14 @@
 						<div class="metar-content" id="metar-content">
 						</div>
 						<div class="metadata-source">
-							<div id="metar-source-label"></div>&nbsp;<div id="metar-source-data"></div>
+							<div id="metar-source-label"></div>&nbsp;
+							<div id="metar-source-data"></div>
 						</div>
 						<div class="metadata-last-updated">
-							<div id="metar-last-updated-spinner"><span class="iconify" data-icon="line-md:loading-loop"></span></div>&nbsp;
-							<div id="metar-last-updated-label"></div>&nbsp;<div id="metar-last-updated"></div>
+							<div class="metadata-warning iconify" id="metar-last-updated-warning" data-icon="mdi:warning-outline"></div>&nbsp;
+							<div class="metadata-spinner iconify" id="metar-last-updated-spinner" data-icon="line-md:loading-loop"></div>&nbsp;
+							<div id="metar-last-updated-label"></div>&nbsp;
+							<div id="metar-last-updated"></div>
 						</div>
 					</div>
 					<div class="gafor" id="gafor">
@@ -128,15 +134,21 @@
 						<div class="gafor-content" id="gafor-content">
 						</div>
 						<div class="metadata-source">
-							<div id="gafor-source-label"></div>&nbsp;<div id="gafor-source-data"></div>
+							<div id="gafor-source-label"></div>&nbsp;
+							<div id="gafor-source-data"></div>
 						</div>
 						<div class="metadata-last-updated">
-							<div id="gafor-last-updated-spinner"><span class="iconify" data-icon="line-md:loading-loop"></span></div>&nbsp;
-							<div id="gafor-last-updated-label"></div>&nbsp;<div id="gafor-last-updated"></div>
+							<div class="metadata-warning iconify" id="gafor-last-updated-warning" data-icon="mdi:warning-outline"></div>&nbsp;
+							<div class="metadata-spinner iconify" id="gafor-last-updated-spinner" data-icon="line-md:loading-loop"></div>&nbsp;
+							<div id="gafor-last-updated-label"></div>&nbsp;
+							<div id="gafor-last-updated"></div>
 						</div>
 					</div>
 				</div>
 				<div class="images">
+					<!--
+					<iframe class="layer-map" src="https://www.wunderground.com/wundermap/?renderer=2&Units=metric&zoom=8&lat=37.76834106&lon=37.76834106&wxstn=1&wxstnmode=tw&aq=0&aqvalue=NaN&radar=0&radarType=NaN&radaropa=0.7&satellite=0&satelliteopa=0.8&storm-cells=0&severe=0&severeopa=0.9&sst=0&sstopa=0.8&sstanom=0&sstanomopa=0.8&fronts=0&hur=0&models=0&modelsmodel=ecmwf&modelsopa=0.8&modelstype=SURPRE&lightning=0&fire=0&fireopa=0.9&firePerimeter=0&firePerimeterOpacity=0.9&smoke=0&smokeOpacity=0.9&rep=0&surge=0&tor=0&windstr=0&windstrDensity=undefined&windstreamSpeed=undefined&windstreamSpeedFilter=undefined&windstreamPalette=undefined&hurrArch=0&hurrArchBasin=undefined&hurrArchYear=undefined&hurrArchStorm=undefined"></iframe>
+					-->
 					<!--
 					<iframe class="layer-map" src="https://www.rainviewer.com/map.html?loc=52.1941,5.1416,7&oFa=0&oC=0&oU=0&oCS=1&oF=0&oAP=1&c=1&o=88&lm=1&layer=radar-sat&sm=1&sn=1&hu=0" frameborder="0" allowfullscreen></iframe>
 					?.html	map.html / hurricane-map.html
@@ -158,6 +170,16 @@
 					<img class="layer-cloud" alt="" src="#" id="img-layer-cloud-id">
 					<img class="layer-rain" alt="" src="#" id="img-layer-rain-id">
 					<canvas class="layer-location" id="img-layer-location-id"></canvas>
+					<div class="metadata-source">
+						<div id="images-source-label"></div>&nbsp;
+						<div id="images-source-data"></div>
+					</div>
+					<div class="metadata-last-updated">
+						<div class="metadata-warning iconify" id="images-last-updated-warning" data-icon="mdi:warning-outline"></div>&nbsp;
+						<div class="metadata-spinner iconify" id="images-last-updated-spinner" data-icon="line-md:loading-loop"></div>&nbsp;
+						<div id="images-last-updated-label"></div>&nbsp;
+						<div id="images-last-updated"></div>
+					</div>
 				</div>
 				<div class="widgets">
 					<div class="widget-24hr-forecast">
@@ -193,4 +215,3 @@
 		<script src="scripts/main.js" type="module"></script>
 	</body>
 </html>
-
