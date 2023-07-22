@@ -274,6 +274,7 @@ const UPPERCASES = {
 	'cu/sc': 'CU/SC',
 	'ns/sc': 'NS/SC',
 	'ns/st': 'NS/ST',
+	'sc/as/ns': 'SC/AS/NS',
 	'sc/ac': 'SC/AC',
 	'sc/as': 'SC/AS',
 	'sc/cu': 'SC/CU',
