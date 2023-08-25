@@ -43,7 +43,6 @@ const UPPERCASES = {
 //	'bkn/ovc': 'BKN/OVC',
 	'utc': 'UTC',
 	'vfr': 'VFR',
-	'cavok': 'CAVOK',
 	' fir': ' FIR',
 //	' few': ' FEW',
 //	' sct': ' SCT',
@@ -57,10 +56,6 @@ const UPPERCASES = {
 	' fl1': ' FL1',
 	' Fl0': ' FL0',
 	' Fl1': ' FL1',
-	'-fl0': '-FL0',
-	'-fl1': '-FL1',
-	'-Fl0': '-FL0',
-	'-Fl1': '-FL1',
 	'celcius': 'Celcius',
 	'geisoleerde': 'geïsoleerde',
 	'georienteerd': 'georiënteerd',
@@ -106,7 +101,6 @@ const UPPERCASES = {
 	'ijsland': 'IJsland',
 	'ijsselmeer': 'IJsselmeer',
 	'nederland': 'Nederland',
-	'noorse zee': 'Noorse Zee',
 	'noorse': 'Noorse',
 	'noordzee': 'Noordzee',
 	'noorwegen': 'Noorwegen',
@@ -274,7 +268,6 @@ const UPPERCASES = {
 	'cu/sc': 'CU/SC',
 	'ns/sc': 'NS/SC',
 	'ns/st': 'NS/ST',
-	'sc/as/ns': 'SC/AS/NS',
 	'sc/ac': 'SC/AC',
 	'sc/as': 'SC/AS',
 	'sc/cu': 'SC/CU',
@@ -348,35 +341,40 @@ class Module {
 				/* Get contents from the result from allorigins.win and get the GAFOR bulletin by slicing off any HTML content*/
 				this.gafor = data.slice(data.indexOf('ZCZC'), data.indexOf('</pre>'));
 
-				/* Get day & time when this bulletin was published */
-				this.valid_from = new Date();
-				start = this.gafor.indexOf('EHDB ') + 5;
-				this.valid_from.setDate(
-					Number(this.gafor.slice(start, start + 2))
-				);
-				this.valid_from.setHours(
-					Number(this.gafor.slice(start + 2, start + 4)) - (new Date().getTimezoneOffset() / 60),
-					Number(this.gafor.slice(start + 4, start + 6)),
-					0
-				);
+				/* Check if there's a valid GAFOR bulletin in the document */
+				if (this.gafor.length > 0) {
+					/* Get day & time when this bulletin was published */
+					this.valid_from = new Date();
+					start = this.gafor.indexOf('EHDB ') + 5;
+					this.valid_from.setDate(
+						Number(this.gafor.slice(start, start + 2))
+					);
+					this.valid_from.setHours(
+						Number(this.gafor.slice(start + 2, start + 4)) - (new Date().getTimezoneOffset() / 60),
+						Number(this.gafor.slice(start + 4, start + 6)),
+						0
+					);
 
-				/* De-compose GAFOR */
-				this.gafor_items = {};
-				start = this.gafor.indexOf('GELDIG ');
-				this.gafor_items['GELDIG'] = this.gafor.slice(start + 7, this.gafor.indexOf('\n', start));
-				for (i = 0; i < GAFOR_ITEMS.length; i++) {
-					this.gafor_items[GAFOR_ITEMS[i].toUpperCase()] = this.gafor_decompose(GAFOR_ITEMS[i].toUpperCase());
-				}
-
-				/* Fill document contents */
-				document.getElementById(ID_GAFOR_CONTENT).innerHTML = '';
-				for (i = 0; i < document.config.knmi_gafor.length; i++) {
-					if (this.gafor_items[document.config.knmi_gafor[i].toUpperCase()] !== null) {
-						document.getElementById(ID_GAFOR_CONTENT).innerHTML += '<div class=gafor-item><span class="gafor-item-header">' + document.config.knmi_gafor[i] + ':</span>&nbsp;<span class="gafor-item-text">' + this.gafor_items[document.config.knmi_gafor[i].toUpperCase()] + '</span></div>';
+					/* De-compose GAFOR */
+					this.gafor_items = {};
+					start = this.gafor.indexOf('GELDIG ');
+					this.gafor_items['GELDIG'] = this.gafor.slice(start + 7, this.gafor.indexOf('\n', start));
+					for (i = 0; i < GAFOR_ITEMS.length; i++) {
+						this.gafor_items[GAFOR_ITEMS[i].toUpperCase()] = this.gafor_decompose(GAFOR_ITEMS[i].toUpperCase());
 					}
+
+					/* Fill document contents */
+					document.getElementById(ID_GAFOR_CONTENT).innerHTML = '';
+					for (i = 0; i < document.config.knmi_gafor.length; i++) {
+						if (this.gafor_items[document.config.knmi_gafor[i].toUpperCase()] !== null) {
+							document.getElementById(ID_GAFOR_CONTENT).innerHTML += '<div class=gafor-item><span class="gafor-item-header">' + document.config.knmi_gafor[i] + ':</span>&nbsp;<span class="gafor-item-text">' + this.gafor_items[document.config.knmi_gafor[i].toUpperCase()] + '</span></div>';
+						}
+					}
+					document.getElementById(ID_VALID_FROM).innerHTML = this.valid_from.toLocaleString(document.config.locale, DATE_OPTIONS_LOCAL);
+					document.getElementById(ID_LAST_UPDATED).innerHTML = this.last_updated.toLocaleString(document.config.locale, DATE_OPTIONS_LOCAL);
+				} else {
+					document.getElementById(ID_GAFOR_LAST_UPDATED_WARNING).style.display = 'block';
 				}
-				document.getElementById(ID_VALID_FROM).innerHTML = this.valid_from.toLocaleString(document.config.locale, DATE_OPTIONS_LOCAL);
-				document.getElementById(ID_LAST_UPDATED).innerHTML = this.last_updated.toLocaleString(document.config.locale, DATE_OPTIONS_LOCAL);
 			} else {
 				document.getElementById(ID_GAFOR_LAST_UPDATED_WARNING).style.display = 'block';
 			}
@@ -429,4 +427,3 @@ class Module {
 }
 
 export { Module };
-
