@@ -271,6 +271,7 @@ const UPPERCASES = {
 	' tcu.': ' TCU.',
 	'ac/as': 'AC/AS',
 	'ac/sc': 'AC/SC',
+	'ac/sc/ns': 'AC/SC/NS',
 	'as/sc': 'AS/SC',
 	'as/ac': 'AS/AC',
 	'cb/tcu': 'CB/TCU',
