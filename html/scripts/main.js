@@ -16,10 +16,11 @@ import { Module as WeerSlag } from './modules/weerslag.js';
 import { Module as WindsAloft } from './modules/windsaloft.js';
 
 const ID_DATETIME = 'datetime-data';
+const ID_LAYER_MAP = 'layer-map-id';
 const ID_IMG_LAYER_MAP = 'img-layer-map-id';
 const ID_IMG_LAYER_CLOUD = 'img-layer-cloud-id';
 const ID_IMG_LAYER_RAIN = 'img-layer-rain-id';
-const ID_IFRAME_RAIN = 'layer-rain';
+const ID_IFRAME_RAIN = 'img-layer-rain-id';
 const ID_UPPERWINDS_TABLE = 'uppper-winds-content-data';
 const ID_WEATHER_ALERT = 'weather-alert';
 const ID_COMPASS = 'compass';
@@ -155,10 +156,10 @@ loadConfig().then(response => {
 	//knmi = new KNMI(ID_IMG_LAYER_RAIN);
 	knmi_gafor = new KNMIGafor();
 	//sat24 = new Sat24(ID_IMG_LAYER_CLOUD);
-	//weatherandradar = new WeatherAndRadar(ID_IFRAME_RAIN);
+	weatherandradar = new WeatherAndRadar(ID_LAYER_MAP);
 	//openweathermap = new OpenWeatherMap();
 	weerlive = new WeerLive();
-	weerslag = new WeerSlag(ID_IMG_LAYER_MAP);
+	//weerslag = new WeerSlag(ID_IMG_LAYER_MAP);
 	windsaloft = new WindsAloft();
 
 	// Add event listener for key-down events
@@ -167,6 +168,7 @@ loadConfig().then(response => {
 		if (e.code === "KeyR") {
 			console.log('Manual refresh triggered');
 			knmi_gafor.updateData();
+			weatherandradar.updateData();
 			weerlive.updateData();
 			weerslag.updateData();
 			windsaloft.updateData();
@@ -199,4 +201,3 @@ loadConfig().then(response => {
 		}
 	});
 })
-
