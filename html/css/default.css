@@ -181,6 +181,7 @@ header,
 }
 .images {
 	width: 50%;
+	min-height: 50vw; /* TODO calculate height by doing 100vw/100% - header - footer */
 	margin: 3px;
 	border-radius: 8px;
 	border-color: var(--block-border-color);
