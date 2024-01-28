@@ -51,8 +51,14 @@
 		"location": "8115883"
 	},
 	"weatherandradar": {
-		"zoom": 8,
-		"layer": "wr"
+		"zoom": 7.6,
+		"layer": "wr",
+		"hideControls": false,
+		"timezone": "UTC",
+		"timeformat": "HH:mm",
+		"tempunit": "celcius",
+		"windunit": "kmh",
+		"period": "periodCurrentHighRes"
 	},
 	"weerlive": {
 		"key": "0000000000"
