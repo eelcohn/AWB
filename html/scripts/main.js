@@ -26,15 +26,6 @@ const ID_WEATHER_ALERT = 'weather-alert';
 const ID_COMPASS = 'compass';
 const ID_METAR = 'metar';
 
-var knmi;
-var knmi_gafor;
-var sat24;
-var weatherandradar;
-var openweathermap;
-var weerlive;
-var weerslag;
-var windsaloft;
-
 var ip;
 var showip_counter = 0;
 
@@ -153,25 +144,24 @@ loadConfig().then(response => {
 		}
 	}
 
-	//knmi = new KNMI(ID_IMG_LAYER_RAIN);
-	knmi_gafor = new KNMIGafor();
-	//sat24 = new Sat24(ID_IMG_LAYER_CLOUD);
-	weatherandradar = new WeatherAndRadar(ID_LAYER_MAP);
-	//openweathermap = new OpenWeatherMap();
-	weerlive = new WeerLive();
+	document.modules = {};
+	//document.modules.knmi = new KNMI(ID_IMG_LAYER_RAIN);
+	document.modules.knmi_gafor = new KNMIGafor();
+	//document.modules.sat24 = new Sat24(ID_IMG_LAYER_CLOUD);
+	document.modules.weatherandradar = new WeatherAndRadar(ID_LAYER_MAP);
+	//document.modules.openweathermap = new OpenWeatherMap();
+	document.modules.weerlive = new WeerLive();
 	//weerslag = new WeerSlag(ID_IMG_LAYER_MAP);
-	windsaloft = new WindsAloft();
+	document.modules.windsaloft = new WindsAloft();
 
 	// Add event listener for key-down events
 	document.addEventListener('keydown', (e) => {
 		/* Key 'R' for manual refresh */
 		if (e.code === "KeyR") {
 			console.log('Manual refresh triggered');
-			knmi_gafor.updateData();
-			weatherandradar.updateData();
-			weerlive.updateData();
-			weerslag.updateData();
-			windsaloft.updateData();
+			for (var module in document.modules) {
+				document.modules[module].updateData();
+			}
 		}
 
 		/* Key 'I' to show local IP address */
