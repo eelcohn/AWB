@@ -111,7 +111,7 @@ $HTTP["remoteip"] !~ "127.0.0.1" {
 ' >> "/etc/lighttpd/lighttpd.conf"
 # Enable php-curl extension
 PHPVER=$(php -v | head -n 1 | cut --delimiter=" " -f 2 | cut --delimiter="." -f1-2)
-sed -i 's/;extension=curl/extension=curl/' '/etc/php/${PHPVER}/cgi/php.ini'
+sed -i "s/;extension=curl/extension=curl/" "/etc/php/${PHPVER}/cgi/php.ini"
 
 # -------------------
 # Install application
