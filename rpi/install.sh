@@ -21,7 +21,7 @@ fi
 # ----------------------------------
 # Check Raspbian OS codename
 # ----------------------------------
-if [[ -n $(lsb_release -c -s | grep "${RASPBIAN_OS_CODENAME}) ]]
+if [[ $(lsb_release -c -s | grep "${RASPBIAN_OS_CODENAME}") != "${RASPBIAN_OS_CODENAME}" ]]
 then
 	echo "This script was intended for Raspbian OS codename ${RASPBIAN_OS_CODENAME}. You're using a different Raspbian version:"
  	lsb_release -a
