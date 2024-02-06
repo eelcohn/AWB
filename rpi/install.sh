@@ -87,7 +87,7 @@ cp /etc/xdg/lxsession/LXDE-pi/autostart /home/${USER}/.config/lxsession/LXDE-pi/
 # Install webserver and PHP
 # -------------------------
 echo "`date +%c` Installing lighttpd and PHP" >> "${LOG_FILE}" 2>&1
-apt-get install -y lighttpd php7.4-common php7.4-cgi php7.4-curl php7.4 >> "${LOG_FILE}" 2>&1
+apt-get install -y lighttpd php php-common php-cgi php-curl >> "${LOG_FILE}" 2>&1
 # Enable the FastCGI PHP module
 lighty-enable-mod fastcgi-php >> "${LOG_FILE}" 2>&1
 # Add the current user to the www-data group
@@ -99,7 +99,8 @@ $HTTP["remoteip"] !~ "127.0.0.1" {
 }
 ' >> "/etc/lighttpd/lighttpd.conf"
 # Enable php-curl extension
-sed -i 's/;extension=curl/extension=curl/' '/etc/php/7.4/cgi/php.ini'
+PHPVER=$(php -v | head -n 1 | cut --delimiter=" " -f 2 | cut --delimiter="." -f1-2)
+sed -i 's/;extension=curl/extension=curl/' '/etc/php/${PHPVER}/cgi/php.ini'
 
 # -------------------
 # Install application
