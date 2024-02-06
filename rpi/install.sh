@@ -7,6 +7,7 @@ APP_NAME="AWB"
 APP_SOURCE="https://github.com/eelcohn/${APP_NAME}"
 LOG_FILE="/var/log/${APP_NAME}/install.log"
 WEATHER_URL="http://127.0.0.1/"
+RASPBIAN_OS_CODENAME="bookworm"
 
 # ----------------------------------
 # Check if user has root permissions
@@ -15,6 +16,16 @@ if [ "$EUID" -ne 0 ]
 then
 	echo "Please run as root"
 	exit
+fi
+
+# ----------------------------------
+# Check Raspbian OS codename
+# ----------------------------------
+if [[ -n $(lsb_release -c -s | grep "${RASPBIAN_OS_CODENAME}) ]]
+then
+	echo "This script was intended for Raspbian OS codename ${RASPBIAN_OS_CODENAME}. You're using a different Raspbian version:"
+ 	lsb_release -a
+	read -p "Are you sure you want to continue?"
 fi
 
 # ------------------------------------------------------------------------------------------------------
