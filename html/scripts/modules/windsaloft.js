@@ -112,14 +112,14 @@ class Module {
 					if (this.temperature[x] <= 0) {
 						if (x >= 1000) {
 							this.freezing_altitude = x - 1000;
+
+							// Calculate the freezing level when it's not at one of the pre-defined altitudes
+							if (this.temperature[this.freezing_altitude] !== FREEZING_TEMPERATURE) {
+								var diff = Math.abs(this.temperature[this.freezing_altitude]) + Math.abs(this.temperature[this.freezing_altitude + 1000]);
+								this.freezing_altitude += Number((Math.abs(this.temperature[this.freezing_altitude]) / diff * 1000).toFixed(0));
+							}
 						} else {
 							this.freezing_altitude = x;
-						}
-
-						// Calculate the freezing level when it's not at one of the pre-defined altitudes
-						if (this.temperature[this.freezing_altitude] !== FREEZING_TEMPERATURE) {
-							var diff = Math.abs(this.temperature[this.freezing_altitude]) + Math.abs(this.temperature[this.freezing_altitude + 1000]);
-							this.freezing_altitude += Number((Math.abs(this.temperature[this.freezing_altitude]) / diff * 1000).toFixed(0));
 						}
 						break;
 					}
@@ -159,7 +159,7 @@ class Module {
 				}
 
 				if (this.freezing_altitude === null) {
-					document.getElementById(ID_FREEZING_ALTITUDE).innerHTML = '-&nbsp;' + UNIT_ALTITUDE;
+					document.getElementById(ID_FREEZING_ALTITUDE).innerHTML = '-&nbsp;' + UNIT_FEET;
 					setTrend(ID_FREEZING_ALTITUDE_TREND, 0, 0);
 				}
 
