@@ -153,6 +153,17 @@ sed -i 's/#hdmi_mode=1/hdmi_mode=16/' '/boot/config.txt'
 #echo "`date +%c` Removing unused packages and services" >> "${LOG_FILE}" 2>&1
 #/opt/${APP_NAME}/rpi/lockdown.sh >> "${LOG_FILE}" 2>&1
 
+# -------------------------------------------------------
+# Autostart kiosk script
+# -------------------------------------------------------
+cat <<EOT >> /home/weather/.config/wayfire.ini
+[core]
+plugins = autostart hide-cursor
+
+[autostart]
+kiosk = chromium-browser --noerrdialogs --disable-infobars --check-for-update-interval=31536000 --enable-logging --kiosk ${WEATHER_URL}
+EOT
+
 # -------
 # Restart
 # -------
