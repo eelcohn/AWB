@@ -3,7 +3,7 @@ Description=TightVNC remote desktop server
 After=network.target
  
 [Service]
-User=<USER>
+User=USERNAME
 Type=forking
 ExecStart=/usr/bin/vncserver :1
 ExecStop=/usr/bin/vncserver -kill :1
