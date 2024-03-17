@@ -70,7 +70,6 @@ echo 'Unattended-Upgrade::Origins-Pattern {
 # ----------------
 echo "`date +%c` Installing packages" >> "${LOG_FILE}" 2>&1
 sudo apt-get install -y chromium-browser git nano sed tightvncserver unattended-upgrades >> "${LOG_FILE}" 2>&1
-# update-alternatives --config x-session-manager >> "${LOG_FILE}" 2>&1
 
 # -------------------------
 # Install webserver and PHP
@@ -89,7 +88,7 @@ $HTTP["remoteip"] !~ "127.0.0.1" {
 ' >> "/etc/lighttpd/lighttpd.conf"
 # Enable php-curl extension
 PHPVER=$(php -v | head -n 1 | cut --delimiter=" " -f 2 | cut --delimiter="." -f1-2)
-sed -i "s/;extension=curl/extension=curl/" "/etc/php/${PHPVER}/cgi/php.ini"
+find "/etc/php/${PHPVER}/" -name php.ini -exec sed -i "s/;extension=curl/extension=curl/" "{}" \;
 
 # -------------------
 # Install application
@@ -112,24 +111,27 @@ timedatectl set-ntp True >> "${LOG_FILE}" 2>&1
 # Add cron job for daily updates and reboot
 # -----------------------------------------
 echo "`date +%c` Adding cron job" >> "${LOG_FILE}" 2>&1
-
-grep -qxF "0 1 * * * /usr/bin/bash /opt/${APP_NAME}/rpi/updater.sh" "/var/spool/cron/crontabs/root" || echo "0 1 * * * /usr/bin/bash /opt/${APP_NAME}/rpi/updater.sh" >> "/var/spool/cron/crontabs/root"
-chown root:crontab /var/spool/cron/crontabs/root >> "${LOG_FILE}" 2>&1
-chmod 600 /var/spool/cron/crontabs/root >> "${LOG_FILE}" 2>&1
-systemctl force-reload cron >> "${LOG_FILE}" 2>&1
+# Create crontab file if it doesn't exist yet
+[[ -e "/var/spool/cron/crontabs/${USERNAME}" ]] || touch "/var/spool/cron/crontabs/${USERNAME}" >> "${LOG_FILE}" 2>&1
+# Add daily cron job
+grep -qxF "0 1 * * * /usr/bin/bash /opt/${APP_NAME}/rpi/updater.sh" "/var/spool/cron/crontabs/${USERNAME}" || echo "0 1 * * * /usr/bin/bash /opt/${APP_NAME}/rpi/updater.sh" >> "/var/spool/cron/crontabs/${USERNAME}"
+chown ${USERNAME}:crontab /var/spool/cron/crontabs/${USERNAME} >> "${LOG_FILE}" 2>&1
+chmod 600 /var/spool/cron/crontabs/${USERNAME} >> "${LOG_FILE}" 2>&1
+sudo systemctl force-reload cron >> "${LOG_FILE}" 2>&1
 
 # ----------------------
 # Alter video resolution
 # ----------------------
 # Does not work for Wayfire/Wayland:
-#xrandr -s 1920x1080
+#xrandr -s 1920x1080 >> "${LOG_FILE}" 2>&1
 
 # -------------------------------------------------------
 # Configure TightVNC server
 # -------------------------------------------------------
-cp /opt/${APP_NAME}/rpi/tightvncserver.service /etc/systemd/system/
-sed -i "s/USERNAME/${USERNAME}/" /etc/systemd/system/tightvncserver.service
-sudo systemctl enable vncserver
+echo "`date +%c` Configuring TightVNC" >> "${LOG_FILE}" 2>&1
+cp /opt/${APP_NAME}/rpi/tightvncserver.service /etc/systemd/system/ >> "${LOG_FILE}" 2>&1
+sed -i "s/USERNAME/${USERNAME}/" /etc/systemd/system/tightvncserver.service >> "${LOG_FILE}" 2>&1
+sudo systemctl enable vncserver >> "${LOG_FILE}" 2>&1
 
 # -------------------------------------------------------
 # Remove unused packages and services to improve security
@@ -152,6 +154,11 @@ EOT
 # Restart
 # -------
 echo "`date +%c` Installer done for ${APP_NAME}" >> "${LOG_FILE}" 2>&1
-echo 'Restarting in 10 seconds...'
-sleep 10
-shutdown -r now
+echo -n 'Restarting in 10 seconds'
+for i in {0..10}
+do
+	sleep 1
+ 	echo -n .
+done
+
+sudo shutdown -r now
