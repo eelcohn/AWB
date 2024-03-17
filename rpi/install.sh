@@ -8,7 +8,6 @@ APP_SOURCE="https://github.com/eelcohn/${APP_NAME}"
 LOG_FILE="/var/log/${APP_NAME}/install.log"
 WEATHER_URL="http://127.0.0.1/"
 RASPBIAN_OS_CODENAME="bookworm"
-USERNAME="$(whoami)"
 
 # ----------------------------------
 # Check if user has root permissions
@@ -37,18 +36,12 @@ chown root:root "/var/log/${APP_NAME}/"
 echo "`date +%c` Installer start for ${APP_NAME}" >> "${LOG_FILE}" 2>&1
 tail -f "${LOG_FILE}" &
 
-# ---------------------------------------
-# Disable screen saver and energy savings
-# ---------------------------------------
-xset s noblank >> "${LOG_FILE}" 2>&1
-xset s off >> "${LOG_FILE}" 2>&1
-xset -dpms >> "${LOG_FILE}" 2>&1
-
 # -------------
 # Update system
 # -------------
 echo "`date +%c` Updating system" >> "${LOG_FILE}" 2>&1
 sudo apt-get -y update >> "${LOG_FILE}" 2>&1
+sudo apt-get -y dist-upgrade >> "${LOG_FILE}" 2>&1
 sudo apt-get -y --with-new-pkgs upgrade >> "${LOG_FILE}" 2>&1
 sudo apt-get -y clean >> "${LOG_FILE}" 2>&1
 sudo apt-get -y autoremove >> "${LOG_FILE}" 2>&1
@@ -112,11 +105,11 @@ timedatectl set-ntp True >> "${LOG_FILE}" 2>&1
 # -----------------------------------------
 echo "`date +%c` Adding cron job" >> "${LOG_FILE}" 2>&1
 # Create crontab file if it doesn't exist yet
-[[ -e "/var/spool/cron/crontabs/${USERNAME}" ]] || touch "/var/spool/cron/crontabs/${USERNAME}" >> "${LOG_FILE}" 2>&1
+[[ -e "/var/spool/cron/crontabs/${USER}" ]] || touch "/var/spool/cron/crontabs/${USER}" >> "${LOG_FILE}" 2>&1
 # Add daily cron job
-grep -qxF "0 1 * * * /usr/bin/bash /opt/${APP_NAME}/rpi/updater.sh" "/var/spool/cron/crontabs/${USERNAME}" || echo "0 1 * * * /usr/bin/bash /opt/${APP_NAME}/rpi/updater.sh" >> "/var/spool/cron/crontabs/${USERNAME}"
-chown ${USERNAME}:crontab /var/spool/cron/crontabs/${USERNAME} >> "${LOG_FILE}" 2>&1
-chmod 600 /var/spool/cron/crontabs/${USERNAME} >> "${LOG_FILE}" 2>&1
+grep -qxF "0 1 * * * /usr/bin/bash /opt/${APP_NAME}/rpi/updater.sh" "/var/spool/cron/crontabs/${USER}" || echo "0 1 * * * /usr/bin/bash /opt/${APP_NAME}/rpi/updater.sh" >> "/var/spool/cron/crontabs/${USERNAME}"
+chown ${USER}:crontab /var/spool/cron/crontabs/${USER} >> "${LOG_FILE}" 2>&1
+chmod 600 /var/spool/cron/crontabs/${USER} >> "${LOG_FILE}" 2>&1
 sudo systemctl force-reload cron >> "${LOG_FILE}" 2>&1
 
 # ----------------------
@@ -130,7 +123,7 @@ sudo systemctl force-reload cron >> "${LOG_FILE}" 2>&1
 # -------------------------------------------------------
 echo "`date +%c` Configuring TightVNC" >> "${LOG_FILE}" 2>&1
 cp /opt/${APP_NAME}/rpi/tightvncserver.service /etc/systemd/system/ >> "${LOG_FILE}" 2>&1
-sed -i "s/USERNAME/${USERNAME}/" /etc/systemd/system/tightvncserver.service >> "${LOG_FILE}" 2>&1
+sed -i "s/USERNAME/${USER}/" /etc/systemd/system/tightvncserver.service >> "${LOG_FILE}" 2>&1
 sudo systemctl enable vncserver >> "${LOG_FILE}" 2>&1
 
 # -------------------------------------------------------
@@ -161,4 +154,4 @@ do
  	echo -n .
 done
 
-sudo shutdown -r now
+sudo shutdown -r now >> "${LOG_FILE}" 2>&1
