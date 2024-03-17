@@ -34,6 +34,7 @@ fi
 # Update system
 # -------------
 echo "`date +%c` `apt-get -qq -y update`" >> "${LOG_FILE}" 2>&1
+echo "`date +%c` `apt-get -qq -y dist-upgrade`" >> "${LOG_FILE}" 2>&1
 echo "`date +%c` `apt-get -qq -y --with-new-pkgs upgrade`" >> "${LOG_FILE}" 2>&1
 
 # ------------------
