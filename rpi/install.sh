@@ -68,7 +68,7 @@ echo 'Unattended-Upgrade::Origins-Pattern {
 # Install packages
 # ----------------
 echo "`date +%c` Installing packages" >> "${LOG_FILE}" 2>&1
-sudo apt-get install -y chromium-browser git nano sed unattended-upgrades >> "${LOG_FILE}" 2>&1
+sudo apt-get install -y chromium-browser git nano sed tightvncserver unattended-upgrades >> "${LOG_FILE}" 2>&1
 # update-alternatives --config x-session-manager >> "${LOG_FILE}" 2>&1
 
 # -------------------------
