@@ -8,6 +8,7 @@ APP_SOURCE="https://github.com/eelcohn/${APP_NAME}"
 LOG_FILE="/var/log/${APP_NAME}/install.log"
 WEATHER_URL="http://127.0.0.1/"
 RASPBIAN_OS_CODENAME="bookworm"
+USERNAME="$(whoami)"
 
 # ----------------------------------
 # Check if user has root permissions
@@ -122,6 +123,13 @@ systemctl force-reload cron >> "${LOG_FILE}" 2>&1
 # ----------------------
 # Does not work for Wayfire/Wayland:
 #xrandr -s 1920x1080
+
+# -------------------------------------------------------
+# Configure TightVNC server
+# -------------------------------------------------------
+cp /opt/${APP_NAME}/rpi/tightvncserver.service /etc/systemd/system/
+sed -i "s/USERNAME/${USERNAME}/" /etc/systemd/system/tightvncserver.service
+sudo systemctl enable vncserver
 
 # -------------------------------------------------------
 # Remove unused packages and services to improve security
