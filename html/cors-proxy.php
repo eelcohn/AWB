@@ -22,7 +22,7 @@ if ($_SERVER['HTTP_X_REQUEST_URL'] != '') {
 			curl_setopt($ch, CURLOPT_URL, $_SERVER['HTTP_X_REQUEST_URL']);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, True);
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, CURL_TIMEOUT);
+			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $CURL_TIMEOUT);
 			$data = curl_exec($ch);
 
 			if(!curl_errno($ch)) {
