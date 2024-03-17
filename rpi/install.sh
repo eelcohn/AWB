@@ -68,31 +68,8 @@ echo 'Unattended-Upgrade::Origins-Pattern {
 # Install packages
 # ----------------
 echo "`date +%c` Installing packages" >> "${LOG_FILE}" 2>&1
-sudo apt-get install -y git lxde-core lxde nano sed task-lxde-desktop unattended-upgrades unclutter xdotool >> "${LOG_FILE}" 2>&1
+sudo apt-get install -y chromium-browser git nano sed unattended-upgrades >> "${LOG_FILE}" 2>&1
 # update-alternatives --config x-session-manager >> "${LOG_FILE}" 2>&1
-
-# -----------------------
-# Disable screen blanking
-# -----------------------
-echo "`date +%c` Altering screensaver and energy settings" >> "${LOG_FILE}" 2>&1
-grep -qxF "@xset s noblank" /etc/xdg/lxsession/LXDE-pi/autostart || echo "@xset s noblank" >> /etc/xdg/lxsession/LXDE-pi/autostart
-# Disable Screensaver
-grep -qxF "@xset s off" /etc/xdg/lxsession/LXDE-pi/autostart || echo "@xset s off" >> /etc/xdg/lxsession/LXDE-pi/autostart
-# Disable display power management system
-grep -qxF "@xset -dpms" /etc/xdg/lxsession/LXDE-pi/autostart || echo "@xset -dpms" >> /etc/xdg/lxsession/LXDE-pi/autostart
-# Hide mouse-cursor when idle
-grep -qxF "@unclutter -idle 5" /etc/xdg/lxsession/LXDE-pi/autostart || echo "@unclutter -idle 1" >> /etc/xdg/lxsession/LXDE-pi/autostart
-# Delete any old Chromium profile
-grep -qxF "@rm -rf ~/.config/chromium" /etc/xdg/lxsession/LXDE-pi/autostart || echo "@rm -rf ~/.config/chromium" >> /etc/xdg/lxsession/LXDE-pi/autostart
-# Autostart browser and load webpage
-grep -qxF "@chromium-browser --noerrdialogs --disable-infobars --check-for-update-interval=31536000 --enable-logging --kiosk ${WEATHER_URL} &" /etc/xdg/lxsession/LXDE-pi/autostart || echo "@chromium-browser --noerrdialogs --disable-infobars --check-for-update-interval=31536000 --enable-logging --kiosk ${WEATHER_URL} &" >> /etc/xdg/lxsession/LXDE-pi/autostart
-#grep -qxF "@firefox-esr -foreground --kiosk ${WEATHER_URL} &" /etc/xdg/lxsession/LXDE-pi/autostart || echo "@firefox-esr -foreground --kiosk ${WEATHER_URL} &" >> /etc/xdg/lxsession/LXDE-pi/autostart
-#@lxpanel --profile LXDE-pi
-#@pcmanfm --desktop --profile LXDE-pi
-#@xscreensaver -no-splash
-# Copy desktop settings to user
-mkdir -p /home/${USER}/.config/lxsession/LXDE-pi >> "${LOG_FILE}" 2>&1
-cp /etc/xdg/lxsession/LXDE-pi/autostart /home/${USER}/.config/lxsession/LXDE-pi/ >> "${LOG_FILE}" 2>&1
 
 # -------------------------
 # Install webserver and PHP
@@ -134,6 +111,7 @@ timedatectl set-ntp True >> "${LOG_FILE}" 2>&1
 # Add cron job for daily updates and reboot
 # -----------------------------------------
 echo "`date +%c` Adding cron job" >> "${LOG_FILE}" 2>&1
+
 grep -qxF "0 1 * * * /usr/bin/bash /opt/${APP_NAME}/rpi/updater.sh" "/var/spool/cron/crontabs/root" || echo "0 1 * * * /usr/bin/bash /opt/${APP_NAME}/rpi/updater.sh" >> "/var/spool/cron/crontabs/root"
 chown root:crontab /var/spool/cron/crontabs/root >> "${LOG_FILE}" 2>&1
 chmod 600 /var/spool/cron/crontabs/root >> "${LOG_FILE}" 2>&1
@@ -142,10 +120,8 @@ systemctl force-reload cron >> "${LOG_FILE}" 2>&1
 # ----------------------
 # Alter video resolution
 # ----------------------
-sed -i 's/#framebuffer_width=1280/framebuffer_width=1920/' '/boot/config.txt'
-sed -i 's/#framebuffer_height=720/framebuffer_height=1080/' '/boot/config.txt'
-sed -i 's/#hdmi_group=1/hdmi_group=1/' '/boot/config.txt'
-sed -i 's/#hdmi_mode=1/hdmi_mode=16/' '/boot/config.txt'
+# Does not work for Wayfire/Wayland:
+#xrandr -s 1920x1080
 
 # -------------------------------------------------------
 # Remove unused packages and services to improve security
@@ -161,7 +137,7 @@ cat <<EOT >> /home/weather/.config/wayfire.ini
 plugins = autostart hide-cursor
 
 [autostart]
-kiosk = chromium-browser --noerrdialogs --disable-infobars --check-for-update-interval=31536000 --enable-logging --kiosk ${WEATHER_URL}
+kiosk = rm -rf ~/.config/chromium && chromium-browser --noerrdialogs --disable-infobars --check-for-update-interval=31536000 --enable-logging --kiosk ${WEATHER_URL}
 EOT
 
 # -------
@@ -171,4 +147,3 @@ echo "`date +%c` Installer done for ${APP_NAME}" >> "${LOG_FILE}" 2>&1
 echo 'Restarting in 10 seconds...'
 sleep 10
 shutdown -r now
-
