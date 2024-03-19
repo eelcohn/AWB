@@ -7,7 +7,6 @@ APP_NAME="AWB"
 APP_SOURCE="https://github.com/eelcohn/${APP_NAME}"
 LOG_FILE="/var/log/${APP_NAME}/install.log"
 WEATHER_URL="http://127.0.0.1/"
-RASPBIAN_OS_CODENAME="bookworm"
 
 # ----------------------------------
 # Check if user has root permissions
@@ -21,11 +20,20 @@ fi
 # ----------------------------------
 # Check Raspbian OS codename
 # ----------------------------------
-if [[ $(lsb_release -c -s | grep "${RASPBIAN_OS_CODENAME}") != "${RASPBIAN_OS_CODENAME}" ]]
+if ( [[ $(lsb_release -c -s | grep "buster") != "buster" ]] && [[ $(lsb_release -c -s | grep "bookworm") != "bookworm" ]] )
 then
-	echo "This script was intended for Raspbian OS codename ${RASPBIAN_OS_CODENAME}. You're using a different Raspbian version:"
+	echo "This script was intended for Raspbian OS codename 'buster' or 'bookworm'. You're using a different Raspbian version:"
  	lsb_release -a
 	read -p "Are you sure you want to continue?"
+fi
+
+# ----------------------------------
+# Check the window manager type
+# ----------------------------------
+if ( [[ ${XDG_SESSION_TYPE != "X11" ]] && [[ ${XDG_SESSION_TYPE != "wayland" ]] ) 
+then
+	echo "This script only works for the X11 or Wayland window manager, and you're using the ${XDG_SESSION_TYPE} window manager."
+	exit
 fi
 
 # ------------------------------------------------------------------------------------------------------
@@ -33,8 +41,10 @@ fi
 # ------------------------------------------------------------------------------------------------------
 mkdir -m 755 -p "/var/log/${APP_NAME}/"
 chown root:root "/var/log/${APP_NAME}/"
-echo "`date +%c` Installer start for ${APP_NAME}" >> "${LOG_FILE}" 2>&1
+touch "${LOG_FILE}"
 tail -f "${LOG_FILE}" &
+echo "`date +%c` Installer start for ${APP_NAME}" >> "${LOG_FILE}" 2>&1
+echo "`date +%c` Window manager: ${XDG_SESSION_TYPE}" >> "${LOG_FILE}" 2>&1
 
 # -------------
 # Update system
@@ -43,7 +53,7 @@ echo "`date +%c` Updating system" >> "${LOG_FILE}" 2>&1
 sudo apt-get -y update >> "${LOG_FILE}" 2>&1
 sudo apt-get -y dist-upgrade >> "${LOG_FILE}" 2>&1
 sudo apt-get -y --with-new-pkgs upgrade >> "${LOG_FILE}" 2>&1
-sudo apt-get -y clean >> "${LOG_FILE}" 2>&1
+sudo apt-get -y clean >> "${LOG_FILE}" 2>&1 
 sudo apt-get -y autoremove >> "${LOG_FILE}" 2>&1
 
 # ----------------------
@@ -81,7 +91,7 @@ $HTTP["remoteip"] !~ "127.0.0.1" {
 ' >> "/etc/lighttpd/lighttpd.conf"
 # Enable php-curl extension
 PHPVER=$(php -v | head -n 1 | cut --delimiter=" " -f 2 | cut --delimiter="." -f1-2)
-find "/etc/php/${PHPVER}/" -name php.ini -exec sed -i "s/;extension=curl/extension=curl/" "{}" \;
+find "/etc/php/${PHPVER}/" -name php.ini -exec sed -i "s/;extension=curl/extension=curl/" "{}" \; >> "${LOG_FILE}" 2>&1
 
 # -------------------
 # Install application
@@ -112,12 +122,6 @@ chown ${USER}:crontab /var/spool/cron/crontabs/${USER} >> "${LOG_FILE}" 2>&1
 chmod 600 /var/spool/cron/crontabs/${USER} >> "${LOG_FILE}" 2>&1
 sudo systemctl force-reload cron >> "${LOG_FILE}" 2>&1
 
-# ----------------------
-# Alter video resolution
-# ----------------------
-# Does not work for Wayfire/Wayland:
-#xrandr -s 1920x1080 >> "${LOG_FILE}" 2>&1
-
 # -------------------------------------------------------
 # Configure TightVNC server
 # -------------------------------------------------------
@@ -132,16 +136,11 @@ sudo systemctl enable vncserver >> "${LOG_FILE}" 2>&1
 #echo "`date +%c` Removing unused packages and services" >> "${LOG_FILE}" 2>&1
 #/opt/${APP_NAME}/rpi/lockdown.sh >> "${LOG_FILE}" 2>&1
 
-# -------------------------------------------------------
-# Autostart kiosk script
-# -------------------------------------------------------
-cat <<EOT >> /home/weather/.config/wayfire.ini
-[core]
-plugins = autostart hide-cursor
-
-[autostart]
-kiosk = rm -rf ~/.config/chromium && chromium-browser --noerrdialogs --disable-infobars --check-for-update-interval=31536000 --enable-logging --kiosk ${WEATHER_URL}
-EOT
+# ----------------------
+# Execute window-manager-specific commands
+# ----------------------
+echo "`date +%c` Configuring ${XDG_SESSION_TYPE}-specific options" >> "${LOG_FILE}" 2>&1
+source "/opt/${APP_NAME}/rpi/install-${XDG_SESSION_TYPE}.sh"
 
 # -------
 # Restart
