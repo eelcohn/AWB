@@ -14,7 +14,7 @@ fi
 # ----------------------------------
 # Check the current window manager
 # ----------------------------------
-if [[ ${XDG_SESSION_TYPE != "X11" ]]
+if [[ "${XDG_SESSION_TYPE}" != "X11" ]]
 then
 	echo "This script only works for the X11 window manager, and you're using the ${XDG_SESSION_TYPE} window manager."
 	exit
@@ -30,14 +30,14 @@ xset -dpms >> "${LOG_FILE}" 2>&1
 # ----------------
 # Install packages
 # ----------------
-echo "`date +%c` Installing packages" >> "${LOG_FILE}" 2>&1
-sudo apt-get install -y lxde-core lxde task-lxde-desktop unclutter xdotool >> "${LOG_FILE}" 2>&1
+echo "$(date +%c) Installing packages" >> "${LOG_FILE}" 2>&1
+apt-get install -y lxde-core lxde task-lxde-desktop unclutter xdotool >> "${LOG_FILE}" 2>&1
 # update-alternatives --config x-session-manager >> "${LOG_FILE}" 2>&1
 
 # -----------------------
 # Disable screen blanking
 # -----------------------
-echo "`date +%c` Altering screensaver and energy settings" >> "${LOG_FILE}" 2>&1
+echo "$(date +%c) Altering screensaver and energy settings" >> "${LOG_FILE}" 2>&1
 grep -qxF "@xset s noblank" /etc/xdg/lxsession/LXDE-pi/autostart || echo "@xset s noblank" >> /etc/xdg/lxsession/LXDE-pi/autostart
 # Disable Screensaver
 grep -qxF "@xset s off" /etc/xdg/lxsession/LXDE-pi/autostart || echo "@xset s off" >> /etc/xdg/lxsession/LXDE-pi/autostart
@@ -54,8 +54,8 @@ grep -qxF "@chromium-browser --noerrdialogs --disable-infobars --check-for-updat
 #@pcmanfm --desktop --profile LXDE-pi
 #@xscreensaver -no-splash
 # Copy desktop settings to user
-mkdir -p /home/${USER}/.config/lxsession/LXDE-pi >> "${LOG_FILE}" 2>&1
-cp /etc/xdg/lxsession/LXDE-pi/autostart /home/${USER}/.config/lxsession/LXDE-pi/ >> "${LOG_FILE}" 2>&1
+mkdir -p "/home/${USER}/.config/lxsession/LXDE-pi" >> "${LOG_FILE}" 2>&1
+cp "/etc/xdg/lxsession/LXDE-pi/autostart" "/home/${USER}/.config/lxsession/LXDE-pi/" >> "${LOG_FILE}" 2>&1
 
 # ----------------------
 # Alter video resolution
