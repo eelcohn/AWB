@@ -20,6 +20,8 @@ then
 	exit
 fi
 
+echo "$(date +%c) Configuring X11" >> "${LOG_FILE}" 2>&1
+
 # ---------------------------------------
 # Disable screen saver and energy savings
 # ---------------------------------------
