@@ -20,7 +20,7 @@ fi
 # ----------------------------------
 # Check Raspbian OS codename
 # ----------------------------------
-if ( [[ $(lsb_release -c -s | grep "buster") != "buster" ]] && [[ $(lsb_release -c -s | grep "bookworm") != "bookworm" ]] )
+if [[ $(lsb_release -c -s | grep "buster") != "buster" ]] && [[ $(lsb_release -c -s | grep "bookworm") != "bookworm" ]]
 then
 	echo "This script was intended for Raspbian OS codename 'buster' or 'bookworm'. You're using a different Raspbian version:"
  	lsb_release -a
@@ -30,7 +30,7 @@ fi
 # ----------------------------------
 # Check the window manager type
 # ----------------------------------
-if ( [[ ${XDG_SESSION_TYPE != "X11" ]] && [[ ${XDG_SESSION_TYPE != "wayland" ]] ) 
+if [[ ${XDG_SESSION_TYPE} != "X11" ]] && [[ ${XDG_SESSION_TYPE} != "wayland" ]]
 then
 	echo "This script only works for the X11 or Wayland window manager, and you're using the ${XDG_SESSION_TYPE} window manager."
 	exit
@@ -43,23 +43,23 @@ mkdir -m 755 -p "/var/log/${APP_NAME}/"
 chown root:root "/var/log/${APP_NAME}/"
 touch "${LOG_FILE}"
 tail -f "${LOG_FILE}" &
-echo "`date +%c` Installer start for ${APP_NAME}" >> "${LOG_FILE}" 2>&1
-echo "`date +%c` Window manager: ${XDG_SESSION_TYPE}" >> "${LOG_FILE}" 2>&1
+echo "$(date +%c) Installer start for ${APP_NAME}" >> "${LOG_FILE}" 2>&1
+echo "$(date +%c) Window manager: ${XDG_SESSION_TYPE}" >> "${LOG_FILE}" 2>&1
 
 # -------------
 # Update system
 # -------------
-echo "`date +%c` Updating system" >> "${LOG_FILE}" 2>&1
-sudo apt-get -y update >> "${LOG_FILE}" 2>&1
-sudo apt-get -y dist-upgrade >> "${LOG_FILE}" 2>&1
-sudo apt-get -y --with-new-pkgs upgrade >> "${LOG_FILE}" 2>&1
-sudo apt-get -y clean >> "${LOG_FILE}" 2>&1 
-sudo apt-get -y autoremove >> "${LOG_FILE}" 2>&1
+echo "$(date +%c) Updating system" >> "${LOG_FILE}" 2>&1
+apt-get -y update >> "${LOG_FILE}" 2>&1
+apt-get -y dist-upgrade >> "${LOG_FILE}" 2>&1
+apt-get -y --with-new-pkgs upgrade >> "${LOG_FILE}" 2>&1
+apt-get -y clean >> "${LOG_FILE}" 2>&1 
+apt-get -y autoremove >> "${LOG_FILE}" 2>&1
 
 # ----------------------
 # Fix unattended updates
 # ----------------------
-echo "`date +%c` Fixing unattended updates" >> "${LOG_FILE}" 2>&1
+echo "$(date +%c) Fixing unattended updates" >> "${LOG_FILE}" 2>&1
 echo 'Unattended-Upgrade::Origins-Pattern {
 //      Fix missing Rasbian sources.
         "origin=Debian,codename=${distro_codename},label=Debian";
@@ -71,18 +71,18 @@ echo 'Unattended-Upgrade::Origins-Pattern {
 # ----------------
 # Install packages
 # ----------------
-echo "`date +%c` Installing packages" >> "${LOG_FILE}" 2>&1
-sudo apt-get install -y chromium-browser git nano sed tightvncserver unattended-upgrades >> "${LOG_FILE}" 2>&1
+echo "$(date +%c) Installing packages" >> "${LOG_FILE}" 2>&1
+apt-get install -y chromium-browser git nano sed tightvncserver unattended-upgrades >> "${LOG_FILE}" 2>&1
 
 # -------------------------
 # Install webserver and PHP
 # -------------------------
-echo "`date +%c` Installing lighttpd and PHP" >> "${LOG_FILE}" 2>&1
+echo "$(date +%c) Installing lighttpd and PHP" >> "${LOG_FILE}" 2>&1
 apt-get install -y lighttpd php php-common php-cgi php-curl >> "${LOG_FILE}" 2>&1
 # Enable the FastCGI PHP module
 lighty-enable-mod fastcgi-php >> "${LOG_FILE}" 2>&1
 # Add the current user to the www-data group
-sudo usermod -a -G www-data ${USER} >> "${LOG_FILE}" 2>&1
+usermod -a -G "www-data" "${USER}" >> "${LOG_FILE}" 2>&1
 # Limit access to only locahost
 echo '
 $HTTP["remoteip"] !~ "127.0.0.1" {
@@ -96,56 +96,56 @@ find "/etc/php/${PHPVER}/" -name php.ini -exec sed -i "s/;extension=curl/extensi
 # -------------------
 # Install application
 # -------------------
-echo "`date +%c` Installing ${APP_NAME}" >> "${LOG_FILE}" 2>&1
+echo "$(date +%c) Installing ${APP_NAME}" >> "${LOG_FILE}" 2>&1
 git clone ${APP_SOURCE} "/opt/${APP_NAME}" >> "${LOG_FILE}" 2>&1
-sudo chmod +x /opt/${APP_NAME}/rpi/*.sh >> "${LOG_FILE}" 2>&1
+chmod +x /opt/${APP_NAME}/rpi/*.sh >> "${LOG_FILE}" 2>&1
 mv -f "/var/www/html" "/var/www/html.old" >> "${LOG_FILE}" 2>&1
 mv -f "/opt/${APP_NAME}/html" "/var/www/" >> "${LOG_FILE}" 2>&1
-sudo chown -R www-data:www-data /var/www/html >> "${LOG_FILE}" 2>&1
-sudo chmod -R 755 /var/www/html >> "${LOG_FILE}" 2>&1
+chown -R www-data:www-data /var/www/html >> "${LOG_FILE}" 2>&1
+chmod -R 755 /var/www/html >> "${LOG_FILE}" 2>&1
 
 # -------------------------------------------------------------
 # Enable NTP time sync (if it's not already enabled by default)
 # -------------------------------------------------------------
-echo "`date +%c` Enabling NTP time sync" >> "${LOG_FILE}" 2>&1
+echo "$(date +%c) Enabling NTP time sync" >> "${LOG_FILE}" 2>&1
 timedatectl set-ntp True >> "${LOG_FILE}" 2>&1
 
 # -----------------------------------------
 # Add cron job for daily updates and reboot
 # -----------------------------------------
-echo "`date +%c` Adding cron job" >> "${LOG_FILE}" 2>&1
+echo "$(date +%c) Adding cron job" >> "${LOG_FILE}" 2>&1
 # Create crontab file if it doesn't exist yet
 [[ -e "/var/spool/cron/crontabs/${USER}" ]] || touch "/var/spool/cron/crontabs/${USER}" >> "${LOG_FILE}" 2>&1
 # Add daily cron job
 grep -qxF "0 1 * * * /usr/bin/bash /opt/${APP_NAME}/rpi/updater.sh" "/var/spool/cron/crontabs/${USER}" || echo "0 1 * * * /usr/bin/bash /opt/${APP_NAME}/rpi/updater.sh" >> "/var/spool/cron/crontabs/${USERNAME}"
-chown ${USER}:crontab /var/spool/cron/crontabs/${USER} >> "${LOG_FILE}" 2>&1
-chmod 600 /var/spool/cron/crontabs/${USER} >> "${LOG_FILE}" 2>&1
-sudo systemctl force-reload cron >> "${LOG_FILE}" 2>&1
+chown "${USER}":"crontab" "/var/spool/cron/crontabs/${USER}" >> "${LOG_FILE}" 2>&1
+chmod 600 "/var/spool/cron/crontabs/${USER}" >> "${LOG_FILE}" 2>&1
+systemctl force-reload cron >> "${LOG_FILE}" 2>&1
 
 # -------------------------------------------------------
 # Configure TightVNC server
 # -------------------------------------------------------
-echo "`date +%c` Configuring TightVNC" >> "${LOG_FILE}" 2>&1
+echo "$(date +%c) Configuring TightVNC" >> "${LOG_FILE}" 2>&1
 cp /opt/${APP_NAME}/rpi/tightvncserver.service /etc/systemd/system/ >> "${LOG_FILE}" 2>&1
 sed -i "s/USERNAME/${USER}/" /etc/systemd/system/tightvncserver.service >> "${LOG_FILE}" 2>&1
-sudo systemctl enable vncserver >> "${LOG_FILE}" 2>&1
+systemctl enable vncserver >> "${LOG_FILE}" 2>&1
 
 # -------------------------------------------------------
 # Remove unused packages and services to improve security
 # -------------------------------------------------------
-#echo "`date +%c` Removing unused packages and services" >> "${LOG_FILE}" 2>&1
+#echo "$(date +%c) Removing unused packages and services" >> "${LOG_FILE}" 2>&1
 #/opt/${APP_NAME}/rpi/lockdown.sh >> "${LOG_FILE}" 2>&1
 
 # ----------------------
 # Execute window-manager-specific commands
 # ----------------------
-echo "`date +%c` Configuring ${XDG_SESSION_TYPE}-specific options" >> "${LOG_FILE}" 2>&1
+echo "$(date +%c) Configuring ${XDG_SESSION_TYPE}-specific options" >> "${LOG_FILE}" 2>&1
 source "/opt/${APP_NAME}/rpi/install-${XDG_SESSION_TYPE}.sh"
 
 # -------
 # Restart
 # -------
-echo "`date +%c` Installer done for ${APP_NAME}" >> "${LOG_FILE}" 2>&1
+echo "$(date +%c) Installer done for ${APP_NAME}" >> "${LOG_FILE}" 2>&1
 echo -n 'Restarting in 10 seconds'
 for i in {0..10}
 do
@@ -153,4 +153,4 @@ do
  	echo -n .
 done
 
-sudo shutdown -r now >> "${LOG_FILE}" 2>&1
+shutdown -r now >> "${LOG_FILE}" 2>&1
