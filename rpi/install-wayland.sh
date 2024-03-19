@@ -14,11 +14,13 @@ fi
 # ----------------------------------
 # Check the current window manager
 # ----------------------------------
-if [[ ${XDG_SESSION_TYPE != "WAYLAND" ]]
+if [[ "${XDG_SESSION_TYPE}" != "WAYLAND" ]]
 then
 	echo "This script only works for the Wayland window manager, and you're using the ${XDG_SESSION_TYPE} window manager."
 	exit
 fi
+
+echo "$(date +%c) Configuring Wayland" >> "${LOG_FILE}" 2>&1
 
 # ----------------------
 # Alter video resolution
