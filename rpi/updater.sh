@@ -6,14 +6,14 @@ APP_SOURCE="https://github.com/${APP_MAINTAINER}/${APP_NAME}"
 LOG_FILE="/var/log/${APP_NAME}/update.log"
 VERSION_FILE="/opt/${APP_NAME}/VERSION"
 
-echo "`date +%c` Updating and rebooting system" >> "${LOG_FILE}" 2>&1
+echo "$(date +%c) Updating and rebooting system" >> "${LOG_FILE}" 2>&1
 
 # ----------------------------------
 # Check if user has root permissions
 # ----------------------------------
 if [ "$EUID" -ne 0 ]
 then
-	echo "Please run as root" >> "${LOG_FILE}" 2>&1
+	echo "$(date +%c) Please run as root" >> "${LOG_FILE}" 2>&1
 	exit
 fi
 
@@ -33,9 +33,21 @@ fi
 # -------------
 # Update system
 # -------------
-echo "`date +%c` `apt-get -qq -y update`" >> "${LOG_FILE}" 2>&1
-echo "`date +%c` `apt-get -qq -y dist-upgrade`" >> "${LOG_FILE}" 2>&1
-echo "`date +%c` `apt-get -qq -y --with-new-pkgs upgrade`" >> "${LOG_FILE}" 2>&1
+apt-get -qq -y dist-upgrade >> "${LOG_FILE}" 2>&1
+apt-get -qq -y --with-new-pkgs upgrade >> "${LOG_FILE}" 2>&1
+apt-get -qq -y clean >> "${LOG_FILE}" 2>&1 
+apt-get -qq -y autoremove >> "${LOG_FILE}" 2>&1
+
+echo "$(date +%c) Updating system" >> "${LOG_FILE}" 2>&1
+apt-get -qq -y update >> "${LOG_FILE}" 2>&1
+echo "$(date +%c) Dist-upgrading system" >> "${LOG_FILE}" 2>&1
+apt-get -qq -y dist-upgrade >> "${LOG_FILE}" 2>&1
+echo "$(date +%c) Upgrading system" >> "${LOG_FILE}" 2>&1
+apt-get -qq -y --with-new-pkgs upgrade >> "${LOG_FILE}" 2>&1
+echo "$(date +%c) Cleaning system" >> "${LOG_FILE}" 2>&1
+apt-get -qq -y clean >> "${LOG_FILE}" 2>&1 
+echo "$(date +%c) Autoremove system" >> "${LOG_FILE}" 2>&1
+apt-get -qq -y autoremove >> "${LOG_FILE}" 2>&1
 
 # ------------------
 # Update application
