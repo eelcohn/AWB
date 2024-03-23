@@ -34,8 +34,10 @@ crudini --set "${WAYFIRE_INI_FILE}" "output:HDMI-A-1" "transform" "normal"
 # ----------------------------------
 # Compile extra Wayfire plugins (needed for the hide-cursor plugin)
 # ----------------------------------
+apt-get install cmake libvulkan-dev meson
+# Temp stuuf (remove this?)
+#wayfire-dev libglibmm-2.4-dev
 
-apt-get install libvulkan-dev
 if [[ "$(wayfire --version)" == "0.7.5" ]]
 then
 	# Work-around to get the plugin-compiler working. This can be removed once Raspbian has updated the Wayfire version to >= 0.8.0
@@ -43,13 +45,22 @@ then
 else
 	git clone https://github.com/WayfireWM/wayfire-plugins-extra /tmp/wayfire-plugins/extra
 fi
-cd /tmp/wayfire-plugins-extra
-meson build --prefix=/usr --buildtype=release
+meson setup --prefix=/usr --buildtype=release /tmp/wayfire-plugins/extra/build /tmp/wayfire-plugins/extra
+
+# Temp; test if build/setup by the above command works. If so, then remove this
+#cd /tmp/wayfire-plugins-extra
+#meson setup --prefix=/usr --buildtype=release
+
 ninja -C build && sudo ninja -C build install
+
+# Temp; test if build/setup by the above command works. If so, then remove this
+# cd ~
+
 rm -rf /tmp/wayfire-plugins-extra
 apt-get remove libvulkan-dev
 
 crudini --set "${WAYFIRE_INI_FILE}" "core" "plugins" "autostart hide-cursor"
+#crudini --set "${WAYFIRE_INI_FILE}" "core" "plugins" "autostart autostart-static command pixdecor expo grid hide-cursor move place resize switcher vswitch window-rules wm-actions wort zoom"
 
 # -------------------------------------------------------
 # Autostart kiosk script
