@@ -7,7 +7,8 @@ LOG_FILE="/var/log/${APP_NAME}/update.log"
 VERSION_FILE="/opt/${APP_NAME}/VERSION"
 BRANCH="$(git --git-dir=/opt/${APP_NAME}/.git rev-parse --abbrev-ref HEAD)"
 
-echo "$(date +%c) Updating and rebooting system" >> "${LOG_FILE}" 2>&1
+echo "" >> "${LOG_FILE}" 2>&1
+echo "$(date +%c) ---------- Updating and rebooting system ----------" >> "${LOG_FILE}" 2>&1
 
 # ----------------------------------
 # Check if user has root permissions
