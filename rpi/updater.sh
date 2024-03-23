@@ -47,17 +47,21 @@ if [ "${LOCAL_VERSION}" != "${EXT_VERSION}" ]
 then
 	echo "`date +%c` New ${APP_NAME} version found: ${EXT_VERSION} (Local version: ${LOCAL_VERSION})" >> "${LOG_FILE}" 2>&1
 	rm -rf "/opt/${APP_NAME}.new" >> "${LOG_FILE}" 2>&1
-	git clone ${APP_SOURCE} "/opt/${APP_NAME}.new" >> "${LOG_FILE}" 2>&1
-	sudo chmod +x /opt/${APP_NAME}.new/rpi/*.sh >> "${LOG_FILE}" 2>&1
-	rm -rf "/opt/${APP_NAME}.old" >> "${LOG_FILE}" 2>&1
-	mv -f "/opt/${APP_NAME}" "/opt/${APP_NAME}.old" >> "${LOG_FILE}" 2>&1
-	mv -f "/opt/${APP_NAME}.new" "/opt/${APP_NAME}" >> "${LOG_FILE}" 2>&1
-	rm -rf "/var/www/html.old" >> "${LOG_FILE}" 2>&1
-	mv -f "/var/www/html" "/var/www/html.old" >> "${LOG_FILE}" 2>&1
-	mv -f "/opt/${APP_NAME}/html" "/var/www/" >> "${LOG_FILE}" 2>&1
-	cp -a "/var/www/html.old/config.json" "/var/www/html/" >> "${LOG_FILE}" 2>&1
-	sudo chown -R www-data:www-data /var/www/html >> "${LOG_FILE}" 2>&1
-	sudo chmod -R 755 /var/www/html >> "${LOG_FILE}" 2>&1
+	if ! git clone ${APP_SOURCE} "/opt/${APP_NAME}.new" >> "${LOG_FILE}" 2>&1
+	then
+		echo "$(date +%c) Could not clone new ${APP_NAME} version"
+ 	else
+		sudo chmod +x /opt/${APP_NAME}.new/rpi/*.sh >> "${LOG_FILE}" 2>&1
+		rm -rf "/opt/${APP_NAME}.old" >> "${LOG_FILE}" 2>&1
+		mv -f "/opt/${APP_NAME}" "/opt/${APP_NAME}.old" >> "${LOG_FILE}" 2>&1
+		mv -f "/opt/${APP_NAME}.new" "/opt/${APP_NAME}" >> "${LOG_FILE}" 2>&1
+		rm -rf "/var/www/html.old" >> "${LOG_FILE}" 2>&1
+		mv -f "/var/www/html" "/var/www/html.old" >> "${LOG_FILE}" 2>&1
+		mv -f "/opt/${APP_NAME}/html" "/var/www/" >> "${LOG_FILE}" 2>&1
+		cp -a "/var/www/html.old/config.json" "/var/www/html/" >> "${LOG_FILE}" 2>&1
+		sudo chown -R www-data:www-data /var/www/html >> "${LOG_FILE}" 2>&1
+		sudo chmod -R 755 /var/www/html >> "${LOG_FILE}" 2>&1
+ 	fi
 fi
 
 # -------
