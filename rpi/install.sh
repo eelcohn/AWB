@@ -30,9 +30,9 @@ fi
 # ----------------------------------
 # Check the window manager type
 # ----------------------------------
-if [[ ${XDG_SESSION_TYPE} != "X11" ]] && [[ ${XDG_SESSION_TYPE} != "wayland" ]]
+if [[ ${XDG_CURRENT_DESKTOP} != "X11" ]] && [[ ${XDG_CURRENT_DESKTOP} != "wayland" ]]
 then
-	echo "This script only works for the X11 or Wayland window manager, and you're using the ${XDG_SESSION_TYPE} window manager."
+	echo "This script only works for the X11 or Wayland window manager, and you're using the ${XDG_CURRENT_DESKTOP} window manager."
 	exit
 fi
 
@@ -139,8 +139,8 @@ systemctl enable vncserver >> "${LOG_FILE}" 2>&1
 # ----------------------
 # Execute window-manager-specific commands
 # ----------------------
-echo "$(date +%c) Configuring ${XDG_SESSION_TYPE}-specific options" >> "${LOG_FILE}" 2>&1
-source "/opt/${APP_NAME}/rpi/install-${XDG_SESSION_TYPE}.sh"
+echo "$(date +%c) Configuring ${XDG_CURRENT_DESKTOP}-specific options" >> "${LOG_FILE}" 2>&1
+source "/opt/${APP_NAME}/rpi/install-${XDG_CURRENT_DESKTOP}.sh"
 
 # -------
 # Restart
