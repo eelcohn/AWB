@@ -33,7 +33,8 @@ xset -dpms >> "${LOG_FILE}" 2>&1
 # Install packages
 # ----------------
 echo "$(date +%c) Installing packages" >> "${LOG_FILE}" 2>&1
-apt-get install -y lxde-core lxde task-lxde-desktop unclutter xdotool >> "${LOG_FILE}" 2>&1
+apt-get install -y unclutter xdotool >> "${LOG_FILE}" 2>&1
+#apt-get install -y lxde-core lxde task-lxde-desktop unclutter xdotool >> "${LOG_FILE}" 2>&1
 # update-alternatives --config x-session-manager >> "${LOG_FILE}" 2>&1
 
 # -----------------------
