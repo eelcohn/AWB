@@ -12,7 +12,7 @@ then
 	exit
 fi
 
-echo "$(date +%c) Configuring ${XDG_CURRENT_DESKTOP}" >> "${LOG_FILE}" 2>&1
+echo "$(date +%c) Configuring Wayland}" >> "${LOG_FILE}" 2>&1
 
 # ----------------------------------
 # Set screen-resolution to 1920x1080 and refresh rate to 50Hz
