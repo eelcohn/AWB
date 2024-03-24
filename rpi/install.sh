@@ -27,15 +27,6 @@ then
 	read -p "Are you sure you want to continue?"
 fi
 
-# ----------------------------------
-# Check the window manager type
-# ----------------------------------
-if [[ ${XDG_CURRENT_DESKTOP} != "LXDE" ]] && [[ ${XDG_CURRENT_DESKTOP} != "wayland" ]]
-then
-	echo "This script only works for the LXDE or Wayland window manager, and you're using the ${XDG_CURRENT_DESKTOP} window manager."
-	exit
-fi
-
 # ------------------------------------------------------------------------------------------------------
 # Create log directory and tail the log file so the user can see what's going on during the installation
 # ------------------------------------------------------------------------------------------------------
@@ -139,8 +130,8 @@ systemctl enable tightvncserver >> "${LOG_FILE}" 2>&1
 # ----------------------
 # Execute window-manager-specific commands
 # ----------------------
-echo "$(date +%c) Configuring ${XDG_CURRENT_DESKTOP}-specific options" >> "${LOG_FILE}" 2>&1
-source "/opt/${APP_NAME}/rpi/install-${XDG_CURRENT_DESKTOP}.sh"
+[[ "${XDG_CURRENT_DESKTOP}" == "LXDE" ]] && source "/opt/${APP_NAME}/rpi/install-LXDE.sh"
+[[ -f "/home/${USER}/.config/wayfire.ini" ]] && source "/opt/${APP_NAME}/rpi/install-Wayland.sh"
 
 # -------
 # Restart
