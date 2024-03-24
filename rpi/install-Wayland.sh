@@ -56,4 +56,5 @@ crudini --set "${WAYFIRE_INI_FILE}" "core" "plugins" "autostart hide-cursor"
 # -------------------------------------------------------
 # Autostart kiosk script
 # -------------------------------------------------------
+crudini --set "${WAYFIRE_INI_FILE}" "autostart" "delprofile" "rm -rf ~/.config/chromium"
 crudini --set "${WAYFIRE_INI_FILE}" "autostart" "kiosk" "chromium-browser --noerrdialogs --disable-infobars --check-for-update-interval=31536000 --enable-logging --kiosk http://127.0.0.1/"
