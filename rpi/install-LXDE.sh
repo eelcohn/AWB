@@ -11,15 +11,6 @@ then
 	exit
 fi
 
-# ----------------------------------
-# Check the current window manager
-# ----------------------------------
-if [[ "${XDG_CURRENT_DESKTOP}" != "LXDE" ]]
-then
-	echo "This script only works for the X11 window manager, and you're using the ${XDG_SESSION_TYPE} window manager."
-	exit
-fi
-
 echo "$(date +%c) Configuring ${XDG_CURRENT_DESKTOP}" >> "${LOG_FILE}" 2>&1
 
 # ---------------------------------------
