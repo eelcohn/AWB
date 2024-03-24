@@ -30,9 +30,9 @@ fi
 # ----------------------------------
 # Check the window manager type
 # ----------------------------------
-if [[ ${XDG_CURRENT_DESKTOP} != "X11" ]] && [[ ${XDG_CURRENT_DESKTOP} != "wayland" ]]
+if [[ ${XDG_CURRENT_DESKTOP} != "LXDE" ]] && [[ ${XDG_CURRENT_DESKTOP} != "wayland" ]]
 then
-	echo "This script only works for the X11 or Wayland window manager, and you're using the ${XDG_CURRENT_DESKTOP} window manager."
+	echo "This script only works for the LXDE or Wayland window manager, and you're using the ${XDG_CURRENT_DESKTOP} window manager."
 	exit
 fi
 
