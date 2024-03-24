@@ -63,7 +63,7 @@ cp "/etc/xdg/lxsession/LXDE-pi/autostart" "/home/${USER}/.config/lxsession/LXDE-
 # ----------------------
 # Alter video resolution
 # ----------------------
-sed -i 's/#framebuffer_width=1280/framebuffer_width=1920/' '/boot/config.txt'
-sed -i 's/#framebuffer_height=720/framebuffer_height=1080/' '/boot/config.txt'
-sed -i 's/#hdmi_group=1/hdmi_group=1/' '/boot/config.txt'
-sed -i 's/#hdmi_mode=1/hdmi_mode=16/' '/boot/config.txt'
+sed -i 's/#framebuffer_width=1280/framebuffer_width=1920/' '/boot/firmware/config.txt'
+sed -i 's/#framebuffer_height=720/framebuffer_height=1080/' '/boot/firmware/config.txt'
+sed -i 's/#hdmi_group=1/hdmi_group=1/' '/boot/firmware/config.txt'
+sed -i 's/#hdmi_mode=1/hdmi_mode=16/' '/boot/firmware/config.txt'
