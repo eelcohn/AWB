@@ -128,7 +128,7 @@ systemctl force-reload cron >> "${LOG_FILE}" 2>&1
 echo "$(date +%c) Configuring TightVNC" >> "${LOG_FILE}" 2>&1
 cp /opt/${APP_NAME}/rpi/tightvncserver.service /etc/systemd/system/ >> "${LOG_FILE}" 2>&1
 sed -i "s/USERNAME/${USER}/" /etc/systemd/system/tightvncserver.service >> "${LOG_FILE}" 2>&1
-systemctl enable vncserver >> "${LOG_FILE}" 2>&1
+systemctl enable tightvncserver >> "${LOG_FILE}" 2>&1
 
 # -------------------------------------------------------
 # Remove unused packages and services to improve security
