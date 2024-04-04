@@ -5,7 +5,7 @@
 
 APP_NAME="AWB"
 APP_SOURCE="https://github.com/eelcohn/${APP_NAME}"
-LOCALE="nl_NL.UTF-8"
+#LOCALE="nl_NL.UTF-8"
 LOG_FILE="/var/log/${APP_NAME}/install.log"
 WEATHER_URL="http://127.0.0.1/"
 
