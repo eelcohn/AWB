@@ -5,6 +5,7 @@
 
 APP_NAME="AWB"
 APP_SOURCE="https://github.com/eelcohn/${APP_NAME}"
+LOCALE="nl_NL.UTF-8"
 LOG_FILE="/var/log/${APP_NAME}/install.log"
 WEATHER_URL="http://127.0.0.1/"
 
@@ -95,6 +96,16 @@ mv -f "/var/www/html" "/var/www/html.old" >> "${LOG_FILE}" 2>&1
 mv -f "/opt/${APP_NAME}/html" "/var/www/" >> "${LOG_FILE}" 2>&1
 chown -R www-data:www-data /var/www/html >> "${LOG_FILE}" 2>&1
 chmod -R 755 /var/www/html >> "${LOG_FILE}" 2>&1
+
+# -------------------------------------------------------------
+# Set locale (if needed)
+# -------------------------------------------------------------
+if [[ -n "${LOCALE}" ]]
+then
+	echo "$(date +%c) Setting locale to ${LOCALE}" >> "${LOG_FILE}" 2>&1
+	locale-gen "${LOCALE}" >> "${LOG_FILE}" 2>&1
+	localectl set-locale "LANG=${LOCALE}" >> "${LOG_FILE}" 2>&1
+fi
 
 # -------------------------------------------------------------
 # Enable NTP time sync (if it's not already enabled by default)
