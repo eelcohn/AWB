@@ -25,6 +25,8 @@ crudini --set "${WAYFIRE_INI_FILE}" "output:HDMI-A-1" "transform" "normal"
 # ----------------------------------
 # Compile extra Wayfire plugins (needed for the hide-cursor plugin)
 # ----------------------------------
+EXTRAS_PATH="/tmp/wayfire-plugins-extra"
+BUILD_PATH="${EXTRAS_PATH}/build"
 apt-get install cmake libvulkan-dev meson
 # Temp stuuf (remove this?)
 #wayfire-dev libglibmm-2.4-dev
@@ -32,22 +34,23 @@ apt-get install cmake libvulkan-dev meson
 if [[ "$(wayfire --version)" == "0.7.5" ]]
 then
 	# Work-around to get the plugin-compiler working. This can be removed once Raspbian has updated the Wayfire version to >= 0.8.0
-	git clone https://github.com/seffs/wayfire-plugins-extra-raspbian /tmp/wayfire-plugins/extra
+	git clone https://github.com/seffs/wayfire-plugins-extra-raspbian "${EXTRAS_PATH}"
 else
-	git clone https://github.com/WayfireWM/wayfire-plugins-extra /tmp/wayfire-plugins/extra
+	git clone https://github.com/WayfireWM/wayfire-plugins-extra "${EXTRAS_PATH}"
 fi
-meson setup --prefix=/usr --buildtype=release /tmp/wayfire-plugins/extra/build /tmp/wayfire-plugins/extra
+meson setup --prefix=/usr --buildtype=release "${BUILD_PATH}" "${EXTRAS_PATH}"
 
 # Temp; test if build/setup by the above command works. If so, then remove this
-#cd /tmp/wayfire-plugins-extra
+#cd "${EXTRAS_PATH}"
+#meson build --prefix=/usr --buildtype=release <-- old style meson setup
 #meson setup --prefix=/usr --buildtype=release
 
-ninja -C build && sudo ninja -C build install
+ninja -C "${BUILD_PATH}" && sudo ninja -C "${BUILD_PATH}" install
 
 # Temp; test if build/setup by the above command works. If so, then remove this
 # cd ~
 
-rm -rf /tmp/wayfire-plugins-extra
+rm -rf "${EXTRAS_PATH}"
 apt-get remove libvulkan-dev
 
 crudini --set "${WAYFIRE_INI_FILE}" "core" "plugins" "autostart hide-cursor"
