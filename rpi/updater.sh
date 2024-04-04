@@ -5,15 +5,17 @@ APP_NAME="AWB"
 APP_SOURCE="https://github.com/${APP_MAINTAINER}/${APP_NAME}"
 LOG_FILE="/var/log/${APP_NAME}/update.log"
 VERSION_FILE="/opt/${APP_NAME}/VERSION"
+BRANCH="$(git --git-dir=/opt/${APP_NAME}/.git rev-parse --abbrev-ref HEAD)"
 
-echo "`date +%c` Updating and rebooting system" >> "${LOG_FILE}" 2>&1
+echo "" >> "${LOG_FILE}" 2>&1
+echo "$(date +%c) ---------- Updating and rebooting system ----------" >> "${LOG_FILE}" 2>&1
 
 # ----------------------------------
 # Check if user has root permissions
 # ----------------------------------
 if [ "$EUID" -ne 0 ]
 then
-	echo "Please run as root" >> "${LOG_FILE}" 2>&1
+	echo "$(date +%c) Please run as root" >> "${LOG_FILE}" 2>&1
 	exit
 fi
 
@@ -33,8 +35,21 @@ fi
 # -------------
 # Update system
 # -------------
-echo "`date +%c` `apt-get -qq -y update`" >> "${LOG_FILE}" 2>&1
-echo "`date +%c` `apt-get -qq -y --with-new-pkgs upgrade`" >> "${LOG_FILE}" 2>&1
+apt-get -qq -y dist-upgrade >> "${LOG_FILE}" 2>&1
+apt-get -qq -y --with-new-pkgs upgrade >> "${LOG_FILE}" 2>&1
+apt-get -qq -y clean >> "${LOG_FILE}" 2>&1 
+apt-get -qq -y autoremove >> "${LOG_FILE}" 2>&1
+
+echo "$(date +%c) Updating system" >> "${LOG_FILE}" 2>&1
+apt-get -qq -y update >> "${LOG_FILE}" 2>&1
+echo "$(date +%c) Dist-upgrading system" >> "${LOG_FILE}" 2>&1
+apt-get -qq -y dist-upgrade >> "${LOG_FILE}" 2>&1
+echo "$(date +%c) Upgrading system" >> "${LOG_FILE}" 2>&1
+apt-get -qq -y --with-new-pkgs upgrade >> "${LOG_FILE}" 2>&1
+echo "$(date +%c) Cleaning system" >> "${LOG_FILE}" 2>&1
+apt-get -qq -y clean >> "${LOG_FILE}" 2>&1 
+echo "$(date +%c) Autoremove system" >> "${LOG_FILE}" 2>&1
+apt-get -qq -y autoremove >> "${LOG_FILE}" 2>&1
 
 # ------------------
 # Update application
@@ -46,17 +61,21 @@ if [ "${LOCAL_VERSION}" != "${EXT_VERSION}" ]
 then
 	echo "`date +%c` New ${APP_NAME} version found: ${EXT_VERSION} (Local version: ${LOCAL_VERSION})" >> "${LOG_FILE}" 2>&1
 	rm -rf "/opt/${APP_NAME}.new" >> "${LOG_FILE}" 2>&1
-	git clone ${APP_SOURCE} "/opt/${APP_NAME}.new" >> "${LOG_FILE}" 2>&1
-	sudo chmod +x /opt/${APP_NAME}.new/rpi/*.sh >> "${LOG_FILE}" 2>&1
-	rm -rf "/opt/${APP_NAME}.old" >> "${LOG_FILE}" 2>&1
-	mv -f "/opt/${APP_NAME}" "/opt/${APP_NAME}.old" >> "${LOG_FILE}" 2>&1
-	mv -f "/opt/${APP_NAME}.new" "/opt/${APP_NAME}" >> "${LOG_FILE}" 2>&1
-	rm -rf "/var/www/html.old" >> "${LOG_FILE}" 2>&1
-	mv -f "/var/www/html" "/var/www/html.old" >> "${LOG_FILE}" 2>&1
-	mv -f "/opt/${APP_NAME}/html" "/var/www/" >> "${LOG_FILE}" 2>&1
-	cp -a "/var/www/html.old/config.json" "/var/www/html/" >> "${LOG_FILE}" 2>&1
-	sudo chown -R www-data:www-data /var/www/html >> "${LOG_FILE}" 2>&1
-	sudo chmod -R 755 /var/www/html >> "${LOG_FILE}" 2>&1
+	if ! git clone ${APP_SOURCE} "/opt/${APP_NAME}.new --branch ${BRANCH}" >> "${LOG_FILE}" 2>&1
+	then
+		echo "$(date +%c) Could not clone new ${APP_NAME} version"
+ 	else
+		sudo chmod +x /opt/${APP_NAME}.new/rpi/*.sh >> "${LOG_FILE}" 2>&1
+		rm -rf "/opt/${APP_NAME}.old" >> "${LOG_FILE}" 2>&1
+		mv -f "/opt/${APP_NAME}" "/opt/${APP_NAME}.old" >> "${LOG_FILE}" 2>&1
+		mv -f "/opt/${APP_NAME}.new" "/opt/${APP_NAME}" >> "${LOG_FILE}" 2>&1
+		rm -rf "/var/www/html.old" >> "${LOG_FILE}" 2>&1
+		mv -f "/var/www/html" "/var/www/html.old" >> "${LOG_FILE}" 2>&1
+		mv -f "/opt/${APP_NAME}/html" "/var/www/" >> "${LOG_FILE}" 2>&1
+		cp -a "/var/www/html.old/config.json" "/var/www/html/" >> "${LOG_FILE}" 2>&1
+		sudo chown -R www-data:www-data /var/www/html >> "${LOG_FILE}" 2>&1
+		sudo chmod -R 755 /var/www/html >> "${LOG_FILE}" 2>&1
+ 	fi
 fi
 
 # -------
