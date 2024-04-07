@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+APP_NAME="AWB"
 LOG_FILE="/var/log/${APP_NAME}/install.log"
 WAYFIRE_INI_FILE="/home/${SUDO_USER}/.config/wayfire.ini"
 
