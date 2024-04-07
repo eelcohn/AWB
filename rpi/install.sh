@@ -156,4 +156,4 @@ do
  	echo -n .
 done
 
-shutdown -r now >> "${LOG_FILE}" 2>&1
+shutdown -r 3 >> "${LOG_FILE}" 2>&1
