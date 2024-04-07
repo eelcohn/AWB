@@ -3,6 +3,9 @@
 APP_NAME="AWB"
 LOG_FILE="/var/log/${APP_NAME}/install.log"
 WAYFIRE_INI_FILE="/home/${SUDO_USER}/.config/wayfire.ini"
+VIDEO_RESOLUTION_HEIGHT="1080"
+VIDEO_RESOLUTION_WIDTH="1920"
+VIDEO_FRAMERATE="50000"
 
 # ----------------------------------
 # Check if user has root permissions
@@ -18,21 +21,13 @@ fi
 # ----------------------------------
 if [[ ! -e "${WAYFIRE_INI_FILE}" ]]
 then
-	echo "Could not find wayfire.ini file." >> "${LOG_FILE}" 2>&1
+	echo "WayfireCould not find wayfire.ini file." >> "${LOG_FILE}" 2>&1
  	echo "${WAYFIRE_INI_FILE}" >> "${LOG_FILE}" 2>&1
 	exit
 fi
 
-echo "$(date +%c) Configuring Wayland" >> "${LOG_FILE}" 2>&1
-
-# ----------------------------------
-# Set screen-resolution to 1920x1080 and refresh rate to 50Hz
-# ----------------------------------
-echo "$(date +%c) Wayfire: setting display resolution" >> "${LOG_FILE}" 2>&1
+echo "$(date +%c) Wayfire: Configuring Wayland" >> "${LOG_FILE}" 2>&1
 apt-get -y install crudini >> "${LOG_FILE}" 2>&1
-crudini --set "${WAYFIRE_INI_FILE}" "output:HDMI-A-1" "mode" "1920x1080@50000" >> "${LOG_FILE}" 2>&1
-crudini --set "${WAYFIRE_INI_FILE}" "output:HDMI-A-1" "position" "0,0" >> "${LOG_FILE}" 2>&1
-crudini --set "${WAYFIRE_INI_FILE}" "output:HDMI-A-1" "transform" "normal" >> "${LOG_FILE}" 2>&1
 
 # ----------------------------------
 # Compile extra Wayfire plugins (needed for the hide-cursor plugin)
@@ -41,9 +36,8 @@ echo "$(date +%c) Wayfire: compiling and installing Wayfire extra plugins" >> "$
 echo "$(date +%c) Wayfire: found Wayfire version $(wayfire --version)" >> "${LOG_FILE}" 2>&1
 EXTRAS_PATH="/tmp/wayfire-plugins-extra"
 BUILD_PATH="${EXTRAS_PATH}/build"
-apt-get -y install cmake libvulkan-dev meson >> "${LOG_FILE}" 2>&1
-# Temp stuuf (remove this?)
-#wayfire-dev libglibmm-2.4-dev
+apt-get -y install cmake libglibmm-2.68-dev libvulkan-dev meson wayfire-dev >> "${LOG_FILE}" 2>&1
+# libglibmm-2.4-dev
 
 if [[ "$(wayfire --version)" == 0.7.5* ]]
 then
@@ -69,6 +63,14 @@ apt-get -y remove libvulkan-dev >> "${LOG_FILE}" 2>&1
 
 crudini --set "${WAYFIRE_INI_FILE}" "core" "plugins" "autostart hide-cursor" >> "${LOG_FILE}" 2>&1
 #crudini --set "${WAYFIRE_INI_FILE}" "core" "plugins" "autostart autostart-static command pixdecor expo grid hide-cursor move place resize switcher vswitch window-rules wm-actions wort zoom" >> "${LOG_FILE}" 2>&1
+
+# ----------------------------------
+# Set screen-resolution to 1920x1080 and refresh rate to 50Hz
+# ----------------------------------
+echo "$(date +%c) Wayfire: setting display resolution" >> "${LOG_FILE}" 2>&1
+crudini --set "${WAYFIRE_INI_FILE}" "output:HDMI-A-1" "mode" "${VIDEO_RESOLUTION_WIDTH}x${VIDEO_RESOLUTION_HEIGHT}@${VIDEO_FRAMERATE}" >> "${LOG_FILE}" 2>&1
+crudini --set "${WAYFIRE_INI_FILE}" "output:HDMI-A-1" "position" "0,0" >> "${LOG_FILE}" 2>&1
+crudini --set "${WAYFIRE_INI_FILE}" "output:HDMI-A-1" "transform" "normal" >> "${LOG_FILE}" 2>&1
 
 # -------------------------------------------------------
 # Autostart kiosk script
