@@ -44,7 +44,7 @@ apt-get -y install cmake libvulkan-dev meson >> "${LOG_FILE}" 2>&1
 # Temp stuuf (remove this?)
 #wayfire-dev libglibmm-2.4-dev
 
-if [[ "$(wayfire --version)" == "0.7.5" ]]
+if [[ "$(wayfire --version)" == 0.7.5* ]]
 then
 	# Work-around to get the plugin-compiler working. This can be removed once Raspbian has updated the Wayfire version to >= 0.8.0
 	git clone https://github.com/seffs/wayfire-plugins-extra-raspbian "${EXTRAS_PATH}" >> "${LOG_FILE}" 2>&1
