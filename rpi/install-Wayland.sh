@@ -37,6 +37,7 @@ crudini --set "${WAYFIRE_INI_FILE}" "output:HDMI-A-1" "transform" "normal" >> "$
 # Compile extra Wayfire plugins (needed for the hide-cursor plugin)
 # ----------------------------------
 echo "$(date +%c) Wayfire: compiling and installing Wayfire extra plugins" >> "${LOG_FILE}" 2>&1
+echo "$(date +%c) Wayfire: found Wayfire version $(wayfire --version)" >> "${LOG_FILE}" 2>&1
 EXTRAS_PATH="/tmp/wayfire-plugins-extra"
 BUILD_PATH="${EXTRAS_PATH}/build"
 apt-get -y install cmake libvulkan-dev meson >> "${LOG_FILE}" 2>&1
