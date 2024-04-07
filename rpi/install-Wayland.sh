@@ -46,6 +46,7 @@ then
 else
 	git clone https://github.com/WayfireWM/wayfire-plugins-extra "${EXTRAS_PATH}" >> "${LOG_FILE}" 2>&1
 fi
+PKG_CONFIG_PATH="/usr/lib/aarch64-linux-gnu/pkgconfig/wayfire.pc"
 meson setup --prefix=/usr --buildtype=release "${BUILD_PATH}" "${EXTRAS_PATH}" >> "${LOG_FILE}" 2>&1
 
 # Temp; test if build/setup by the above command works. If so, then remove this
