@@ -5,6 +5,7 @@
 
 APP_NAME="AWB"
 APP_SOURCE="https://github.com/eelcohn/${APP_NAME}"
+GPIO_SHUTDOWN_PIN="17"
 #LOCALE="nl_NL.UTF-8"
 LOG_FILE="/var/log/${APP_NAME}/install.log"
 WEATHER_URL="http://127.0.0.1/"
@@ -124,6 +125,23 @@ grep -qxF "0 1 * * * /usr/bin/bash /opt/${APP_NAME}/rpi/updater.sh" "/var/spool/
 chown "${USER}":"crontab" "/var/spool/cron/crontabs/${USER}" >> "${LOG_FILE}" 2>&1
 chmod 600 "/var/spool/cron/crontabs/${USER}" >> "${LOG_FILE}" 2>&1
 systemctl force-reload cron >> "${LOG_FILE}" 2>&1
+
+# -----------------------------------------
+# Configure GPIO shutdown button
+# -----------------------------------------
+if [[ -n "${GPIO_SHUTDOWN_PIN}" ]]
+then
+	if [[ -e "/boot/config.txt" ]]
+	then
+ 		# Pre-bookworm RPi OS
+		CONFIG_TXT_FILE="/boot/config.txt"
+	else
+ 		# Bookworm and later RPi OS
+		CONFIG_TXT_FILE="/boot/firmware/config.txt"
+	fi
+	echo "$(date +%c) Configure GPIO${GPIO_SHUTDOWN_PIN} as a shutdown button for the Raspberry PI (active-low)" >> "${LOG_FILE}" 2>&1
+	echo "dtoverlay=gpio-shutdown,gpio_pin=${GPIO_SHUTDOWN_PIN},active_low=1,gpio_pull=up" >> "${CONFIG_TXT_FILE}"
+fi
 
 # -------------------------------------------------------
 # Configure TightVNC server
