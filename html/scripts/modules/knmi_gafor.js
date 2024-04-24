@@ -91,6 +91,7 @@ const UPPERCASES = {
 	'centraal-europa': 'Centraal-Europa',
 	'denemarken': 'Denemarken',
 	'duitsland': 'Duitsland',
+	'duitse bocht': 'Duitse Bocht',
 	'duitse': 'Duitse',
 	'engeland': 'Engeland',
 	'engelse': 'Engelse',
