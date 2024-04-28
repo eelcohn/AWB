@@ -36,7 +36,7 @@ fi
 # -------------
 # Update system
 # -------------
-touch "${LAST_RUN_FILE}"
+touch "${LAST_RUN_FILE}" >> "${LOG_FILE}" 2>&1
 apt-get -qq -y dist-upgrade >> "${LOG_FILE}" 2>&1
 apt-get -qq -y --with-new-pkgs upgrade >> "${LOG_FILE}" 2>&1
 apt-get -qq -y clean >> "${LOG_FILE}" 2>&1 
