@@ -4,6 +4,7 @@ APP_MAINTAINER="eelcohn"
 APP_NAME="AWB"
 APP_SOURCE="https://github.com/${APP_MAINTAINER}/${APP_NAME}"
 LOG_FILE="/var/log/${APP_NAME}/update.log"
+LAST_RUN_FILE="/var/log/${APP_NAME}/update.last_run"
 VERSION_FILE="/opt/${APP_NAME}/VERSION"
 BRANCH="$(git --git-dir=/opt/${APP_NAME}/.git rev-parse --abbrev-ref HEAD)"
 
@@ -35,6 +36,7 @@ fi
 # -------------
 # Update system
 # -------------
+touch "${LAST_RUN_FILE}"
 apt-get -qq -y dist-upgrade >> "${LOG_FILE}" 2>&1
 apt-get -qq -y --with-new-pkgs upgrade >> "${LOG_FILE}" 2>&1
 apt-get -qq -y clean >> "${LOG_FILE}" 2>&1 
