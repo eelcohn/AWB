@@ -251,9 +251,9 @@ header,
 /*	box-shadow: 0 0 10px black;*/
 	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 	border-radius: 5px;
-	position: absolute;
-	bottom: 1%;
-	left: 1%;
+	position: fixed;
+	bottom: 10px;
+	left: 10px;
 	z-index: 9999;
 	padding: 10px;
 	text-align: center;
