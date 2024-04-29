@@ -69,6 +69,10 @@ crudini --set "${WAYFIRE_INI_FILE}" "core" "plugins" "autostart hide-cursor" >> 
 # Set screen-resolution to 1920x1080 and refresh rate to 50Hz
 # ----------------------------------
 echo "$(date +%c) Wayfire: setting display resolution" >> "${LOG_FILE}" 2>&1
+DISPLAY="$(loginctl show-user "$USER" --property Display --value)"
+#crudini --set "${WAYFIRE_INI_FILE}" "output:HDMI-A-$(DISPLAY)" "mode" "${VIDEO_RESOLUTION_WIDTH}x${VIDEO_RESOLUTION_HEIGHT}@${VIDEO_FRAMERATE}" >> "${LOG_FILE}" 2>&1
+#crudini --set "${WAYFIRE_INI_FILE}" "output:HDMI-A-$(DISPLAY)" "position" "0,0" >> "${LOG_FILE}" 2>&1
+#crudini --set "${WAYFIRE_INI_FILE}" "output:HDMI-A-$(DISPLAY)" "transform" "normal" >> "${LOG_FILE}" 2>&1
 crudini --set "${WAYFIRE_INI_FILE}" "output:HDMI-A-1" "mode" "${VIDEO_RESOLUTION_WIDTH}x${VIDEO_RESOLUTION_HEIGHT}@${VIDEO_FRAMERATE}" >> "${LOG_FILE}" 2>&1
 crudini --set "${WAYFIRE_INI_FILE}" "output:HDMI-A-1" "position" "0,0" >> "${LOG_FILE}" 2>&1
 crudini --set "${WAYFIRE_INI_FILE}" "output:HDMI-A-1" "transform" "normal" >> "${LOG_FILE}" 2>&1
