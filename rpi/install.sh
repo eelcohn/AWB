@@ -164,6 +164,14 @@ WAYLAND_INI_FILE="/home/${SUDO_USER}/.config/wayfire.ini"
 [[ "${XDG_CURRENT_DESKTOP}" == "LXDE" ]] && source "/opt/${APP_NAME}/rpi/install-LXDE.sh"
 [[ -e "${WAYFIRE_INI_FILE}" ]] && source "/opt/${APP_NAME}/rpi/install-Wayland.sh"
 
+# ----------------------
+# Change the Raspberry Pi boot splash screen
+# ----------------------
+#echo "$(date +%c) Setting custom Raspberry Pi boot splash screen" >> "${LOG_FILE}" 2>&1
+#mv "/usr/share/plymouth/themes/pix/splash.png" "/usr/share/plymouth/themes/pix/splash.png.backup"
+#mv "/opt/${APP_NAME}/rpi/splash.png" "/usr/share/plymouth/themes/pix/splash.png"
+#plymouth-set-default-theme --rebuild-initrd pix
+
 # -------
 # Restart
 # -------
