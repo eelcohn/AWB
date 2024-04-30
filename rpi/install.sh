@@ -4,6 +4,7 @@
 # https://pimylifeup.com/raspberry-pi-kiosk/
 
 APP_NAME="AWB"
+APP_FULLNAME="Aviation Weather Board"
 APP_SOURCE="https://github.com/eelcohn/${APP_NAME}"
 GPIO_SHUTDOWN_PIN="17"
 #LOCALE="nl_NL.UTF-8"
@@ -66,7 +67,7 @@ echo 'Unattended-Upgrade::Origins-Pattern {
 # Install packages
 # ----------------
 echo "$(date +%c) Installing packages" >> "${LOG_FILE}" 2>&1
-apt-get install -y chromium-browser git nano sed tightvncserver unattended-upgrades >> "${LOG_FILE}" 2>&1
+apt-get install -y chromium-browser git imagemagick nano sed tightvncserver unattended-upgrades >> "${LOG_FILE}" 2>&1
 
 # -------------------------
 # Install webserver and PHP
@@ -167,10 +168,20 @@ WAYLAND_INI_FILE="/home/${SUDO_USER}/.config/wayfire.ini"
 # ----------------------
 # Change the Raspberry Pi boot splash screen
 # ----------------------
-#echo "$(date +%c) Setting custom Raspberry Pi boot splash screen" >> "${LOG_FILE}" 2>&1
-#mv "/usr/share/plymouth/themes/pix/splash.png" "/usr/share/plymouth/themes/pix/splash.png.backup"
-#mv "/opt/${APP_NAME}/rpi/splash.png" "/usr/share/plymouth/themes/pix/splash.png"
-#plymouth-set-default-theme --rebuild-initrd pix
+echo "$(date +%c) Setting custom Raspberry Pi boot splash screen" >> "${LOG_FILE}" 2>&1
+SPLASH_SCREEN="/usr/share/plymouth/themes/pix/splash.png"
+mv "${SPLASH_SCREEN}" "${SPLASH_SCREEN}.backup" >> "${LOG_FILE}" 2>&1
+convert "/opt/${APP_NAME}/rpi/splash.png"[1024x768] \
+	-font 'Cantarell-Light' \
+	-pointsize 60 -fill black -gravity North -draw "text 1,26 '${APP_FULLNAME}'" \
+	-pointsize 60 -fill white -gravity North -draw "text 0,25 '${APP_FULLNAME}'" \
+	-pointsize 18 -fill black -gravity SouthWest -draw "text 24,24 'Raspberry Pi OS v$(cat /etc/debian_version) $(getconf LONG_BIT) bit'" \
+	-pointsize 18 -fill white -gravity SouthWest -draw "text 25,25 'Raspberry Pi OS v$(cat /etc/debian_version) $(getconf LONG_BIT) bit'" \
+ 	-pointsize 18 -fill black -gravity SouthEast -draw "text 24,24 '${APP_SOURCE}'" \
+	-pointsize 18 -fill white -gravity SouthEast -draw "text 25,25 '${APP_SOURCE}'" \
+ 	"${SPLASH_SCREEN} >> "${LOG_FILE}" 2>&1
+mv "/opt/${APP_NAME}/rpi/splash.png" "${SPLASH_SCREEN}"
+plymouth-set-default-theme --rebuild-initrd pix
 
 # -------
 # Restart
