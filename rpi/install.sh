@@ -120,11 +120,11 @@ timedatectl set-ntp True >> "${LOG_FILE}" 2>&1
 # -----------------------------------------
 echo "$(date +%c) Adding cron job" >> "${LOG_FILE}" 2>&1
 # Create crontab file if it doesn't exist yet
-[[ -e "/var/spool/cron/crontabs/${USER}" ]] || touch "/var/spool/cron/crontabs/${USER}" >> "${LOG_FILE}" 2>&1
+[[ -e "/var/spool/cron/crontabs/${SUDO_USER}" ]] || touch "/var/spool/cron/crontabs/${SUDO_USER}" >> "${LOG_FILE}" 2>&1
 # Add daily cron job
-grep -qxF "0 1 * * * /usr/bin/bash /opt/${APP_NAME}/rpi/updater.sh" "/var/spool/cron/crontabs/${USER}" || echo "0 1 * * * /usr/bin/bash /opt/${APP_NAME}/rpi/updater.sh" >> "/var/spool/cron/crontabs/${USERNAME}"
-chown "${USER}":"crontab" "/var/spool/cron/crontabs/${USER}" >> "${LOG_FILE}" 2>&1
-chmod 600 "/var/spool/cron/crontabs/${USER}" >> "${LOG_FILE}" 2>&1
+grep -qxF "0 1 * * * /usr/bin/bash /opt/${APP_NAME}/rpi/updater.sh" "/var/spool/cron/crontabs/${SUDO_USER}" || echo "0 1 * * * /usr/bin/bash /opt/${APP_NAME}/rpi/updater.sh" >> "/var/spool/cron/crontabs/${USERNAME}"
+chown "${SUDO_USER}":"crontab" "/var/spool/cron/crontabs/${SUDO_USER}" >> "${LOG_FILE}" 2>&1
+chmod 600 "/var/spool/cron/crontabs/${SUDO_USER}" >> "${LOG_FILE}" 2>&1
 systemctl force-reload cron >> "${LOG_FILE}" 2>&1
 
 # -----------------------------------------
@@ -149,7 +149,7 @@ fi
 # -------------------------------------------------------
 echo "$(date +%c) Configuring TightVNC" >> "${LOG_FILE}" 2>&1
 cp /opt/${APP_NAME}/rpi/tightvncserver.service /etc/systemd/system/ >> "${LOG_FILE}" 2>&1
-sed -i "s/USERNAME/${USER}/" /etc/systemd/system/tightvncserver.service >> "${LOG_FILE}" 2>&1
+sed -i "s/USERNAME/${SUDO_USER}/" /etc/systemd/system/tightvncserver.service >> "${LOG_FILE}" 2>&1
 systemctl enable tightvncserver >> "${LOG_FILE}" 2>&1
 
 # -------------------------------------------------------
