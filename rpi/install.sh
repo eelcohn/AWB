@@ -173,7 +173,7 @@ echo "${WAYFIRE_INI_FILE}" >> "${LOG_FILE}" 2>&1
 echo "$(date +%c) Setting custom Raspberry Pi boot splash screen" >> "${LOG_FILE}" 2>&1
 SPLASH_SCREEN="/usr/share/plymouth/themes/pix/splash.png"
 mv "${SPLASH_SCREEN}" "${SPLASH_SCREEN}.backup" >> "${LOG_FILE}" 2>&1
-convert "/opt/${APP_NAME}/rpi/splash.png"[1024x768] \
+convert "/opt/${APP_NAME}/rpi/splash.png" \
 	-font 'Cantarell-Light' \
 	-pointsize 60 -fill black -gravity North -draw "text 1,26 '${APP_FULLNAME}'" \
 	-pointsize 60 -fill white -gravity North -draw "text 0,25 '${APP_FULLNAME}'" \
