@@ -162,7 +162,9 @@ systemctl enable tightvncserver >> "${LOG_FILE}" 2>&1
 # Execute window-manager-specific commands
 # ----------------------
 WAYFIRE_INI_FILE="/home/${SUDO_USER}/.config/wayfire.ini"
+echo "${WAYFIRE_INI_FILE}" >> "${LOG_FILE}" 2>&1
 [[ "${XDG_CURRENT_DESKTOP}" == "LXDE" ]] && source "/opt/${APP_NAME}/rpi/install-LXDE.sh"
+[[ -e "${WAYFIRE_INI_FILE}" ]] && echo "Wayfire yes" >> "${LOG_FILE}" 2>&1
 [[ -e "${WAYFIRE_INI_FILE}" ]] && source "/opt/${APP_NAME}/rpi/install-Wayland.sh"
 
 # ----------------------
