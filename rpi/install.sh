@@ -182,8 +182,7 @@ convert "/opt/${APP_NAME}/rpi/splash.png"[1024x768] \
  	-pointsize 18 -fill black -gravity SouthEast -draw "text 24,24 '${APP_SOURCE}'" \
 	-pointsize 18 -fill white -gravity SouthEast -draw "text 25,25 '${APP_SOURCE}'" \
  	"${SPLASH_SCREEN}" >> "${LOG_FILE}" 2>&1
-mv "/opt/${APP_NAME}/rpi/splash.png" "${SPLASH_SCREEN}"
-plymouth-set-default-theme --rebuild-initrd pix
+#plymouth-set-default-theme --rebuild-initrd pix
 
 # -------
 # Restart
