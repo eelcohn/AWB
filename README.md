@@ -20,6 +20,8 @@ https://www.knmi.nl/
 https://www.knmi.nl/nederland-nu/luchtvaart/weerbulletin-kleine-luchtvaart
 #### NOAA METAR
 https://tgftp.nws.noaa.gov/data/forecasts/taf/stations/
+#### Open-Meteo
+https://open-meteo.com/en/docs
 #### Open Sky Network
 https://opensky-network.org/aircraft-profile
 #### Open Weather Map
