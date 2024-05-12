@@ -112,6 +112,7 @@ const UPPERCASES = {
 	'noorwegen': 'Noorwegen',
 	'normandie': 'Normandië',
 	'oostenrijk': 'Oostenrijk',
+	'oostzee': 'Oostzee',
 	'polen': 'Polen',
 	'rusland': 'Rusland',
 	'scandinavie': 'Scandinavië',
