@@ -129,7 +129,7 @@ class Module {
 				for (var i = 0; i < document.config.upperwinds.length; i++) {
 					document.getElementById(ID_WIND_DIRECTION.replace('????', document.config.upperwinds[i])).innerHTML = this.wind_direction[document.config.upperwinds[i]] + '&nbsp;' + UNIT_DIRECTION;
 					document.getElementById(ID_WIND_SPEED.replace('????', document.config.upperwinds[i])).innerHTML = this.wind_speed[document.config.upperwinds[i]] + '&nbsp;' + UNIT_KNOTS;
-					if (this.temperature[document.config.upperwinds[i]] == -272) {
+					if (this.temperature[document.config.upperwinds[i]] < -250) {
 						/* Do not display invalid temperatures */
 						document.getElementById(ID_WIND_TEMPERATURE.replace('????', document.config.upperwinds[i])).innerHTML = '-&nbsp;' + UNIT_CELCIUS;
 					} else {
