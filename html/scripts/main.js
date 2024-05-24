@@ -91,6 +91,19 @@ class OnlineStatus {
 	}
 }
 
+/* Get a URL parameter */
+function getURLParameter(variable) {
+      var query = window.location.search.substring(1);
+      var vars = query.split("&");
+      for (var i=0; i<vars.length; i++) {
+            var pair = vars[i].split("=");
+            if (pair[0] == variable) {
+                  return pair[1];
+            }
+      }
+    return null;
+}
+
 
 
 /* Automatically add timestamps to console.log */
@@ -101,9 +114,12 @@ console.log = function () {
 };
 
 /* Make config available for all modules */
+var location = getURLParameter('location');
 document.config = {};
-loadConfig().then(response => {
-	/* Enable/disable compass rose */
+loadConfig(location).then(response => {
+    /* Check if a custom location is given */
+    
+    /* Enable/disable compass rose */
 	if (document.config.compass === true) {
 		document.getElementById(ID_COMPASS).style.display = 'block';
 	} else {
@@ -130,7 +146,7 @@ loadConfig().then(response => {
 	var online_status = new OnlineStatus();
 
 	/* Set up ADS-B module(s) */
-	//var airplanes = new OpenSkyNetwork(document.config.airplanes);
+	var airplanes = new OpenSkyNetwork(document.config.airplanes);
 
 	/* Add altitudes to upper winds table */
 	if (document.config.upperwinds) {
