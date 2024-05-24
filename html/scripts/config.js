@@ -4,10 +4,15 @@ import { createSystemMessage } from './functions.js';
 
 const CONFIG_URL = './config.json';
 
-async function loadConfig() {
+async function loadConfig(location) {
+    if (location === null) {
+        var url = CONFIG_URL;
+    } else {
+        var url = './config-' + location + '.json';
+    }
 	/* Fetch data from the API */
 	document.config = await fetch(
-		CONFIG_URL,
+		url,
 		{
 			headers: {
 				Accept: 'application/json',
@@ -32,4 +37,3 @@ async function loadConfig() {
 }
 
 export { loadConfig };
-
