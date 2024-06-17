@@ -300,6 +300,11 @@ const UPPERCASES = {
 	'tcu/cb': 'TCU/CB',
 };
 
+const ALERTWORDS= [
+    'ijsaanzetting',
+    'onweer',
+];
+
 class Module {
 	constructor() {
 		this.url = 'https://www.knmi.nl/nederland-nu/luchtvaart/weerbulletin-kleine-luchtvaart';
@@ -423,7 +428,14 @@ class Module {
 			} else {
 				start = this.gafor.indexOf(': ', start) + 2;
 			}
-			data = this.gafor.slice(start, this.gafor.indexOf('\n.\n', start)).toLowerCase().replaceAll('\n', ' ');
+
+            /*  */
+            data = this.gafor.slice(start, this.gafor.indexOf('\n.\n', start)).toLowerCase().replaceAll('\n', ' ');
+
+            /* Highlight specific words that need extra attention */
+			for (key in ALERTWORDS) {
+				data = data.replaceAll(ALERTWORDS[key], '<span class="gafor-item-text-alert">' + ALERTWORDS[key] + '</span>');
+			}
 
 			/* Make some METAR- and language-specific uppercase changes */
 			for (key in UPPERCASES) {
