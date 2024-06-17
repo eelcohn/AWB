@@ -10,6 +10,8 @@
 	--metadata-textcolor: #fff;
 	--metadata-fontsize: 9pt;
 	--textcolor: #fff;
+	--textcolor-alert: #fc3;
+	--jumplimit-color: orangered;
 	--text-header-fontsize: 16pt;
 	--text-contents-fontsize: 15pt;
 	--alert-color: #000;
