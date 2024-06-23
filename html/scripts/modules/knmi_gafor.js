@@ -82,6 +82,7 @@ const UPPERCASES = {
 	'achterhoek': 'Achterhoek',
 	'alpen': 'Alpen',
 	'arnhem': 'Arnhem',
+	'atlantisch': 'Atlantisch',
 	'atlantische oceaan': 'Atlantische Oceaan',
 	'azoren': 'Azoren',
 	'baltische': 'Baltische',
