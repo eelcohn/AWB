@@ -93,6 +93,7 @@ const UPPERCASES = {
 	'centraal europa': 'Centraal Europa',
 	'centraal-europa': 'Centraal-Europa',
 	'de kooij': 'De Kooij',
+	'den haag': 'Den Haag',
 	'denemarken': 'Denemarken',
 	'duitsland': 'Duitsland',
 	'duitse bocht': 'Duitse Bocht',
