@@ -125,6 +125,7 @@ const UPPERCASES = {
 	'tsjechie': 'Tsjechië',
 	'twente': 'Twente',
 	'veluwe': 'Veluwe',
+	'verenigd koninkrijk': 'Verenigd Koninkrijk',
 	'waddeneilanden': 'Waddeneilanden',
 	'waddengebied': 'Waddengebied',
 	'waddenzee': 'Waddenzee',
