@@ -104,6 +104,7 @@ const UPPERCASES = {
 	'europa': 'Europa',
 	'finland': 'Finland',
 	'frankrijk': 'Frankrijk',
+	'groot-brittannie': 'Groot-Brittannië',
 	'golf van biscaje': 'Golf van Biscaje',
 	'golf van biskaje': 'Golf van Biskaje',
 	'ierland': 'Ierland',
