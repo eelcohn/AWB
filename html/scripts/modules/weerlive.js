@@ -62,8 +62,8 @@ const ICONS = {
 
 class Module {
 	constructor() {
-//		this.api_url = 'https://weerlive.nl/api/json-data-10min.php?key=' + document.config.weerlive.key + '&locatie=' + document.config.location.name;
-		this.api_url = 'https://weerlive.nl/api/json-data-10min.php?key=' + document.config.weerlive.key + '&locatie=' + document.config.location.lattitude + ',' + document.config.location.longitude;
+//		this.api_url = ' https://weerlive.nl/api/weerlive_api_v2.php?key=' + document.config.weerlive.key + '&locatie=' + document.config.location.name;
+		this.api_url = 'https://weerlive.nl/api/weerlive_api_v2.php?key=' + document.config.weerlive.key + '&locatie=' + document.config.location.lattitude + ',' + document.config.location.longitude;
 		this.refreshInterval = 10 * 60 * 1000; // Refresh interval is 10 minutes
 
 		this.valid_from = null
