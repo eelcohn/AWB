@@ -314,7 +314,8 @@ const ALERTWORDS= [
 
 class Module {
 	constructor() {
-		this.url = 'https://www.knmi.nl/nederland-nu/luchtvaart/weerbulletin-kleine-luchtvaart';
+		/*this.url = 'https://www.knmi.nl/nederland-nu/luchtvaart/weerbulletin-kleine-luchtvaart'; */
+    this.url = 'https://www.canrinus.nl/weerinformatie/kleineluchtvaart.php';
 		this.cors_proxy_url = 'cors-proxy.php';
 		this.refreshInterval = 10 * 60 * 1000; // Refresh interval is 10 minutes
 
@@ -373,7 +374,7 @@ class Module {
 				this.last_updated = new Date();
 
 				/* Get contents from the result from allorigins.win and get the GAFOR bulletin by slicing off any HTML content*/
-				this.gafor = data.slice(data.indexOf('ZCZC'), data.indexOf('</pre>'));
+				this.gafor = data.slice(data.indexOf('ZCZC'), data.indexOf('Bron KNMI')).replaceAll('<br/>', '\n');
 
 				/* Check if there's a valid GAFOR bulletin in the document */
 				if (this.gafor.length > 0) {
