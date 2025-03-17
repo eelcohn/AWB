@@ -1,7 +1,7 @@
 <?php
 $CURL_TIMEOUT = 5;
 
-if ($_SERVER['HTTP_X_REQUEST_URL'] != '') {
+if ((isset($_SERVER['HTTP_X_REQUEST_URL'])) && ($_SERVER['HTTP_X_REQUEST_URL'] != '')) {
 	$headers = array();
 
 	if (isset($_SERVER['HTTP_CACHE_CONTROL'])) {
@@ -14,6 +14,10 @@ if ($_SERVER['HTTP_X_REQUEST_URL'] != '') {
 		$headers[] = 'Pragma: ' . $_SERVER['HTTP_PRAGMA'];
 	} else {
 		$headers[] = 'Pragma: no-cache';
+	}
+
+	if (isset($_SERVER['HTTP_X_USER_AGENT'])) {
+		$headers[] = 'User-Agent: ' . $_SERVER['HTTP_X_USER_AGENT'];
 	}
 
 	switch($_SERVER['REQUEST_METHOD']) {
@@ -48,4 +52,3 @@ if ($_SERVER['HTTP_X_REQUEST_URL'] != '') {
 	http_response_code(400);
 }
 ?>
-
