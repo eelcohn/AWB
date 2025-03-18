@@ -5,7 +5,7 @@ import { UNIT_CELCIUS, UNIT_DIRECTION, UNIT_FEET, UNIT_KNOTS } from './const.js'
 import { createSystemMessage, removeSystemMessage } from './functions.js';
 import { LANGUAGE_INTERNET_DOWN, LANGUAGE_INTERNET_RESTORED } from './language.js';
 import { Module as KNMI } from './modules/knmi.js';
-import { Module as KNMIGafor } from './modules/knmi_gafor.js';
+import { Module as KNMI_LLFC } from './modules/knmi_llfc.js';
 import { Module as NOAAMETAR } from './modules/noaa_metar.js';
 import { Module as OpenSkyNetwork } from './modules/openskynetwork.js';
 import { Module as OpenWeatherMap } from './modules/openweathermap.js';
@@ -162,7 +162,7 @@ loadConfig(location).then(response => {
 
 	document.modules = {};
 	//document.modules.knmi = new KNMI(ID_IMG_LAYER_RAIN);
-	document.modules.knmi_gafor = new KNMIGafor();
+	document.modules.knmi_llfc = new KNMI_LLFC();
 	//document.modules.sat24 = new Sat24(ID_IMG_LAYER_CLOUD);
 	document.modules.weatherandradar = new WeatherAndRadar(ID_LAYER_MAP);
 	//document.modules.openweathermap = new OpenWeatherMap();
