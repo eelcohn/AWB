@@ -45,6 +45,7 @@ echo "$(date +%c) Window manager: ${XDG_SESSION_TYPE}" >> "${LOG_FILE}" 2>&1
 # Update system
 # -------------
 echo "$(date +%c) Updating system" >> "${LOG_FILE}" 2>&1
+apt-get -y autoremove >> "${LOG_FILE}" 2>&1
 apt-get -y update >> "${LOG_FILE}" 2>&1
 apt-get -y dist-upgrade >> "${LOG_FILE}" 2>&1
 apt-get -y --with-new-pkgs upgrade >> "${LOG_FILE}" 2>&1
