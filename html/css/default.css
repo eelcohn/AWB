@@ -65,7 +65,7 @@ header,
 .compass,
 .upper-winds,
 .metar,
-.gafor,
+.llfc,
 .weather-alert1,
 .weather-alert2,
 .weather-alert3 {
@@ -85,7 +85,7 @@ header,
 }
 .upper-winds-header,
 .metar-header,
-.gafor-header {
+.llfc-header {
 	text-align: center;
 	font-size: var(--text-header-fontsize);
 }
@@ -116,26 +116,26 @@ header,
 .metrics-content,
 .upper-winds-content,
 .metar-content,
-.gafor-content {
+.llfc-content {
 	padding-top: 7px;
 	padding-bottom: 11px;
 }
-.gafor {
+.llfc {
 	flex: 2 100%;
 	position: relative;
 }
-.gafor-content {
+.llfc-content {
 	height: 100%;
 }
-.gafor-item {
+.llfc-item {
 	margin-bottom: 5pt;
 }
-.gafor-item-header {
+.llfc-item-header {
 	font-weight: bold;
 }
-.gafor-item-text {
+.llfc-item-text {
 }
-.gafor-item-text-alert {
+.llfc-item-text-alert {
 	color: var(--textcolor-alert);
 }
 .weather,
