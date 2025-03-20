@@ -3,6 +3,8 @@
 APP_NAME="AWB"
 LOG_FILE="/var/log/${APP_NAME}/install.log"
 WAYFIRE_INI_FILE="/home/${SUDO_USER}/.config/wayfire.ini"
+AUTOSTART_PATH="/home/${SUDO_USER}/autostart/"
+AUTOSTART_FILE="/home/${SUDO_USER}/autostart/${APP_NAME}.desktop"
 VIDEO_RESOLUTION_HEIGHT="1080"
 VIDEO_RESOLUTION_WIDTH="1920"
 VIDEO_FRAMERATE="50000"
@@ -81,5 +83,8 @@ crudini --set "${WAYFIRE_INI_FILE}" "output:HDMI-A-1" "transform" "normal" >> "$
 # Autostart kiosk script
 # -------------------------------------------------------
 echo "$(date +%c) Wayfire: configuring autostart kiosk script" >> "${LOG_FILE}" 2>&1
-crudini --set "${WAYFIRE_INI_FILE}" "autostart" "delprofile" "rm -rf ~/.config/chromium" >> "${LOG_FILE}" 2>&1
-crudini --set "${WAYFIRE_INI_FILE}" "autostart" "kiosk" "chromium-browser --noerrdialogs --disable-infobars --check-for-update-interval=31536000 --enable-logging --kiosk http://127.0.0.1/" >> "${LOG_FILE}" 2>&1
+#crudini --set "${WAYFIRE_INI_FILE}" "autostart" "delprofile" "rm -rf ~/.config/chromium" >> "${LOG_FILE}" 2>&1
+#crudini --set "${WAYFIRE_INI_FILE}" "autostart" "kiosk" "chromium-browser --noerrdialogs --disable-infobars --check-for-update-interval=31536000 --enable-logging --kiosk http://127.0.0.1/" >> "${LOG_FILE}" 2>&1
+mkdir -p "${AUTOSTART_PATH}"
+crudini --set "${AUTOSTART_FILE}" "Desktop Entry" "Type" "Application" >> "${LOG_FILE}" 2>&1
+crudini --set "${AUTOSTART_FILE}" "Desktop Entry" "Exec" "bash -c \"rm -rf ~/.config/chromium && chromium-browser --noerrdialogs --disable-infobars --check-for-update-interval=31536000 --enable-logging --kiosk http://127.0.0.1/ > /dev/null & \"" >> "${LOG_FILE}" 2>&1
