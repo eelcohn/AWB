@@ -21,12 +21,12 @@ fi
 # ----------------------------------
 # Check if wayfire.ini file exists
 # ----------------------------------
-if [[ ! -e "${WAYFIRE_INI_FILE}" ]]
-then
-	echo "WayfireCould not find wayfire.ini file." >> "${LOG_FILE}" 2>&1
- 	echo "${WAYFIRE_INI_FILE}" >> "${LOG_FILE}" 2>&1
-	exit
-fi
+#if [[ ! -e "${WAYFIRE_INI_FILE}" ]]
+#then
+#	echo "WayfireCould not find wayfire.ini file." >> "${LOG_FILE}" 2>&1
+#	echo "${WAYFIRE_INI_FILE}" >> "${LOG_FILE}" 2>&1
+#	exit
+#fi
 
 echo "$(date +%c) Wayfire: Configuring Wayland" >> "${LOG_FILE}" 2>&1
 apt-get -y install crudini >> "${LOG_FILE}" 2>&1
