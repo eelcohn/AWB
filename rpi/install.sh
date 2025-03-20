@@ -162,11 +162,11 @@ systemctl enable tightvncserver >> "${LOG_FILE}" 2>&1
 # ----------------------
 # Execute window-manager-specific commands
 # ----------------------
-WAYFIRE_INI_FILE="/home/${SUDO_USER}/.config/wayfire.ini"
-echo "${WAYFIRE_INI_FILE}" >> "${LOG_FILE}" 2>&1
-[[ "${XDG_CURRENT_DESKTOP}" == "LXDE" ]] && source "/opt/${APP_NAME}/rpi/install-LXDE.sh"
-[[ -e "${WAYFIRE_INI_FILE}" ]] && echo "Wayfire yes" >> "${LOG_FILE}" 2>&1
-[[ -e "${WAYFIRE_INI_FILE}" ]] && source "/opt/${APP_NAME}/rpi/install-Wayland.sh"
+echo "Executing window-manager-specific commands" >> "${LOG_FILE}" 2>&1
+echo "XDG Current Desk: ${XDG_CURRENT_DESK}" >> "${LOG_FILE}" 2>&1
+echo "XDG Session Type: ${XDG_SESSION_TYPE}" >> "${LOG_FILE}" 2>&1
+[[ "${XDG_CURRENT_DESK}" == "LXDE" ]] && source "/opt/${APP_NAME}/rpi/install-LXDE.sh"
+[[ "${XDG_SESSION_TYPE}" == "wayland" ]] && source "/opt/${APP_NAME}/rpi/install-Wayland.sh"
 
 # ----------------------
 # Change the Raspberry Pi boot splash screen
