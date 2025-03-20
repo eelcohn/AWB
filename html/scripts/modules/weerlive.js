@@ -183,7 +183,7 @@ class Module {
 					/* Wind speed in m/s */
 					if (data['liveweer'][0]['windms']) {
 						var wind_speed_ms_previous = this.wind_speed_ms;
-						this.wind_speed_ms = data['liveweer'][0]['windms'];
+						this.wind_speed_ms = parseFloat(data['liveweer'][0]['windms']).toFixed(1);
 					}
 					/* Wind speed in kt */
 					if (data['liveweer'][0]['windk']) {
