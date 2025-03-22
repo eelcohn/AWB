@@ -316,7 +316,7 @@ const ALERTWORDS = [
 class Module {
 	constructor() {
 		this.url = 'https://www.knmi.nl/nederland-nu/luchtvaart/weerbulletin-kleine-luchtvaart';
-        this.user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:136.0) Gecko/20100101 Firefox/136.0';
+		this.user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:136.0) Gecko/20100101 Firefox/136.0';
 		this.cors_proxy_url = 'cors-proxy.php';
 		this.refreshInterval = 10 * 60 * 1000; // Refresh interval is 10 minutes
 
@@ -355,7 +355,7 @@ class Module {
 			{
 				headers: {
 					'X-Request-Url': this.url,
-                    'X-User-Agent': this.user_agent,
+					'X-User-Agent': this.user_agent,
 				},
 				keepalive: true,
 				method: 'GET',
@@ -439,10 +439,10 @@ class Module {
 				start = this.llfc.indexOf(': ', start) + 2;
 			}
 
-            /*  */
-            data = this.llfc.slice(start, this.llfc.indexOf('\n.\n', start)).toLowerCase().replaceAll('\n', ' ');
+		/*  */
+		data = this.llfc.slice(start, this.llfc.indexOf('\n.\n', start)).toLowerCase().replaceAll('\n', ' ');
 
-            /* Highlight specific words that need extra attention */
+		/* Highlight specific words that need extra attention */
 			for (key in ALERTWORDS) {
 				data = data.replaceAll(ALERTWORDS[key], '<span class="llfc-item-text-alert">' + ALERTWORDS[key] + '</span>');
 			}
