@@ -308,8 +308,9 @@ const UPPERCASES = {
 };
 
 const ALERTWORDS= [
-    'ijsaanzetting',
-    'onweer',
+	'ijsaanzetting',
+	'onweer',
+	'turbulentie',	
 ];
 
 class Module {
