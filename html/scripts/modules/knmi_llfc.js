@@ -86,7 +86,7 @@ const UPPERCASES = {
 	'atlantische oceaan': 'Atlantische Oceaan',
 	'azoren': 'Azoren',
 	'baltische': 'Baltische',
-	'belgie': 'België',
+	'belgie': 'BelgiÃ«',
 	'bretagne': 'Bretagne',
 	'britse eilanden': 'Britse Eilanden',
 	'britse': 'Britse',
@@ -104,7 +104,7 @@ const UPPERCASES = {
 	'europa': 'Europa',
 	'finland': 'Finland',
 	'frankrijk': 'Frankrijk',
-	'groot-brittannie': 'Groot-Brittannië',
+	'groot-brittannie': 'Groot-BrittanniÃ«',
 	'golf van biscaje': 'Golf van Biscaje',
 	'golf van biskaje': 'Golf van Biskaje',
 	'ierland': 'Ierland',
@@ -115,16 +115,16 @@ const UPPERCASES = {
 	'noorse': 'Noorse',
 	'noordzee': 'Noordzee',
 	'noorwegen': 'Noorwegen',
-	'normandie': 'Normandië',
+	'normandie': 'NormandiÃ«',
 	'oostenrijk': 'Oostenrijk',
 	'oostzee': 'Oostzee',
 	'polen': 'Polen',
 	'rusland': 'Rusland',
-	'scandinavie': 'Scandinavië',
+	'scandinavie': 'ScandinaviÃ«',
 	'schotland': 'Schotland',
 	'shetlandeilanden': 'Shetlandeilanden',
 	'tilburg': 'Tilburg',
-	'tsjechie': 'Tsjechië',
+	'tsjechie': 'TsjechiÃ«',
 	'twente': 'Twente',
 	'veluwe': 'Veluwe',
 	'verenigd koninkrijk': 'Verenigd Koninkrijk',
@@ -307,16 +307,15 @@ const UPPERCASES = {
 	'tcu/cb': 'TCU/CB',
 };
 
-const ALERTWORDS = [
-	'ijsaanzetting',
-	'onweer',
-	'turbulentie',	
+const ALERTWORDS= [
+    'ijsaanzetting',
+    'onweer',
 ];
 
 class Module {
 	constructor() {
 		this.url = 'https://www.knmi.nl/nederland-nu/luchtvaart/weerbulletin-kleine-luchtvaart';
-		this.user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:136.0) Gecko/20100101 Firefox/136.0';
+        this.user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:136.0) Gecko/20100101 Firefox/136.0';
 		this.cors_proxy_url = 'cors-proxy.php';
 		this.refreshInterval = 10 * 60 * 1000; // Refresh interval is 10 minutes
 
@@ -355,7 +354,7 @@ class Module {
 			{
 				headers: {
 					'X-Request-Url': this.url,
-					'X-User-Agent': this.user_agent,
+                    'X-User-Agent': this.user_agent,
 				},
 				keepalive: true,
 				method: 'GET',
@@ -439,10 +438,10 @@ class Module {
 				start = this.llfc.indexOf(': ', start) + 2;
 			}
 
-			/* Extract component text */
-			data = this.llfc.slice(start, this.llfc.indexOf('\n.\n', start)).toLowerCase().replaceAll('\n', ' ');
+            /*  */
+            data = this.llfc.slice(start, this.llfc.indexOf('\n.\n', start)).toLowerCase().replaceAll('\n', ' ');
 
-			/* Highlight specific words that need extra attention */
+            /* Highlight specific words that need extra attention */
 			for (key in ALERTWORDS) {
 				data = data.replaceAll(ALERTWORDS[key], '<span class="llfc-item-text-alert">' + ALERTWORDS[key] + '</span>');
 			}
@@ -455,10 +454,8 @@ class Module {
 			/* Start each sentence with an uppercase letter */
 			sentences = data.split(". ");
 			for (i = 0; i < sentences.length; i++) {
-
 				/* Always make first letter uppercase for the component */
 				sentences[0]= sentences[0][0].toUpperCase() + sentences[0].slice(1);
-
 				/* Only transform first letter of sentence to uppercase when it's not preceded by an abbreviation */
 				if ((i !== 0) && (sentences[i - 1][sentences[i - 1].length - 2] !== '.')) {
 					sentences[i] = sentences[i][0].toUpperCase() + sentences[i].slice(1);
