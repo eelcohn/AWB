@@ -307,7 +307,7 @@ const UPPERCASES = {
 	'tcu/cb': 'TCU/CB',
 };
 
-const ALERTWORDS= [
+const ALERTWORDS = [
 	'ijsaanzetting',
 	'onweer',
 	'turbulentie',	
