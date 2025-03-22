@@ -439,10 +439,10 @@ class Module {
 				start = this.llfc.indexOf(': ', start) + 2;
 			}
 
-		/*  */
-		data = this.llfc.slice(start, this.llfc.indexOf('\n.\n', start)).toLowerCase().replaceAll('\n', ' ');
+			/* Extract component text */
+			data = this.llfc.slice(start, this.llfc.indexOf('\n.\n', start)).toLowerCase().replaceAll('\n', ' ');
 
-		/* Highlight specific words that need extra attention */
+			/* Highlight specific words that need extra attention */
 			for (key in ALERTWORDS) {
 				data = data.replaceAll(ALERTWORDS[key], '<span class="llfc-item-text-alert">' + ALERTWORDS[key] + '</span>');
 			}
@@ -455,8 +455,10 @@ class Module {
 			/* Start each sentence with an uppercase letter */
 			sentences = data.split(". ");
 			for (i = 0; i < sentences.length; i++) {
+
 				/* Always make first letter uppercase for the component */
 				sentences[0]= sentences[0][0].toUpperCase() + sentences[0].slice(1);
+
 				/* Only transform first letter of sentence to uppercase when it's not preceded by an abbreviation */
 				if ((i !== 0) && (sentences[i - 1][sentences[i - 1].length - 2] !== '.')) {
 					sentences[i] = sentences[i][0].toUpperCase() + sentences[i].slice(1);
