@@ -83,6 +83,6 @@ fi
 # -------
 # Restart
 # -------
-echo "`date +%c` Updaing done" >> "${LOG_FILE}" 2>&1
+echo "`date +%c` Updating done" >> "${LOG_FILE}" 2>&1
 
 /usr/sbin/shutdown -r now >> "${LOG_FILE}" 2>&1
