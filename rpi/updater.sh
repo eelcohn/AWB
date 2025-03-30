@@ -63,7 +63,7 @@ if [ "${LOCAL_VERSION}" != "${EXT_VERSION}" ]
 then
 	echo "`date +%c` New ${APP_NAME} version found: ${EXT_VERSION} (Local version: ${LOCAL_VERSION})" >> "${LOG_FILE}" 2>&1
 	rm -rf "/opt/${APP_NAME}.new" >> "${LOG_FILE}" 2>&1
-	if ! git clone ${APP_SOURCE} "/opt/${APP_NAME}.new --branch ${BRANCH}" >> "${LOG_FILE}" 2>&1
+	if ! git clone ${APP_SOURCE} "/opt/${APP_NAME}.new" --branch ${BRANCH} >> "${LOG_FILE}" 2>&1
 	then
 		echo "$(date +%c) Could not clone new ${APP_NAME} version"
  	else
