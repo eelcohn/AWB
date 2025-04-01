@@ -41,6 +41,7 @@ const UPPERCASES = {
 //	'few/sct': 'FEW/SCT',
 //	'sct/bkn': 'SCT/BKN',
 //	'bkn/ovc': 'BKN/OVC',
+	'cavok': 'CAVOK',
 	'utc': 'UTC',
 	'vfr': 'VFR',
 	' nm': ' NM',
