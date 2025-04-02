@@ -316,7 +316,7 @@ const ALERTWORDS= [
 class Module {
 	constructor() {
 		this.url = 'https://www.knmi.nl/nederland-nu/luchtvaart/weerbulletin-kleine-luchtvaart';
-        this.user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:136.0) Gecko/20100101 Firefox/136.0';
+		this.user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:136.0) Gecko/20100101 Firefox/136.0';
 		this.cors_proxy_url = 'cors-proxy.php';
 		this.refreshInterval = 10 * 60 * 1000; // Refresh interval is 10 minutes
 
@@ -380,6 +380,7 @@ class Module {
 
 				/* Check if there's a valid LLFC bulletin in the document */
 				if (this.llfc.length > 0) {
+
 					/* Get day & time when this bulletin was published */
 					this.valid_from = new Date();
 					start = this.llfc.indexOf('EHDB ') + 5;
