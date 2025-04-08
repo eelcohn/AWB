@@ -111,6 +111,7 @@ const UPPERCASES = {
 	'ierland': 'Ierland',
 	'ijsland': 'IJsland',
 	'ijsselmeer': 'IJsselmeer',
+	'leeuwarden': 'Leeuwarden',
 	'lille': 'Lille',
 	'nederland': 'Nederland',
 	'noorse': 'Noorse',
