@@ -288,6 +288,7 @@ const UPPERCASES = {
 	' sc.': ' SC.',
 	' st.': ' ST.',
 	' tcu.': ' TCU.',
+	' cb\'': ' CB\'',
 	'ac/as': 'AC/AS',
 	'ac/sc': 'AC/SC',
 	'ac/sc/ns': 'AC/SC/NS',
