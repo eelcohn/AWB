@@ -232,6 +232,7 @@ const UPPERCASES = {
 	'ono-wzw': 'ONO-WZW',
 	'ozo-wnw': 'OZO-WNW',
 	'zzo-nnw': 'ZZO-NNW',
+	'wnw-ono': 'WNW-ONO',
 	'wzw-ono': 'WZW-ONO',
 	'zzw-nno': 'ZZW-NNO',
 	'nw-zo': 'NW-ZO',
