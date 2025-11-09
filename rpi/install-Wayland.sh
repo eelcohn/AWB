@@ -88,4 +88,4 @@ echo "$(date +%c) Wayfire: configuring autostart kiosk script" >> "${LOG_FILE}" 
 mkdir -p "${AUTOSTART_PATH}"
 crudini --set "${AUTOSTART_FILE}" "Desktop Entry" "Type" "Application" >> "${LOG_FILE}" 2>&1
 crudini --set "${AUTOSTART_FILE}" "Desktop Entry" "Name" "${APP_NAME}" >> "${LOG_FILE}" 2>&1
-crudini --set "${AUTOSTART_FILE}" "Desktop Entry" "Exec" "bash -c \"rm -rf ~/.config/chromium && chromium-browser --noerrdialogs --disable-infobars --check-for-update-interval=31536000 --enable-logging --kiosk http://127.0.0.1/ > /dev/null & \"" >> "${LOG_FILE}" 2>&1
+crudini --set "${AUTOSTART_FILE}" "Desktop Entry" "Exec" "bash -c \"rm -rf ~/.config/chromium && chromium-browser --password-store=basic --noerrdialogs --disable-infobars --check-for-update-interval=31536000 --enable-logging --kiosk http://127.0.0.1/ > /dev/null & \"" >> "${LOG_FILE}" 2>&1
