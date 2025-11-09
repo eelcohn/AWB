@@ -68,7 +68,7 @@ echo 'Unattended-Upgrade::Origins-Pattern {
 # Install packages
 # ----------------
 echo "$(date +%c) Installing packages" >> "${LOG_FILE}" 2>&1
-apt-get install -y chromium-browser git imagemagick nano sed tightvncserver unattended-upgrades >> "${LOG_FILE}" 2>&1
+apt-get install -y avahi-daemon chromium-browser git imagemagick nano sed tightvncserver unattended-upgrades >> "${LOG_FILE}" 2>&1
 
 # -------------------------
 # Install webserver and PHP
