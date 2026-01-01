@@ -18,6 +18,8 @@
 	"compass": true,
 	"metar": [
 	],
+	"taf": [
+	],
 	"upperwinds": [
 		1000,
 		2000,
