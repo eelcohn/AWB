@@ -23,8 +23,7 @@ fi
 # ----------------------------------
 # Check Raspbian OS codename
 # ----------------------------------
-#if [[ $(lsb_release -c -s | grep "buster") != "buster" ]] && [[ $(lsb_release -c -s | grep "bookworm") != "bookworm" ]]
-if [[ ! $(lsb_release -c -s | grep -E "buster|bookworm") ]]
+if [[ ! $(lsb_release -c -s | grep -E "buster|bookworm|trixie") ]]
 then
 	echo "This script was intended for Raspbian OS codename 'buster' or 'bookworm'. You're using a different Raspbian version:"
  	lsb_release -a
