@@ -342,6 +342,7 @@ main() {
 	done
 
 	OS_VERSION_CODENAME="$(cat /etc/os-release | grep VERSION_CODENAME | cut -d = -f 2)"
+	SESSION_ID="$(loginctl list-sessions | awk '/^ *[0-9]+/ {print $1; exit}')"
 	WINDOW_MANAGER="$(loginctl show-session 1 | grep Type | cut -d = -f 2)"
 
 	check_root_permissions
