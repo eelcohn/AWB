@@ -248,7 +248,7 @@ class Module {
 				document.getElementById(ID_WEATHER_WIND_UNIT).innerHTML = UNIT_METERS_PER_SECOND;
 				document.getElementById(ID_WEATHER_WIND_JUMPLIMIT).innerHTML = "(> 200 jumps)";
 				document.getElementById(ID_WEATHER_WIND_JUMPLIMIT).style.visibility = "block";
-				document.getElementById(ID_WEATHER_VISIBILITY_VALUE).innerHTML = this.visibility;
+				document.getElementById(ID_WEATHER_VISIBILITY_VALUE).innerHTML = Number(this.visibility).toFixed(0);
 				document.getElementById(ID_WEATHER_VISIBILITY_UNIT).innerHTML = UNIT_KILOMETERS;
 				document.getElementById(ID_WEATHER_PRESSURE_VALUE).innerHTML = Number(this.pressure).toFixed(1);
 				document.getElementById(ID_WEATHER_PRESSURE_UNIT).innerHTML = UNIT_HECTOPASCAL;
