@@ -323,6 +323,7 @@ const UPPERCASES = {
 
 const ALERTWORDS= [
     'ijsaanzetting',
+    'onweersbuien',
     'onweer',
 ];
 
