@@ -131,6 +131,7 @@ const UPPERCASES = {
 	'scandinavie': 'Scandinavië',
 	'schotland': 'Schotland',
 	'shetlandeilanden': 'Shetlandeilanden',
+	'skagerrak': 'Skagerrak',
 	'tilburg': 'Tilburg',
 	'tsjechie': 'Tsjechië',
 	'twente': 'Twente',
