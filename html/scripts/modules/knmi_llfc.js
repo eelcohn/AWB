@@ -93,6 +93,7 @@ const UPPERCASES = {
 	'baltische staten': 'Baltische Staten',
 	'baltische': 'Baltische',
 	'belgie': 'België',
+	'benelux': 'Benelux',
 	'bretagne': 'Bretagne',
 	'britse eilanden': 'Britse Eilanden',
 	'britse': 'Britse',
